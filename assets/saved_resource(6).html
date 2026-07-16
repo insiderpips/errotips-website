@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--card:#0f0b1a;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.section{padding:96px 24px;position:relative;overflow:hidden}
+.section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(168,85,247,.05),transparent 60%);
+  pointer-events:none;
+}
+
+.container{max-width:800px;margin:0 auto}
+
+.header{text-align:center;margin-bottom:52px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;margin-bottom:20px;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  font-size:12px;font-weight:700;color:#22d3ee;letter-spacing:.08em;text-transform:uppercase;
+}
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(28px,4.5vw,46px);font-weight:700;letter-spacing:-.035em;line-height:1.08;margin-bottom:14px;
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.lead{font-size:16px;line-height:1.65;color:var(--muted)}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:10px}
+
+.faq-item{
+  border-radius:16px;
+  background:var(--card);border:1px solid var(--border);
+  overflow:hidden;
+  transition:border-color .25s,box-shadow .25s;
+}
+.faq-item:hover{border-color:rgba(168,85,247,.18)}
+.faq-item.active{
+  border-color:rgba(168,85,247,.28);
+  box-shadow:0 0 30px rgba(168,85,247,.06);
+}
+
+.faq-q{
+  width:100%;padding:22px 24px;
+  background:none;border:none;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  font-family:'Inter',sans-serif;font-size:16px;font-weight:600;
+  color:var(--text);text-align:left;
+}
+.faq-q:hover{color:#fff}
+
+.faq-icon{
+  flex-shrink:0;width:30px;height:30px;border-radius:10px;
+  background:rgba(168,85,247,.08);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .25s,transform .35s;
+  position:relative;
+}
+.faq-icon::before,.faq-icon::after{
+  content:'';position:absolute;background:var(--accent);border-radius:2px;transition:.35s;
+}
+.faq-icon::before{width:12px;height:2px}
+.faq-icon::after{width:2px;height:12px}
+
+.faq-item.active .faq-icon{background:linear-gradient(135deg,#0ea5e9,#a855f7);border-color:transparent}
+.faq-item.active .faq-icon::before{background:#0f0b1a}
+.faq-item.active .faq-icon::after{opacity:0;transform:rotate(90deg)}
+
+.faq-a{
+  display:grid;grid-template-rows:0fr;
+  opacity:0;padding:0 24px;
+  font-size:15px;line-height:1.72;color:var(--muted);
+  transition:grid-template-rows .35s ease,opacity .25s ease,padding .35s ease;
+}
+.faq-a>div{overflow:hidden}
+.faq-item.active .faq-a{grid-template-rows:1fr;opacity:1;padding:0 24px 22px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:600px){.section{padding:72px 20px}.faq-q{font-size:15px;padding:18px 20px}.faq-a{padding:0 20px}.faq-item.active .faq-a{padding:0 20px 20px}}
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="header reveal">
+      <span class="badge" data-i18n="badge">DUK</span>
+      <h2 data-i18n="h2">Dažniausiai užduodami klausimai</h2>
+      <p class="lead" data-i18n="lead">Atsakymai į svarbiausius klausimus prieš pradedant copy trading.</p>
+    </div>
+
+    <div class="faq-list reveal" style="transition-delay:.15s">
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq1_q">Ar man reikia trading patirties?</span><span class="faq-icon"></span></button>
+        <div class="faq-a"><div data-i18n="faq1_a">Ne. Sistema yra pilnai automatizuota - visi sandoriai bus vykdomi už tave. Nereikia jokių žinių apie Forex ar techninius rodiklius.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq2_q">Kokia minimali suma pradėti?</span><span class="faq-icon"></span></button>
+        <div class="faq-a"><div data-i18n="faq2_a">Minimali suma yra $500, tačiau rekomenduojama pradėti nuo didesnės sumos geresniam rezultatų proporcingumui.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq3_q">Ar galiu bet kada sustabdyti kopijavimą?</span><span class="faq-icon"></span></button>
+        <div class="faq-a"><div data-i18n="faq3_a">Taip, gali bet kada išjungti copy trading funkciją vienu mygtuko paspaudimu.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq4_q">Ar galiu bet kada išsiimti pinigus?</span><span class="faq-icon"></span></button>
+        <div class="faq-a"><div data-i18n="faq4_a">Taip. Tu visada turi pilną kontrolę savo lėšoms ir gali jas išsiimti bet kuriuo metu.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq5_q">Ar tai garantuoja pelną?</span><span class="faq-icon"></span></button>
+        <div class="faq-a"><div data-i18n="faq5_a">Ne. Trading visada turi riziką. Tačiau strategija orientuota į stabilų augimą ir rizikos valdymą.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq6_q">Kiek laiko užtrunka pradėti?</span><span class="faq-icon"></span></button>
+        <div class="faq-a"><div data-i18n="faq6_a">Dažniausiai visą procesą galima atlikti per 10–15 minučių (registracija, KYC ir depozitas).</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.faq-item');
+    document.querySelectorAll('.faq-item').forEach(i=>{if(i!==item)i.classList.remove('active')});
+    item.classList.toggle('active');
+    window.parent.postMessage({action:'iframeHeightUpdated',height:document.body.scrollHeight,id:'faq'},'*');
+  });
+});
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script>
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'faq'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    badge:'DUK',h2:'Dažniausiai užduodami klausimai',lead:'Atsakymai į svarbiausius klausimus prieš pradedant copy trading.',
+    faq1_q:'Ar man reikia trading patirties?',faq1_a:'Ne. Sistema yra pilnai automatizuota - visi sandoriai bus vykdomi už tave. Nereikia jokių žinių apie Forex ar techninius rodiklius.',
+    faq2_q:'Kokia minimali suma pradėti?',faq2_a:'Minimali suma yra $500, tačiau rekomenduojama pradėti nuo didesnės sumos geresniam rezultatų proporcingumui.',
+    faq3_q:'Ar galiu bet kada sustabdyti kopijavimą?',faq3_a:'Taip, gali bet kada išjungti copy trading funkciją vienu mygtuko paspaudimu.',
+    faq4_q:'Ar galiu bet kada išsiimti pinigus?',faq4_a:'Taip. Tu visada turi pilną kontrolę savo lėšoms ir gali jas išsiimti bet kuriuo metu.',
+    faq5_q:'Ar tai garantuoja pelną?',faq5_a:'Ne. Trading visada turi riziką. Tačiau strategija orientuota į stabilų augimą ir rizikos valdymą.',
+    faq6_q:'Kiek laiko užtrunka pradėti?',faq6_a:'Dažniausiai visą procesą galima atlikti per 10–15 minučių (registracija, KYC ir depozitas).'
+  },
+  en:{
+    badge:'FAQ',h2:'Frequently Asked Questions',lead:'Answers to the most important questions before starting copy trading.',
+    faq1_q:'Do I need trading experience?',faq1_a:'No. The system is fully automated - all trades will be executed for you. No knowledge of Forex or technical indicators required.',
+    faq2_q:'What is the minimum amount to start?',faq2_a:'The minimum is $500, but starting with a larger amount is recommended for better proportional results.',
+    faq3_q:'Can I stop copying at any time?',faq3_a:'Yes, you can turn off the copy trading function with a single button press at any time. No extra bureaucracy.',
+    faq4_q:'Can I withdraw my money at any time?',faq4_a:'Yes. You always have full control over your funds and can withdraw them at any time - with no additional fees or waiting periods.',
+    faq5_q:'Does this guarantee profits?',faq5_a:'No. Trading always carries risk. However, the Aurix strategy focuses on stable growth with controlled risk (~5.61% max drawdown). Past results do not guarantee future performance.',
+    faq6_q:'How long does it take to get started?',faq6_a:'The entire process usually takes 10–15 minutes (registration, KYC, and deposit).'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body></html>
+
+
+

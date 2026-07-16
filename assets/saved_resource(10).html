@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--card:#0f0b1a;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.14);--border-hi:rgba(168,85,247,.3);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+.section{
+  padding:100px 24px 120px;
+  position:relative;overflow:hidden;
+  min-height:700px;
+}
+.section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(168,85,247,.07),transparent 70%);
+  pointer-events:none;
+}
+
+.container{max-width:1200px;margin:0 auto;position:relative}
+
+/* LAYOUT */
+.layout{
+  display:grid;
+  grid-template-columns:1fr 520px 1fr;
+  gap:0;
+  align-items:center;
+  min-height:580px;
+}
+
+/* LEFT TEXT */
+.left{padding-right:40px}
+.eyebrow{
+  display:flex;align-items:center;gap:10px;margin-bottom:20px;
+  font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;
+}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(32px,4vw,54px);font-weight:700;letter-spacing:-.04em;line-height:1.05;
+  margin-bottom:20px;
+  background:linear-gradient(160deg,#fff 0%,#e0d4ff 55%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.desc{font-size:16px;line-height:1.72;color:var(--muted);margin-bottom:32px;max-width:340px}
+
+.step-counter{
+  font-size:12px;color:rgba(155,138,181,.5);
+  letter-spacing:.06em;
+  border-top:1px solid var(--border);
+  padding-top:20px;
+  margin-top:24px;
+}
+
+/* RIGHT CHART */
+.right{padding-left:40px;display:flex;align-items:center;justify-content:center}
+
+/* PHONE */
+.phone-wrap{
+  position:relative;
+  width:220px;
+  margin:0 auto;
+  z-index:2;
+}
+.phone{
+  width:220px;
+  border-radius:36px;
+  background:linear-gradient(170deg,#1a1028,#0d0818);
+  border:1.5px solid rgba(168,85,247,.35);
+  box-shadow:
+    0 0 0 8px rgba(168,85,247,.06),
+    0 0 60px rgba(168,85,247,.2),
+    0 40px 80px rgba(0,0,0,.7);
+  overflow:hidden;
+  position:relative;
+}
+/* notch */
+.phone::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:80px;height:26px;border-radius:0 0 18px 18px;
+  background:#0d0818;z-index:10;
+}
+.phone-screen{padding:36px 16px 20px}
+.phone-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
+}
+.phone-header span{font-size:9px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.phone-badge{
+  padding:3px 8px;border-radius:20px;
+  background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);
+  font-size:8px;font-weight:700;color:var(--accent);letter-spacing:.06em;
+}
+.phone-balance{margin-bottom:14px}
+.phone-balance .label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.phone-balance .amount{font-family:'Inter',sans-serif;font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.03em}
+.phone-balance .change{font-size:10px;color:#a855f7;margin-top:2px}
+
+.phone-divider{height:1px;background:rgba(168,85,247,.1);margin:12px 0}
+
+.strategy-row{margin-bottom:10px}
+.strategy-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.strategy-name{
+  padding:8px 10px;border-radius:8px;
+  background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.15);
+  font-size:10px;font-weight:600;color:var(--text);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.strategy-pct{color:var(--accent);font-weight:700}
+
+.mini-chart{margin-top:10px;height:48px;position:relative}
+
+.phone-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
+.ps{
+  padding:6px 8px;border-radius:7px;background:rgba(0,0,0,.25);
+  border:1px solid rgba(168,85,247,.1);
+}
+.ps-l{font-size:7px;color:rgba(155,138,181,.6);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.ps-v{font-size:10px;font-weight:700;color:var(--text)}
+
+/* FLOATING CARDS */
+.cards-layer{position:absolute;inset:0;pointer-events:none;z-index:3}
+
+.fc{
+  position:absolute;
+  padding:14px 18px;border-radius:14px;
+  background:rgba(15,11,26,.85);
+  border:1px solid var(--border-hi);
+  backdrop-filter:blur(12px);
+  box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 20px rgba(168,85,247,.1);
+  min-width:120px;
+  opacity:0;transform:translateY(20px) scale(.95);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.fc.visible{opacity:1;transform:translateY(0) scale(1)}
+
+.fc-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin-bottom:6px}
+.fc-value{font-family:'Inter',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--accent)}
+.fc-sub{font-size:10px;color:rgba(155,138,181,.6);margin-top:3px}
+
+/* card positions */
+.fc-1{top:8%;left:-20px;transition-delay:.1s}
+.fc-2{top:5%;right:-10px;transition-delay:.25s}
+.fc-3{bottom:28%;left:-30px;transition-delay:.4s}
+.fc-4{bottom:10%;left:10%;transition-delay:.55s}
+.fc-5{bottom:15%;right:-15px;transition-delay:.35s}
+
+/* DONUT */
+.donut-wrap{
+  position:relative;width:180px;height:180px;
+  opacity:0;transform:scale(.85);
+  transition:opacity .7s ease .5s,transform .7s ease .5s;
+}
+.donut-wrap.visible{opacity:1;transform:scale(1)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:960px){
+  .layout{grid-template-columns:1fr;justify-items:center;gap:48px}
+  .left{padding-right:0;text-align:center;max-width:500px}
+  .left .desc{max-width:100%}
+  .right{display:none}
+  .phone-wrap{width:200px}
+  .phone{width:200px}
+}
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="layout">
+
+      <!-- LEFT -->
+      <div class="left reveal">
+        <div class="eyebrow">Aurix Pulse strategija</div>
+        <h2>Automatizuok.<br>Stebėk.<br>Augink.</h2>
+        <p class="desc">Sistema dirba už tave 24/7 - kopijuoja sandorius realiuoju laiku, valdo riziką ir generuoja stabilią grąžą be tavo dalyvavimo.</p>
+        <div class="step-counter">Patikrinta · 25 mėnesiai · Viešai stebima</div>
+      </div>
+
+      <!-- CENTER PHONE -->
+      <div style="position:relative;width:520px;display:flex;align-items:center;justify-content:center">
+        <div class="cards-layer" id="cardsLayer">
+          <!-- Top left -->
+          <div class="fc fc-1" id="fc1">
+            <div class="fc-label">Vid. mėn. grąža</div>
+            <div class="fc-value">+6.5%</div>
+            <div class="fc-sub">Per 25 mėnesius</div>
+          </div>
+          <!-- Top right -->
+          <div class="fc fc-2" id="fc2">
+            <div class="fc-label">Track record</div>
+            <div class="fc-value">25 mėn.</div>
+            <div class="fc-sub">Viešai stebima</div>
+          </div>
+          <!-- Mid left -->
+          <div class="fc fc-3" id="fc3">
+            <div class="fc-label">Max drawdown</div>
+            <div class="fc-value">5.61%</div>
+            <div class="fc-sub">Kontroliuojama rizika</div>
+          </div>
+          <!-- Bottom left -->
+          <div class="fc fc-4" id="fc4">
+            <div class="fc-label">Sandoriai</div>
+            <div class="fc-value">Auto</div>
+            <div class="fc-sub">Pilnai automatizuota</div>
+          </div>
+          <!-- Bottom right -->
+          <div class="fc fc-5" id="fc5">
+            <div class="fc-label">Pradžios suma</div>
+            <div class="fc-value">$500</div>
+            <div class="fc-sub">Minimalus depozitas</div>
+          </div>
+        </div>
+
+        <div class="phone-wrap" id="phoneWrap">
+          <div class="phone reveal" id="phoneEl">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <span>Mano portfelis</span>
+                <span class="phone-badge">● Kopijuoja</span>
+              </div>
+              <div class="phone-balance">
+                <div class="label">Balansas</div>
+                <div class="amount">€2 847.20</div>
+                <div class="change">+€184.30 šį mėnesį</div>
+              </div>
+              <div class="phone-divider"></div>
+              <div class="strategy-row">
+                <div class="strategy-label">Aktyvi strategija</div>
+                <div class="strategy-name">
+                  <span>Aurix Pulse</span>
+                  <span class="strategy-pct">+6.5%</span>
+                </div>
+              </div>
+              <div class="mini-chart">
+                <svg viewBox="0 0 188 48" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                  <defs>
+                    <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#a855f7" stop-opacity=".3"/>
+                      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <polygon points="0,40 20,36 40,38 60,30 80,26 100,20 120,15 140,10 160,6 188,2 188,48 0,48" fill="url(#cg)"/>
+                  <polyline points="0,40 20,36 40,38 60,30 80,26 100,20 120,15 140,10 160,6 188,2" stroke="#a855f7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="phone-stats">
+                <div class="ps"><div class="ps-l">Rizika</div><div class="ps-v">Žema</div></div>
+                <div class="ps"><div class="ps-l">Veikia</div><div class="ps-v">Auto</div></div>
+                <div class="ps"><div class="ps-l">Istorija</div><div class="ps-v">25m.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT DONUT -->
+      <div class="right">
+        <div style="text-align:center">
+          <div class="donut-wrap" id="donut">
+            <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" width="180" height="180">
+              <!-- bg circle -->
+              <circle cx="90" cy="90" r="70" fill="none" stroke="rgba(168,85,247,.08)" stroke-width="22"/>
+              <!-- segments -->
+              <circle cx="90" cy="90" r="70" fill="none" stroke="#a855f7" stroke-width="22"
+                stroke-dasharray="264 176" stroke-dashoffset="0" stroke-linecap="round"
+                transform="rotate(-90 90 90)" opacity=".9"/>
+              <circle cx="90" cy="90" r="70" fill="none" stroke="#7c3aed" stroke-width="22"
+                stroke-dasharray="110 330" stroke-dashoffset="-264" stroke-linecap="round"
+                transform="rotate(-90 90 90)" opacity=".7"/>
+              <circle cx="90" cy="90" r="70" fill="none" stroke="#c084fc" stroke-width="22"
+                stroke-dasharray="66 374" stroke-dashoffset="-374" stroke-linecap="round"
+                transform="rotate(-90 90 90)" opacity=".5"/>
+              <!-- center text -->
+              <text x="90" y="84" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#9b8ab5" letter-spacing="1">STABILUMAS</text>
+              <text x="90" y="104" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="#f4f0ff">Aukštas</text>
+            </svg>
+          </div>
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;text-align:left">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#9b8ab5">
+              <span style="width:10px;height:10px;border-radius:50%;background:#a855f7;flex-shrink:0"></span>Grąža 60%
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#9b8ab5">
+              <span style="width:10px;height:10px;border-radius:50%;background:#7c3aed;flex-shrink:0"></span>Stabilumas 25%
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#9b8ab5">
+              <span style="width:10px;height:10px;border-radius:50%;background:#c084fc;flex-shrink:0"></span>Apsauga 15%
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+const allAnimated = document.querySelectorAll('.reveal, .fc, .donut-wrap');
+
+// Fallback: always show after 300ms regardless of IO
+setTimeout(() => {
+  allAnimated.forEach(el => el.classList.add('visible'));
+}, 300);
+
+// Also try IO for scroll-based animation when embedded in parent page
+try {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05, root: null });
+  allAnimated.forEach(el => io.observe(el));
+} catch(e) {}
+</script>
+<script>
+const heightObserver = new ResizeObserver(([{contentRect}]) => {
+  window.parent.postMessage({action:'iframeHeightUpdated', height: contentRect.height, id:'phone'}, '*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+</body></html>

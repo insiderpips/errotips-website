@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--card:#0f0b1a;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.section{padding:96px 24px;position:relative;overflow:hidden}
+.section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(168,85,247,.06),transparent 60%);
+  pointer-events:none;
+}
+
+.container{max-width:960px;margin:0 auto}
+
+.card{
+  border-radius:24px;padding:52px 48px;
+  background:linear-gradient(160deg,#1a0d35 0%,#0d0a1e 60%,#071018 100%);
+  border:1px solid rgba(168,85,247,.25);
+  box-shadow:0 0 0 1px rgba(56,189,248,.06),0 0 80px rgba(168,85,247,.1),0 0 120px rgba(56,189,248,.04),0 40px 80px rgba(0,0,0,.5);
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 0% 0%,rgba(168,85,247,.09),transparent 50%);
+  pointer-events:none;
+}
+
+/* LEFT */
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;margin-bottom:20px;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  font-size:12px;font-weight:700;color:#22d3ee;letter-spacing:.08em;text-transform:uppercase;
+}
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(22px,3vw,34px);font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-bottom:16px;
+}
+h2 .accent{
+  background:linear-gradient(135deg,#38bdf8,#22d3ee);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.sub{font-size:15px;line-height:1.65;color:var(--muted);margin-bottom:24px}
+
+.bullets{list-style:none;display:flex;flex-direction:column;gap:10px}
+.bullets li{
+  display:flex;align-items:center;gap:10px;
+  font-size:14.5px;color:var(--text);
+}
+.bullets li::before{
+  content:'';flex-shrink:0;width:18px;height:18px;border-radius:5px;
+  background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.28);
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='2,6 5,9 10,3' stroke='%2338bdf8' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;background-size:10px;
+}
+
+/* RIGHT - FORM */
+.form-right{position:relative;z-index:1}
+
+.row{display:grid;grid-template-columns:1fr;gap:0;margin-bottom:0}
+
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+
+.field input,.field textarea{
+  padding:12px 16px;border-radius:11px;
+  background:rgba(0,0,0,.35);border:1px solid var(--border);
+  color:var(--text);font-family:'Inter',sans-serif;font-size:14.5px;
+  outline:none;transition:border-color .2s,box-shadow .2s;resize:none;
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(155,138,181,.5)}
+.field input:focus,.field textarea:focus{border-color:rgba(56,189,248,.4);box-shadow:0 0 0 3px rgba(56,189,248,.08)}
+.field textarea{height:90px}
+
+.submit{
+  width:100%;padding:16px;border-radius:12px;border:none;cursor:pointer;
+  font-family:'Inter',sans-serif;font-size:15.5px;font-weight:700;
+  background:linear-gradient(135deg,#0ea5e9,#a855f7);
+  color:#0f0b1a;
+  box-shadow:0 0 28px rgba(168,85,247,.25),0 6px 20px rgba(0,0,0,.4);
+  transition:all .3s;
+}
+.submit:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(168,85,247,.4),0 12px 32px rgba(0,0,0,.5)}
+.submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+.note{font-size:12px;color:var(--muted);text-align:center;margin-top:12px}
+
+.msg{display:none;padding:12px 16px;border-radius:10px;margin-top:12px;font-size:14px}
+.msg.success{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);color:var(--accent)}
+.msg.error{background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.2);color:#ff6b6b}
+
+@media(max-width:860px){
+  .card{grid-template-columns:1fr;gap:36px;padding:36px 28px}
+}
+@media(max-width:480px){
+  .section{padding:72px 20px}
+  .card{padding:28px 20px;border-radius:18px}
+  .row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="left">
+        <span class="badge" data-i18n="badge">Nemokama medžiaga</span>
+        <h2 data-i18n="h2">Gauk <span class="accent">14 Forex ICT strategijos</span> mokymų PDF nemokamai</h2>
+        <p class="sub" data-i18n="sub">Įvesk savo duomenis ir gausi medžiagą tiesiai į savo el. paštą per kelias minutes.</p>
+        <ul class="bullets">
+          <li data-i18n="li1">14 PDF lietuvių kalba</li>
+          <li data-i18n="li2">Aiškūs pavyzdžiai ir paaiškinimai</li>
+          <li data-i18n="li3">Tinka tiek pradedantiesiems, tiek pažengusiems</li>
+        </ul>
+      </div>
+
+      <div class="form-right">
+        <form id="form" novalidate>
+          <div class="row">
+            <div class="field"><label data-i18n="l_name">Vardas</label><input name="name" type="text" data-ph="ph_name" placeholder="Tavo vardas" required></div>
+            <div class="field"><label data-i18n="l_email">El. paštas</label><input name="email" type="email" data-ph="ph_email" placeholder="vardas@email.com" required></div>
+          </div>
+          <button type="submit" class="submit" data-i18n="submit_btn">Gauti PDF nemokamai</button>
+          <p class="note" data-i18n="note">Tavo duomenys saugūs. Niekada nesidalinsime jais su trečiosiomis šalimis.</p>
+          <div id="ok" class="msg success" data-i18n="ok_msg">Ačiū! Medžiagą išsiuntėme į tavo el. paštą. Patikrink pašto dėžutę (ir SPAM aplanką).</div>
+          <div id="err" class="msg error" data-i18n="err_msg">Įvyko klaida. Bandyk dar kartą arba parašyk mums tiesiogiai.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const ENDPOINT='https://fsqtjmexsyockqsisuab.supabase.co/functions/v1/submit-lead';
+  const ANON_KEY='sb_publishable_GysyTRjZrgOh2YRZFWqaAg_P8-G9rsY';
+  const form=document.getElementById('form');
+  const ok=document.getElementById('ok'),err=document.getElementById('err');
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();ok.style.display='none';err.style.display='none';
+    const btn=form.querySelector('button[type=submit]'),orig=btn.textContent;
+    btn.disabled=true;btn.textContent='Siunčiama...';
+    try{
+      const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+ANON_KEY,'apikey':ANON_KEY},body:JSON.stringify({name:form.name.value.trim(),email:form.email.value.trim()})});
+      if(r.ok){ok.style.display='block';form.reset()}else throw new Error();
+    }catch(ex){err.style.display='block'}
+    btn.disabled=false;btn.textContent=orig;
+  });
+})();
+</script>
+<script>
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'form'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    badge:'Nemokama medžiaga',
+    h2:'Gauk <span class="accent">14 Forex ICT strategijos</span> mokymų PDF nemokamai',
+    sub:'Įvesk savo duomenis ir gausi medžiagą tiesiai į savo el. paštą per kelias minutes.',
+    li1:'14 PDF lietuvių kalba',li2:'Aiškūs pavyzdžiai ir paaiškinimai',li3:'Tinka tiek pradedantiesiems, tiek pažengusiems',
+    l_name:'Vardas',l_email:'El. paštas',l_phone:'Telefono nr. (nebūtina)',l_msg:'Žinutė (nebūtina)',
+    ph_name:'Tavo vardas',ph_email:'vardas@email.com',ph_phone:'+370...',ph_msg:'Klausimai ar komentarai...',
+    submit_btn:'Gauti PDF nemokamai',note:'Tavo duomenys saugūs. Niekada nesidalinsime jais su trečiosiomis šalimis.',
+    ok_msg:'Ačiū! Medžiagą išsiuntėme į tavo el. paštą. Patikrink pašto dėžutę (ir SPAM aplanką).',
+    err_msg:'Įvyko klaida. Bandyk dar kartą arba parašyk mums tiesiogiai.'
+  },
+  en:{
+    badge:'Free material',
+    h2:'Get <span class="accent">14 Forex ICT strategy</span> training PDFs for free',
+    sub:'Enter your details and we\'ll send the material straight to your email within minutes.',
+    li1:'14 PDFs in English',li2:'Clear examples and explanations',li3:'Suitable for both beginners and advanced',
+    l_name:'Name',l_email:'Email',l_phone:'Phone (optional)',l_msg:'Message (optional)',
+    ph_name:'Your name',ph_email:'name@email.com',ph_phone:'+1...',ph_msg:'Questions or comments...',
+    submit_btn:'Get PDF for free',note:'Your data is safe. We will never share it with third parties.',
+    ok_msg:'Thank you! We\'ve sent the material to your email. Check your inbox (and SPAM folder).',
+    err_msg:'An error occurred. Please try again or contact us directly.'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.innerHTML=T[lang][k];
+  });
+  document.querySelectorAll('[data-ph]').forEach(function(el){
+    var k=el.getAttribute('data-ph');
+    if(T[lang]&&T[lang][k]) el.placeholder=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body></html>

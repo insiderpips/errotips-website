@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --accent:#a855f7;
+  --bg:#08060f;
+  --text:#f4f0ff;
+  --muted:#9b8ab5;
+  --border:rgba(168,85,247,.15);
+}
+html,body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text)}
+
+/* ── HEADER ── */
+.section-head{text-align:center;padding:72px 32px 48px}
+.section-label{
+  display:inline-block;padding:5px 16px;border-radius:999px;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  font-size:11px;font-weight:700;color:#22d3ee;
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;
+}
+.section-title{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(26px,3.5vw,44px);font-weight:800;
+  letter-spacing:-.03em;line-height:1.1;
+  background:linear-gradient(135deg,#f4f0ff 30%,#a855f7);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-sub{margin-top:12px;font-size:15px;color:var(--muted)}
+
+/* ── GRID ── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+  padding:0 32px 80px;
+  max-width:1400px;
+  margin:0 auto;
+}
+
+/* ── CARD ── */
+.card{
+  position:relative;
+  border-radius:14px;
+  overflow:hidden;
+  background:#06040d;
+  border:1px solid var(--border);
+  aspect-ratio:9/16;
+  cursor:pointer;
+  /* subtle scale + glow on hover */
+  transition:
+    transform .3s cubic-bezier(.34,1.56,.64,1),
+    box-shadow .3s ease,
+    border-color .3s ease;
+}
+.card:hover{
+  transform:scale(1.05);
+  z-index:10;
+  border-color:rgba(168,85,247,.5);
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,.4),
+    0 0 24px rgba(168,85,247,.3),
+    0 0 60px rgba(168,85,247,.12),
+    0 20px 50px rgba(0,0,0,.8);
+}
+
+/* screenshot image */
+.card-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+}
+.card-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:top center;
+  display:block;
+  transition:transform .4s ease;
+}
+.card:hover .card-img img{
+  transform:scale(1.03);
+}
+
+/* bottom gradient */
+.card-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(6,4,13,.97) 0%,
+    rgba(6,4,13,.6) 30%,
+    rgba(6,4,13,.1) 55%,
+    transparent 75%
+  );
+  pointer-events:none;
+}
+
+/* bottom info row */
+.card-footer{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:12px 10px 10px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:6px;
+}
+
+/* Telegram avatar */
+.tg-avatar{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff;
+  flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.15);
+  box-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+.card-info{
+  display:flex;flex-direction:column;gap:1px;
+  flex:1;min-width:0;
+}
+.card-name{
+  font-size:11px;font-weight:700;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  line-height:1.2;
+}
+.card-label-txt{
+  font-size:9px;color:rgba(168,85,247,.7);font-weight:500;
+  letter-spacing:.04em;
+}
+
+/* profit badge */
+.profit{
+  font-family:'Inter',sans-serif;
+  font-size:12px;font-weight:700;
+  color:#4ade80;
+  background:rgba(74,222,128,.1);
+  border:1px solid rgba(74,222,128,.2);
+  border-radius:6px;
+  padding:3px 7px;
+  white-space:nowrap;
+  flex-shrink:0;
+  letter-spacing:.01em;
+}
+
+/* glow pulse ring on hover */
+.card::before{
+  content:'';
+  position:absolute;inset:-1px;
+  border-radius:14px;
+  background:transparent;
+  box-shadow:inset 0 0 0 1px rgba(168,85,247,0);
+  transition:box-shadow .3s ease;
+  pointer-events:none;
+  z-index:2;
+}
+.card:hover::before{
+  box-shadow:inset 0 0 0 1px rgba(168,85,247,.6);
+}
+
+@media(max-width:700px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    padding:0 16px 60px;
+  }
+  .section-head{padding:48px 20px 32px}
+  .section-title br,
+  .section-title span::after{display:none}
+  .metatrader-label{display:inline}
+}
+</style>
+</head>
+<body>
+
+<div class="section-head">
+  <div class="section-label"><span data-i18n="label">Bendruomenės narių rezultatai</span></div>
+  <h2 class="section-title"><span data-i18n="title">Realūs skaičiai iš<span class="metatrader-label"> MetaTrader terminalo</span></span></h2>
+  <p class="section-sub"><span data-i18n="sub">Tikri žmonės, tikros strategijos, tikri rezultatai</span></p>
+</div>
+
+<div class="grid">
+
+  <!-- Aurelija r1.png -->
+  <div class="card">
+    <div class="card-img"><img src="r1.png" alt="Aurelija" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#2AABEE,#229ED9)">A</div>
+      <div class="card-info">
+        <span class="card-name">Aurelija</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+706 $</span>
+    </div>
+  </div>
+
+  <!-- PV r2.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r2.jpg" alt="PV" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#E17076,#C0575C)">G</div>
+      <div class="card-info">
+        <span class="card-name">Gundzas</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+918 $</span>
+    </div>
+  </div>
+
+  <!-- Arnoldas r3.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r3.jpg" alt="Arnoldas" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#7BC862,#5DA64A)">K</div>
+      <div class="card-info">
+        <span class="card-name">Kash</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+1 325 $</span>
+    </div>
+  </div>
+
+  <!-- Kash r4.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r4.jpg" alt="Kash" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#65AADD,#4A8FBF)">E</div>
+      <div class="card-info">
+        <span class="card-name">Eismantas</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+348 $</span>
+    </div>
+  </div>
+
+  <!-- Lauryzas r5.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r5.jpg" alt="Lauryzas" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#A695E7,#8B7BC7)">A</div>
+      <div class="card-info">
+        <span class="card-name">Alvaras</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+1 744 $</span>
+    </div>
+  </div>
+
+  <!-- Neringa r6.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r6.jpg" alt="Neringa" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#EE7AAE,#D05E92)">P</div>
+      <div class="card-info">
+        <span class="card-name">PV</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+1 140 $</span>
+    </div>
+  </div>
+
+  <!-- Alvaras r7.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r7.jpg" alt="Alvaras" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#6EC9CB,#52ADAF)">M</div>
+      <div class="card-info">
+        <span class="card-name">Martas</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+792 $</span>
+    </div>
+  </div>
+
+  <!-- Eismantas r8.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r8.jpg" alt="Eismantas" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#FF9F44,#E0832A)">L</div>
+      <div class="card-info">
+        <span class="card-name">Lauryzas</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+209 $</span>
+    </div>
+  </div>
+
+  <!-- Gundzas r9.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r9.jpg" alt="Gundzas" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#B39DDB,#9575C7)">R</div>
+      <div class="card-info">
+        <span class="card-name">Robertas</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+324 $</span>
+    </div>
+  </div>
+
+  <!-- Martas r10.jpg -->
+  <div class="card">
+    <div class="card-img"><img src="r10.jpg" alt="Martas" loading="lazy"></div>
+    <div class="card-overlay"></div>
+    <div class="card-footer">
+      <div class="tg-avatar" style="background:linear-gradient(135deg,#66BB6A,#4CAF50)">N</div>
+      <div class="card-info">
+        <span class="card-name">Neringa</span>
+        <span class="card-label-txt">MetaTrader</span>
+      </div>
+      <span class="profit">+139 $</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var ro = new ResizeObserver(function(entries){
+    window.parent.postMessage({action:'iframeHeightUpdated', height: entries[0].contentRect.height, id:'klientai'}, '*');
+  });
+  ro.observe(document.documentElement);
+})();
+</script>
+<script>
+(function(){
+var T={
+  lt:{label:'Bendruomenės narių rezultatai',title:'Realūs skaičiai iš<br>MetaTrader terminalo',sub:'Tikri žmonės, tikros strategijos, tikri rezultatai'},
+  en:{label:'Community Members\' Results',title:'Real numbers from<br>MetaTrader Terminal',sub:'Real people, real strategies, real results'}
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.innerHTML=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body>
+</html>
+

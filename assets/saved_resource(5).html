@@ -1,0 +1,704 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--card:#0f0b1a;--card2:#140e22;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.section{padding:96px 24px;position:relative;overflow:hidden}
+.section::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 40% at 20% 30%,rgba(168,85,247,.08),transparent 60%),radial-gradient(ellipse 50% 40% at 80% 70%,rgba(56,189,248,.07),transparent 55%);
+  pointer-events:none;
+}
+
+.container{max-width:1080px;margin:0 auto}
+
+.header{text-align:center;margin-bottom:72px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;margin-bottom:20px;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  font-size:12px;font-weight:700;color:#22d3ee;letter-spacing:.08em;text-transform:uppercase;
+}
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(28px,4.5vw,50px);font-weight:700;letter-spacing:-.035em;line-height:1.08;margin-bottom:16px;
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.lead{font-size:17px;line-height:1.65;color:var(--muted);max-width:580px;margin:0 auto 32px}
+
+.cta-top{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:12px;
+  font-family:'Inter',sans-serif;font-size:15px;font-weight:700;
+  text-decoration:none;
+  background:linear-gradient(135deg,#0ea5e9,#a855f7);
+  color:#0f0b1a;
+  box-shadow:0 0 24px rgba(168,85,247,.25),0 6px 20px rgba(0,0,0,.4);
+  transition:all .3s;
+}
+.cta-top:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(168,85,247,.4),0 12px 32px rgba(0,0,0,.5)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0;position:relative;isolation:isolate}
+#snakeSvg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:visible;will-change:transform;transform:translateZ(0);-webkit-transform:translateZ(0)}
+.step{position:relative;z-index:0}
+
+.step{
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+  padding:64px 0;border-bottom:1px solid var(--border);
+  position:relative;
+}
+.step:last-child{border-bottom:none}
+.step:nth-child(even){direction:rtl}
+.step:nth-child(even)>*{direction:ltr}
+
+.step-content{position:relative;z-index:1}
+.step-tag{
+  display:inline-block;padding:4px 12px;border-radius:999px;margin-bottom:16px;
+  background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.25);
+  font-size:11px;font-weight:700;color:#38bdf8;letter-spacing:.1em;text-transform:uppercase;
+}
+.step:nth-child(odd) .step-tag{
+  background:rgba(168,85,247,.07);border-color:var(--border-hi);color:var(--accent);
+}
+.step-num{
+  font-family:'Inter',sans-serif;
+  font-size:80px;font-weight:800;letter-spacing:-.05em;
+  background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(168,85,247,.06));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;
+  position:absolute;top:-20px;left:-10px;pointer-events:none;
+  user-select:none;
+}
+h3{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(22px,3vw,32px);font-weight:700;letter-spacing:-.03em;
+  color:var(--text);margin-bottom:14px;position:relative;z-index:1;
+}
+.step-p{font-size:16px;line-height:1.72;color:var(--muted);position:relative;z-index:1}
+
+/* MOCKUP CARD */
+.step-mock{
+  border-radius:20px;overflow:hidden;
+  border:1px solid rgba(56,189,248,.2);
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(56,189,248,.08);
+  transition:transform .4s,box-shadow .4s;
+  background:#060d18;
+  position:relative;z-index:1;
+}
+.step-mock::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(56,189,248,.5),rgba(168,85,247,.4),transparent);
+  pointer-events:none;
+}
+.step-mock:hover{transform:translateY(-4px);box-shadow:0 32px 80px rgba(0,0,0,.6),0 0 60px rgba(56,189,248,.15)}
+
+/* mock browser chrome */
+.mock-chrome{
+  padding:10px 14px;border-bottom:1px solid rgba(56,189,248,.08);
+  background:#050c16;
+  display:flex;align-items:center;gap:8px;
+}
+.mock-dot{width:9px;height:9px;border-radius:50%}
+.mock-bar{
+  flex:1;height:22px;border-radius:6px;
+  background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.1);
+  display:flex;align-items:center;padding:0 10px;
+  font-size:10px;color:rgba(56,189,248,.4);font-family:'Inter',sans-serif;letter-spacing:.01em;
+}
+/* Auto Copy anim card (step 4) */
+.step-mock-anim{
+  border-radius:20px;
+  border:1px solid rgba(168,85,247,.28);
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(168,85,247,.1);
+  transition:transform .4s,box-shadow .4s;
+  background:#0d0918;
+  padding:8px 0 16px;
+  position:relative;z-index:1;
+}
+.step-mock-anim::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(168,85,247,.6),rgba(56,189,248,.4),transparent);
+  pointer-events:none;
+}
+.step-mock-anim:hover{transform:translateY(-4px);box-shadow:0 32px 80px rgba(0,0,0,.6),0 0 60px rgba(168,85,247,.15)}
+.step-mock-anim svg{width:100%;display:block}
+
+/* BOTTOM CTA BOX */
+.cta-box{
+  margin-top:72px;border-radius:24px;padding:52px 40px;text-align:center;
+  background:linear-gradient(160deg,#1e0f38,#100c1c);
+  border:1px solid rgba(168,85,247,.18);
+  box-shadow:0 0 80px rgba(168,85,247,.06),0 40px 80px rgba(0,0,0,.4);
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(168,85,247,.1),transparent 60%);
+  pointer-events:none;
+}
+.cta-box h3{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-.035em;
+  margin-bottom:16px;position:relative;z-index:1;
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.cta-box p{font-size:17px;color:var(--muted);max-width:580px;margin:0 auto 32px;position:relative;z-index:1}
+.cta-box-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:18px 40px;border-radius:14px;
+  font-family:'Inter',sans-serif;font-size:17px;font-weight:700;
+  text-decoration:none;
+  background:linear-gradient(135deg,#0ea5e9,#a855f7);
+  color:#0f0b1a;
+  box-shadow:0 0 40px rgba(168,85,247,.35),0 8px 24px rgba(0,0,0,.4);
+  transition:all .3s;position:relative;z-index:1;
+}
+.cta-box-btn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 60px rgba(168,85,247,.5),0 16px 40px rgba(0,0,0,.5)}
+
+.trust-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px;position:relative;z-index:1}
+.trust-pill{
+  padding:10px 18px;border-radius:999px;
+  background:rgba(168,85,247,.06);border:1px solid var(--border);
+  font-size:13.5px;color:var(--muted);
+}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+/* Steps appear instantly — avoid concurrent CSS transitions during snake RAF loop (Safari perf) */
+.step.reveal{transition:none}
+.step.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:800px){
+  .section{padding:72px 20px}
+  .step{grid-template-columns:1fr;gap:28px;direction:ltr!important}
+  .step:nth-child(even)>*{direction:ltr}
+  .step-mock{order:-1}
+  .cta-box{padding:36px 24px}
+}
+
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="header reveal">
+      <span class="badge" data-i18n="badge">Kaip pradėti?</span>
+      <h2 data-i18n="h2">Prisijungimas trunka vos kelias minutes</h2>
+      <p class="lead" data-i18n="lead">Sek žemiau esančius žingsnius, atlik KYC patvirtinimą ir pradėk automatiškai kopijuoti strategiją.</p>
+      <a href="https://my.levelssocials.com/auth/signup?ref=JC12vmdR&tag=u" target="_blank" rel="noopener" class="cta-top"><span data-i18n="cta_top">Susikurti paskyrą →</span></a>
+    </div>
+
+    <div class="steps">
+      <!-- STEP 1 -->
+      <div class="step reveal">
+        <div class="step-content">
+          <div class="step-num">01</div>
+          <span class="step-tag" data-i18n="step1_tag">Žingsnis 1</span>
+          <h3 data-i18n="step1_h3">Susikurk paskyrą ir atlik KYC</h3>
+          <p class="step-p" data-i18n="step1_p">Registruokis platformoje ir patvirtink savo tapatybę. Procesas greitas ir saugus - trunka apie 5-10 minučių.</p>
+        </div>
+        <div class="step-mock-anim">
+<svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="s1btnGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#0ea5e9"/><stop offset="100%" stop-color="#a855f7"/>
+  </linearGradient>
+  <linearGradient id="s1headerGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="rgba(56,189,248,.1)"/><stop offset="100%" stop-color="rgba(168,85,247,.07)"/>
+  </linearGradient>
+</defs>
+<style>
+@keyframes s1blink{0%,45%{opacity:1}50%,95%{opacity:0}100%{opacity:1}}
+@keyframes s1checkshow{0%,48%{opacity:0;transform:scale(.05)}56%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(.05)}}
+@keyframes s1checkline{0%,54%{stroke-dashoffset:65}70%,88%{stroke-dashoffset:0}94%,100%{stroke-dashoffset:65}}
+.s1cur{animation:s1blink .85s infinite}
+.s1chkg{transform-origin:0 0;animation:s1checkshow 5s ease-in-out infinite}
+.s1chkl{stroke-dasharray:65;animation:s1checkline 5s ease-in-out infinite}
+</style>
+<rect x="118" y="16" width="324" height="208" rx="14" fill="#060d18" stroke="rgba(56,189,248,.2)" stroke-width="1.2"/>
+<rect x="118" y="16" width="324" height="42" rx="14" fill="url(#s1headerGrad)"/>
+<rect x="118" y="42" width="324" height="16" fill="url(#s1headerGrad)"/>
+<rect x="118" y="16" width="324" height="1.5" rx="1" fill="rgba(56,189,248,.4)"/>
+<text x="280" y="43" text-anchor="middle" fill="#38bdf8" font-size="12" font-family="Inter,sans-serif" font-weight="600">Create Account</text>
+<rect x="148" y="80" width="264" height="32" rx="8" fill="rgba(56,189,248,.05)" stroke="rgba(56,189,248,.25)" stroke-width="1"/>
+<text x="161" y="101" fill="rgba(56,189,248,.5)" font-size="11" font-family="Inter,sans-serif">email@mail.com</text>
+<rect class="s1cur" x="224" y="90" width="1.5" height="14" fill="#38bdf8"/>
+<rect x="148" y="124" width="264" height="32" rx="8" fill="rgba(168,85,247,.05)" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+<circle cx="163" cy="140" r="3" fill="#9b8ab5" opacity=".5"/><circle cx="175" cy="140" r="3" fill="#9b8ab5" opacity=".5"/>
+<circle cx="187" cy="140" r="3" fill="#9b8ab5" opacity=".5"/><circle cx="199" cy="140" r="3" fill="#9b8ab5" opacity=".4"/>
+<rect x="148" y="170" width="264" height="34" rx="10" fill="url(#s1btnGrad)"/>
+<text x="280" y="192" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="700">Register →</text>
+<g transform="translate(280,120)">
+  <g class="s1chkg">
+    <circle cx="0" cy="0" r="36" fill="#060d18" stroke="#38bdf8" stroke-width="2"/>
+    <polyline class="s1chkl" points="-15,2 -4,15 18,-15" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</g>
+</svg>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step reveal" style="transition-delay:.1s">
+        <div class="step-content">
+          <div class="step-num">02</div>
+          <span class="step-tag" data-i18n="step2_tag">Žingsnis 2</span>
+          <h3 data-i18n="step2_h3">Atlik KYC tapatybės patvirtinimą</h3>
+          <p class="step-p" data-i18n="step2_p">Įkelk asmens dokumentą ir atliki veido atpažinimą. Paprastas procesas, kuris užtrunka kelias minutes ir užtikrina sąskaitos saugumą.</p>
+        </div>
+        <div class="step-mock-anim">
+<svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <clipPath id="s2clip"><rect x="128" y="20" width="304" height="162"/></clipPath>
+  <linearGradient id="s2sg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0"/>
+    <stop offset="45%" stop-color="#38bdf8" stop-opacity=".5"/>
+    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="s2prog" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#a855f7"/>
+  </linearGradient>
+</defs>
+<style>
+@keyframes s2scan{0%{transform:translateY(0)}80%,100%{transform:translateY(154px)}}
+@keyframes s2prog{0%{transform:scaleX(0)}75%,100%{transform:scaleX(1)}}
+@keyframes s2chkshow{0%,72%{opacity:0;transform:scale(.05)}80%,93%{opacity:1;transform:scale(1)}98%,100%{opacity:0;transform:scale(.05)}}
+@keyframes s2chkline{0%,77%{stroke-dashoffset:55}90%,93%{stroke-dashoffset:0}98%,100%{stroke-dashoffset:55}}
+.s2sc{animation:s2scan 3.8s ease-in-out infinite}
+.s2pr{transform-origin:left center;animation:s2prog 3.8s ease-in-out infinite}
+.s2cg{transform-origin:0 0;animation:s2chkshow 3.8s ease-in-out infinite}
+.s2cl{stroke-dasharray:55;animation:s2chkline 3.8s ease-in-out infinite}
+</style>
+<rect x="128" y="20" width="304" height="162" rx="12" fill="#060d18" stroke="rgba(56,189,248,.18)" stroke-width="1.2"/>
+<rect x="128" y="20" width="304" height="1.5" rx="1" fill="rgba(56,189,248,.35)"/>
+<rect x="144" y="36" width="78" height="104" rx="8" fill="rgba(56,189,248,.06)" stroke="rgba(56,189,248,.15)" stroke-width="1"/>
+<circle cx="183" cy="74" r="18" fill="rgba(56,189,248,.14)"/>
+<ellipse cx="183" cy="108" rx="22" ry="14" fill="rgba(56,189,248,.09)"/>
+<rect x="240" y="46" width="100" height="8" rx="4" fill="rgba(56,189,248,.2)"/>
+<rect x="240" y="62" width="78" height="6" rx="3" fill="rgba(56,189,248,.12)"/>
+<rect x="240" y="76" width="90" height="6" rx="3" fill="rgba(168,85,247,.11)"/>
+<rect x="240" y="90" width="66" height="6" rx="3" fill="rgba(168,85,247,.09)"/>
+<rect x="144" y="154" width="272" height="5" rx="2.5" fill="rgba(56,189,248,.07)"/>
+<rect x="144" y="163" width="200" height="5" rx="2.5" fill="rgba(56,189,248,.05)"/>
+<g clip-path="url(#s2clip)">
+  <rect class="s2sc" x="128" y="20" width="304" height="14" fill="url(#s2sg)"/>
+</g>
+<rect x="128" y="196" width="304" height="8" rx="4" fill="rgba(56,189,248,.1)"/>
+<rect class="s2pr" x="128" y="196" width="304" height="8" rx="4" fill="url(#s2prog)"/>
+<g transform="translate(280,101)">
+  <g class="s2cg">
+    <circle cx="0" cy="0" r="34" fill="#060d18" stroke="#38bdf8" stroke-width="2"/>
+    <polyline class="s2cl" points="-14,1 -4,13 16,-13" fill="none" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</g>
+</svg>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step reveal" style="transition-delay:.2s">
+        <div class="step-content">
+          <div class="step-num">03</div>
+          <span class="step-tag" data-i18n="step3_tag">Žingsnis 3</span>
+          <h3 data-i18n="step3_h3">Atlik depozitą</h3>
+          <p class="step-p" data-i18n="step3_p">Papildyk sąskaitą patogia suma. Minimumas prasideda nuo $500 - rekomenduojame pradėti nuo didesnės sumos geresniam rezultatui.</p>
+        </div>
+        <div class="step-mock-anim">
+<svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <filter id="s3gl"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="s3gl2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <radialGradient id="s3rg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#38bdf8" stop-opacity=".14"/>
+    <stop offset="60%" stop-color="#a855f7" stop-opacity=".08"/>
+    <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="s3euroGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#a855f7"/>
+  </linearGradient>
+</defs>
+<style>
+@keyframes s3rot{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes s3coin{0%{transform:translateY(0);opacity:.85}65%{transform:translateY(-78px);opacity:0}100%{transform:translateY(-78px);opacity:0}}
+@keyframes s3pulse{0%,100%{opacity:.15}50%{opacity:.28}}
+.s3ring{transform-origin:280px 118px;animation:s3rot 10s linear infinite}
+.s3bg{animation:s3pulse 3s ease-in-out infinite}
+.s3c1{animation:s3coin 2.8s 0s ease-in infinite}
+.s3c2{animation:s3coin 2.8s .45s ease-in infinite}
+.s3c3{animation:s3coin 2.8s .9s ease-in infinite}
+.s3c4{animation:s3coin 2.8s 1.35s ease-in infinite}
+.s3c5{animation:s3coin 2.8s 1.8s ease-in infinite}
+.s3c6{animation:s3coin 2.8s 2.25s ease-in infinite}
+</style>
+<circle class="s3bg" cx="280" cy="118" r="95" fill="url(#s3rg)"/>
+<circle class="s3ring" cx="280" cy="118" r="78" fill="none" stroke="url(#s3euroGrad)" stroke-width="1.2" stroke-dasharray="9 7" opacity=".5"/>
+<circle cx="280" cy="118" r="60" fill="rgba(56,189,248,.04)" stroke="#38bdf8" stroke-width="1.5" opacity=".5"/>
+<circle cx="280" cy="118" r="48" fill="rgba(56,189,248,.06)" filter="url(#s3gl)"/>
+<text x="280" y="138" text-anchor="middle" fill="url(#s3euroGrad)" font-size="50" font-family="Inter,sans-serif" font-weight="700" filter="url(#s3gl2)">€</text>
+<circle class="s3c1" cx="236" cy="162" r="9" fill="#38bdf8" filter="url(#s3gl2)"/>
+<circle class="s3c2" cx="258" cy="170" r="7" fill="#818cf8" opacity=".8"/>
+<circle class="s3c3" cx="282" cy="165" r="10" fill="#38bdf8" opacity=".9"/>
+<circle class="s3c4" cx="306" cy="168" r="7" fill="#a855f7" opacity=".8"/>
+<circle class="s3c5" cx="326" cy="160" r="8" fill="#38bdf8" filter="url(#s3gl2)"/>
+<circle class="s3c6" cx="248" cy="174" r="6" fill="#818cf8" opacity=".7"/>
+</svg>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step reveal" style="transition-delay:.3s">
+        <div class="step-content">
+          <div class="step-num">04</div>
+          <span class="step-tag" data-i18n="step4_tag">Žingsnis 4</span>
+          <h3 data-i18n="step4_h3">Prisijunk prie Aurix strategijos ir stebėk veiklą</h3>
+          <p class="step-p" data-i18n="step4_p">Rask Aurix strategiją platformoje, aktyvuok automatinį kopijavimą ir sistema pradeda veikti už tave. Stebėk sąskaitos pokyčius realiuoju laiku.</p>
+        </div>
+        <!-- STEP 4 ANIM: Auto Copy (same as stats section) -->
+        <div class="step-mock-anim">
+<svg viewBox="0 0 600 290" xmlns="http://www.w3.org/2000/svg" style="max-width:520px;margin:0 auto;display:block">
+  <defs>
+    <filter id="sg4"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <defs>
+    <linearGradient id="s4arcGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="s4pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0ea5e9"/><stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <path id="s4arc" d="M 135,190 L 135,68 Q 135,55 148,55 L 452,55 Q 465,55 465,68 L 465,190"
+    fill="none" stroke="url(#s4arcGrad)" stroke-width="1.5" stroke-dasharray="7 5" opacity=".5"/>
+  <rect x="236" y="38" width="128" height="34" rx="17" fill="#060d18" stroke="url(#s4pillGrad)" stroke-width="1.2"/>
+  <text x="300" y="60" text-anchor="middle" fill="#38bdf8" font-size="13.5" font-family="Inter,sans-serif" font-weight="600">Auto Copy</text>
+  <circle r="8" fill="#38bdf8" filter="url(#sg4)">
+    <animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#s4arc"/></animateMotion>
+  </circle>
+  <circle cx="135" cy="200" r="44" fill="#060d18" stroke="#38bdf8" stroke-width="1.5" opacity=".9"/>
+  <circle cx="135" cy="187" r="14" fill="#38bdf8" opacity=".6"/>
+  <ellipse cx="135" cy="217" rx="20" ry="13" fill="#38bdf8" opacity=".4"/>
+  <text x="135" y="262" text-anchor="middle" fill="#38bdf8" font-size="13" font-family="Inter,sans-serif">Provider</text>
+  <rect x="72" y="162" width="64" height="28" rx="14" fill="url(#s4pillGrad)"/>
+  <text x="104" y="181" text-anchor="middle" fill="#fff" font-size="12.5" font-family="Inter,sans-serif" font-weight="700">Copy</text>
+  <circle cx="465" cy="200" r="44" fill="#060d18" stroke="#a855f7" stroke-width="1.5" opacity=".9"/>
+  <circle cx="465" cy="187" r="14" fill="#a855f7" opacity=".7"/>
+  <ellipse cx="465" cy="217" rx="20" ry="13" fill="#a855f7" opacity=".5"/>
+  <text x="465" y="262" text-anchor="middle" fill="#c084fc" font-size="13" font-family="Inter,sans-serif">You</text>
+  <circle cx="465" cy="190" r="4" fill="#a855f7" opacity=".5"/>
+</svg>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cta-box reveal" style="transition-delay:.15s">
+      <h3 data-i18n="cta_h3">Pradėk automatizuoti prekybą šiandien</h3>
+      <p data-i18n="cta_p">Sistema automatiškai atidarys ir valdys sandorius</p>
+      <a href="https://my.levelssocials.com/auth/signup?ref=JC12vmdR&amp;tag=u" target="_blank" rel="noopener" class="cta-box-btn">
+        <span data-i18n="tg_btn">Pradėti dabar →</span>
+      </a>
+      <div class="trust-pills">
+        <span class="trust-pill" data-i18n="pill1">✔ Gali bet kada sustabdyti kopijavimą</span>
+        <span class="trust-pill" data-i18n="pill2">✔ Gali išsiimti pinigus bet kuriuo metu</span>
+        <span class="trust-pill" data-i18n="pill3">✔ Pilna kontrolė tavo rankose</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script>
+// Snake path animation
+(function(){
+  var NS = 'http://www.w3.org/2000/svg';
+  var snakeUpdate = null;
+  var snakeUpdateByViewY = null;
+
+  function buildSnake() {
+    var stepsEl = document.querySelector('.steps');
+    var stepEls = Array.from(document.querySelectorAll('.step'));
+    if (!stepsEl || !stepEls.length) return;
+
+    var W = stepsEl.offsetWidth;
+    var H = stepsEl.offsetHeight;
+    if (W < 10 || H < 10) return;
+
+    // Remove any existing SVG
+    var old = document.getElementById('snakeSvg');
+    if (old) old.parentNode.removeChild(old);
+
+    var stepsRect = stepsEl.getBoundingClientRect();
+    var isMobile = W < 600;
+
+    var pts = stepEls.map(function(s, i) {
+      var mockEl = s.querySelector('.step-mock-anim') || s.querySelector('.step-mock');
+      var mTop, mH, xCenter;
+      if (mockEl) {
+        var mr = mockEl.getBoundingClientRect();
+        mTop = mr.top - stepsRect.top;
+        mH   = mockEl.offsetHeight;
+      } else {
+        mTop = s.offsetTop;
+        mH   = s.offsetHeight * 0.6;
+      }
+      if (isMobile) {
+        // mobile: single column, all cards centred — just ball visible, no zigzag needed
+        xCenter = W * 0.5;
+      } else {
+        // desktop: original alternating left/right (same as before)
+        xCenter = (i % 2 === 0) ? W * 0.26 : W * 0.74;
+      }
+      return {
+        x:    xCenter,
+        midY: mTop + mH * 0.5,
+        botY: mTop + mH
+      };
+    });
+
+    // Path: start at bottom of card 1, S-curve to bottom of card 2, etc.
+    var d = 'M ' + pts[0].x + ' ' + pts[0].botY;
+    for (var i = 0; i < pts.length - 1; i++) {
+      var a = pts[i], b = pts[i+1];
+      // S-curve through the gap between card bottoms
+      var cy1 = a.botY + (b.botY - a.botY) * 0.35;
+      var cy2 = a.botY + (b.botY - a.botY) * 0.65;
+      d += ' C ' + a.x + ' ' + cy1 + ', ' + b.x + ' ' + cy2 + ', ' + b.x + ' ' + b.botY;
+    }
+
+    // Create SVG
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('id', 'snakeSvg');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+    // Defs: gradient + glow filter
+    var defs = document.createElementNS(NS, 'defs');
+    defs.innerHTML =
+      '<linearGradient id="sGrad" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="#38bdf8"/>' +
+        '<stop offset="40%" stop-color="#818cf8"/>' +
+        '<stop offset="100%" stop-color="#a855f7"/>' +
+      '</linearGradient>' +
+      '<linearGradient id="sBgGrad" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="rgba(56,189,248,0.08)"/>' +
+        '<stop offset="100%" stop-color="rgba(168,85,247,0.06)"/>' +
+      '</linearGradient>' +
+      '<filter id="sGlow" x="-80%" y="-80%" width="260%" height="260%">' +
+        '<feGaussianBlur stdDeviation="6" result="b"/>' +
+        '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+      '</filter>' +
+      '<filter id="sBallGlow" x="-150%" y="-150%" width="400%" height="400%">' +
+        '<feGaussianBlur stdDeviation="8" result="b"/>' +
+        '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+      '</filter>';
+    svg.appendChild(defs);
+
+    // Background dim path
+    var bg = document.createElementNS(NS, 'path');
+    bg.setAttribute('d', d);
+    bg.setAttribute('fill', 'none');
+    bg.setAttribute('stroke', 'url(#sBgGrad)');
+    bg.setAttribute('stroke-width', '2.5');
+    bg.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(bg);
+
+    // Active (drawn) path — glow copy underneath
+    var fpGlow = document.createElementNS(NS, 'path');
+    fpGlow.setAttribute('id', 'snakeFillGlow');
+    fpGlow.setAttribute('d', d);
+    fpGlow.setAttribute('fill', 'none');
+    fpGlow.setAttribute('stroke', 'url(#sGrad)');
+    fpGlow.setAttribute('stroke-width', '4');
+    fpGlow.setAttribute('stroke-linecap', 'round');
+    fpGlow.setAttribute('opacity', '0.35');
+    svg.appendChild(fpGlow);
+
+    // Active (drawn) path — crisp line on top
+    var fp = document.createElementNS(NS, 'path');
+    fp.setAttribute('id', 'snakeFill');
+    fp.setAttribute('d', d);
+    fp.setAttribute('fill', 'none');
+    fp.setAttribute('stroke', 'url(#sGrad)');
+    fp.setAttribute('stroke-width', '2');
+    fp.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(fp);
+
+    // Ball group — move via transform:translate() so Safari can GPU-composite it
+    var ballGroup = document.createElementNS(NS, 'g');
+    ballGroup.setAttribute('id', 'snakeBallGroup');
+    ballGroup.style.willChange = 'transform';
+
+    var ballGlow = document.createElementNS(NS, 'circle');
+    ballGlow.setAttribute('id', 'snakeBallGlow');
+    ballGlow.setAttribute('r', '14');
+    ballGlow.setAttribute('fill', 'rgba(56,189,248,0.25)');
+    ballGroup.appendChild(ballGlow);
+
+    var ballEl = document.createElementNS(NS, 'circle');
+    ballEl.setAttribute('id', 'snakeBall');
+    ballEl.setAttribute('r', '6');
+    ballEl.setAttribute('fill', '#38bdf8');
+    ballEl.setAttribute('filter', 'none');
+    ballGroup.appendChild(ballEl);
+
+    var ring = document.createElementNS(NS, 'circle');
+    ring.setAttribute('id', 'snakeRing');
+    ring.setAttribute('r', '11');
+    ring.setAttribute('fill', 'none');
+    ring.setAttribute('stroke', 'rgba(56,189,248,0.35)');
+    ring.setAttribute('stroke-width', '1.5');
+    ballGroup.appendChild(ring);
+
+    svg.appendChild(ballGroup);
+
+    stepsEl.insertBefore(svg, stepsEl.firstChild);
+
+    var totalLen = fp.getTotalLength();
+    fp.setAttribute('stroke-dasharray', totalLen);
+    fp.setAttribute('stroke-dashoffset', totalLen);
+    fpGlow.setAttribute('stroke-dasharray', totalLen);
+    fpGlow.setAttribute('stroke-dashoffset', totalLen);
+    var startPt = fp.getPointAtLength(0);
+    ballGroup.setAttribute('transform', 'translate('+startPt.x+','+startPt.y+')');
+
+    // Pre-compute lookup table so scroll handler never calls getPointAtLength()
+    var TABLE = 600;
+    var lut = new Array(TABLE + 1);
+    for (var i = 0; i <= TABLE; i++) {
+      var t = (i / TABLE) * totalLen;
+      var p = fp.getPointAtLength(t);
+      lut[i] = {len: t, x: p.x, y: p.y};
+    }
+
+    function lutApply(t) {
+      fp.setAttribute('stroke-dashoffset', totalLen - t);
+      fpGlow.setAttribute('stroke-dashoffset', totalLen - t);
+      ballGroup.removeAttribute('display');
+      var idx = Math.round((t / totalLen) * TABLE);
+      idx = Math.max(0, Math.min(TABLE, idx));
+      var pt = lut[idx];
+      ballGroup.setAttribute('transform', 'translate('+pt.x+','+pt.y+')');
+    }
+
+    // Tell parent exact y extents in IFRAME coordinates
+    var stepsTop = stepsEl.offsetTop;
+    window.parent.postMessage({action:'pradeti_bounds', startY: stepsTop + pts[0].midY, endY: stepsTop + pts[pts.length-1].botY}, '*');
+
+    snakeUpdate = function(p) {
+      lutApply(Math.max(0, Math.min(1, p)) * totalLen);
+    };
+
+    // Fast lookup: binary search lut by Y
+    var lastBotY = pts[pts.length - 1].botY;
+    snakeUpdateByViewY = function(viewY, viewH) {
+      var delay = (viewH || 800) * 0.45;
+      var targetY = viewY - stepsTop - delay;
+      if (targetY <= 0) { lutApply(0); return; }
+      if (targetY >= lastBotY - 40) {
+        fp.setAttribute('stroke-dashoffset', '0');
+        fpGlow.setAttribute('stroke-dashoffset', '0');
+        ballGroup.setAttribute('display', 'none');
+        return;
+      }
+      var lo = 0, hi = TABLE;
+      while (lo < hi - 1) {
+        var mid = (lo + hi) >> 1;
+        if (lut[mid].y < targetY) lo = mid; else hi = mid;
+      }
+      lutApply(lut[lo].len);
+    };
+  }
+
+  function init() {
+    setTimeout(buildSnake, 150);
+  }
+  if (document.readyState === 'complete') { init(); }
+  else { window.addEventListener('load', init); }
+
+  // Direct parent scroll read — same-origin iframe, zero postMessage latency
+  (function() {
+    function selfTick() {
+      try {
+        if (snakeUpdateByViewY && window.frameElement) {
+          var rect = window.frameElement.getBoundingClientRect();
+          var viewH = window.parent.innerHeight;
+          snakeUpdateByViewY(viewH - rect.top, viewH);
+        }
+      } catch(ex) {}
+      requestAnimationFrame(selfTick);
+    }
+    requestAnimationFrame(selfTick);
+  })();
+})();
+
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'steps'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    badge:'Kaip pradėti?',h2:'Prisijungimas trunka vos kelias minutes',
+    lead:'Sek žemiau esančius žingsnius, atlik KYC patvirtinimą ir pradėk automatiškai kopijuoti strategiją.',
+    cta_top:'Susikurti paskyrą →',
+    step1_tag:'Žingsnis 1',step2_tag:'Žingsnis 2',step3_tag:'Žingsnis 3',step4_tag:'Žingsnis 4',
+    step1_p:'Registruokis platformoje ir patvirtink savo tapatybę. Procesas greitas ir saugus - trunka apie 5-10 minučių.',
+    step2_p:'Įkelk asmens dokumentą ir atliki veido atpažinimą. Paprastas procesas, kuris užtrunka kelias minutes ir užtikrina sąskaitos saugumą.',
+    step3_p:'Papildyk sąskaitą patogia suma. Minimumas prasideda nuo $500 - rekomenduojame pradėti nuo didesnės sumos geresniam rezultatui.',
+    step4_p:'Rask Aurix strategiją platformoje, aktyvuok automatinį kopijavimą ir sistema pradeda veikti už tave. Stebėk sąskaitos pokyčius realiuoju laiku.',
+    cta_h3:'Pradėk automatizuoti prekybą šiandien',
+    cta_p:'Sistema automatiškai atidarys ir valdys sandorius',
+    tg_btn:'Pradėti dabar →',
+    pill1:'✔ Gali bet kada sustabdyti kopijavimą',pill2:'✔ Gali išsiimti pinigus bet kuriuo metu',pill3:'✔ Pilna kontrolė tavo rankose',
+    step1_h3:'Susikurk paskyrą ir atlik KYC',step2_h3:'Atlik KYC tapatybės patvirtinimą',
+    step3_h3:'Atlik depozitą',step4_h3:'Prisijunk prie Aurix strategijos ir stebėk veiklą'
+  },
+  en:{
+    badge:'How to start?',h2:'Getting started takes just a few minutes',
+    lead:'Follow the steps below, complete KYC verification and start automatically copying the strategy.',
+    cta_top:'Create an account →',
+    step1_tag:'Step 1',step2_tag:'Step 2',step3_tag:'Step 3',step4_tag:'Step 4',
+    step1_p:'Register on the platform and verify your identity. The process is fast and secure - takes about 5-10 minutes.',
+    step2_p:'Upload your ID document and complete facial recognition. A simple process that takes a few minutes and ensures account security.',
+    step3_p:'Fund your account with a comfortable amount. The minimum starts at $500 - we recommend starting with a larger amount for better results.',
+    step4_p:'Find the Aurix strategy on the platform, activate automatic copying and the system starts working for you. Monitor your account activity in real time.',
+    cta_h3:'Start automating your trading today',
+    cta_p:'The system will automatically open and manage trades',
+    tg_btn:'Start now →',
+    pill1:'✔ Stop copying anytime',pill2:'✔ Withdraw funds at any time',pill3:'✔ Full control in your hands',
+    step1_h3:'Create an account and complete KYC',step2_h3:'Complete KYC identity verification',
+    step3_h3:'Make a deposit',step4_h3:'Connect to the Aurix strategy and monitor activity'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body></html>
+
+
+

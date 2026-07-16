@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--surface:#0d0a18;--card:#0f0b1a;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;--gold:#c9a84c;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+  --glow:rgba(168,85,247,.14);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.6;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100dvh;
+  display:flex;align-items:center;justify-content:center;
+  padding:80px 24px 60px;text-align:center;overflow:hidden;
+}
+
+/* animated gradient mesh */
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(168,85,247,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 10% 90%,rgba(124,58,237,.1) 0%,transparent 50%),
+    radial-gradient(ellipse 60% 50% at 90% 80%,rgba(168,85,247,.08) 0%,transparent 50%),
+    var(--bg);
+}
+
+/* dot grid */
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(168,85,247,.18) 1px,transparent 1px);
+  background-size:36px 36px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,black 30%,transparent 80%);
+}
+
+.blob{
+  position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;
+  animation:blobFloat 12s ease-in-out infinite;
+}
+.blob1{width:500px;height:500px;top:-120px;left:-100px;background:radial-gradient(circle,rgba(168,85,247,.14),transparent 70%);animation-delay:0s}
+.blob2{width:400px;height:400px;bottom:-80px;right:-80px;background:radial-gradient(circle,rgba(124,58,237,.12),transparent 70%);animation-delay:-4s}
+.blob3{width:300px;height:300px;top:40%;left:60%;background:radial-gradient(circle,rgba(201,168,76,.08),transparent 70%);animation-delay:-8s}
+
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,15px) scale(.95)}}
+
+/* ── CONTENT ── */
+.hero-inner{position:relative;z-index:2;max-width:960px;width:100%}
+
+/* badge */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 16px;border-radius:999px;margin-bottom:28px;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  font-size:13px;font-weight:600;color:#22d3ee;letter-spacing:.06em;text-transform:uppercase;
+  animation:fadeUp .8s ease both;
+}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:#22d3ee;box-shadow:0 0 8px #22d3ee;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.8)}}
+
+/* video */
+.video-wrap{
+  position:relative;width:100%;max-width:760px;margin:0 auto 44px;border-radius:20px;overflow:hidden;
+  border:1px solid var(--border-hi);
+  box-shadow:0 0 0 1px rgba(168,85,247,.08),0 0 60px rgba(168,85,247,.2),0 40px 80px rgba(0,0,0,.6);
+  animation:fadeUp .8s .1s ease both;
+}
+.video-wrap::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(168,85,247,.06),transparent 50%,rgba(0,0,0,.3));
+  z-index:1;pointer-events:none;
+}
+video{width:100%;display:block;background:#000}
+.sub-overlay{
+  position:absolute;bottom:52px;left:0;right:0;
+  text-align:center;pointer-events:none;z-index:10;
+  padding:0 16px;
+}
+.sub-overlay span{
+  display:inline-block;
+  color:rgba(253,224,130,.9);
+  font-family:'Inter',sans-serif;
+  font-size:14px;font-weight:500;
+  line-height:1.55;
+  text-shadow:0 1px 5px rgba(0,0,0,.95),0 0 14px rgba(0,0,0,.8);
+  background:transparent;
+  white-space:pre-line;
+}
+
+/* heading */
+h1{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(36px,5.5vw,68px);font-weight:700;line-height:1.0;
+  letter-spacing:-.04em;margin-bottom:22px;
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:fadeUp .8s .2s ease both;
+}
+
+.sub{
+  max-width:640px;margin:0 auto 40px;
+  font-size:clamp(16px,2vw,19px);line-height:1.65;color:var(--muted);
+  animation:fadeUp .8s .35s ease both;
+}
+
+/* CTA */
+.cta-wrap{display:flex;flex-direction:column;align-items:center;gap:20px;animation:fadeUp .8s .5s ease both}
+
+.btn-primary{
+  position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;gap:10px;
+  padding:18px 40px;border-radius:14px;
+  font-family:'Inter',sans-serif;font-size:17px;font-weight:700;
+  text-decoration:none;cursor:pointer;
+  background:linear-gradient(135deg,#0ea5e9,#a855f7);
+  color:#0f0b1a;
+  box-shadow:0 0 40px rgba(168,85,247,.35),0 8px 24px rgba(0,0,0,.4);
+  transition:all .3s ease;
+  border:none;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,rgba(255,255,255,.25),transparent 50%);
+  opacity:0;transition:.3s;
+}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 60px rgba(168,85,247,.55),0 16px 40px rgba(0,0,0,.5)}
+.btn-primary:hover::before{opacity:1}
+
+.btn-icon{font-size:20px;transition:.3s}
+.btn-primary:hover .btn-icon{transform:translateX(4px)}
+
+/* trust items */
+.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 24px}
+.trust-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:13.5px;color:var(--muted);
+}
+.trust-dot{width:5px;height:5px;border-radius:50%;background:var(--accent2)}
+
+/* stats strip */
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  margin-top:52px;
+  animation:fadeUp .8s .65s ease both;
+}
+.stat{
+  padding:22px 16px;border-radius:16px;
+  background:rgba(15,11,26,.7);border:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.stat:hover{border-color:var(--border-hi);transform:translateY(-2px)}
+.stat::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,var(--glow),transparent 70%);
+}
+.stat-number{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(26px,4vw,34px);font-weight:700;
+  color:var(--accent);letter-spacing:-.02em;
+  text-shadow:0 0 20px rgba(168,85,247,.4);
+}
+.stat-label{margin-top:6px;font-size:13px;color:var(--muted);line-height:1.35}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:760px){
+  .hero{padding:48px 20px 40px;min-height:auto}
+  .stats{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}
+  .trust{flex-direction:column;align-items:center}
+}
+@media(max-width:480px){
+  .video-wrap{border-radius:14px}
+  h1{font-size:34px}
+  .btn-primary{width:auto;white-space:nowrap;justify-content:center;padding:18px 28px;font-size:15px}
+}
+</style>
+</head>
+<body>
+<section class="hero" id="pagrindinis">
+  <div class="hero-bg"></div>
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <div class="hero-inner">
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span data-i18n="eyebrow">Aurix Copy Trading Sistema</span>
+    </div>
+
+    <div class="video-wrap">
+      <video id="herovid" controls playsinline preload="none" poster="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/screenshot-2026-05-07-at-21.09.26-XxvjyUjzISWeky4X.png">
+        <source src="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/geras-J2srwk7l7r0zzNPj.mp4" type="video/mp4">
+      </video>
+      <div class="sub-overlay" id="subOverlay"><span></span></div>
+    </div>
+
+    <h1 data-i18n="h1">Automatizuok savo prekybą su patikrinta copy trading sistema</h1>
+
+    <p class="sub" data-i18n="sub">Prijunk savo sąskaitą prie profesionalios strategijos ir leisk sistemai dirbti už tave</p>
+
+    <div class="cta-wrap">
+      <a href="https://t.me/errotipscopyfx" target="_blank" rel="noopener" class="btn-primary"
+        onclick="event.preventDefault();const u=this.href;if(typeof fbq==='function'){fbq('trackCustom','TelegramJoin',{content_name:'Telegram Community',destination:'telegram'});fbq('track','Contact',{content_name:'Telegram Community'})}setTimeout(()=>window.open(u,'_blank'),250)">
+        <span data-i18n="cta_btn">Prisijungti prie bendruomenės</span>
+        <span class="btn-icon">→</span>
+      </a>
+      <div class="trust">
+        <span class="trust-item"><span class="trust-dot"></span><span data-i18n="trust1">Patikrinta statistika</span></span>
+        <span class="trust-item"><span class="trust-dot"></span><span data-i18n="trust2">Automatinis kopijavimas</span></span>
+        <span class="trust-item"><span class="trust-dot"></span><span data-i18n="trust3">Rizikos valdymas</span></span>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number" data-target="6.5" data-prefix="+" data-suffix="%" data-decimals="1">+6.5%</div>
+        <div class="stat-label" data-i18n="stat1">Vid. mėnesinis augimas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" data-target="4500" data-suffix="+">4500+</div>
+        <div class="stat-label" data-i18n="stat2">Aktyvių vartotojų</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" data-target="25" data-suffix=" mėn." data-suffix-en=" mo.">25 mėn.</div>
+        <div class="stat-label" data-i18n="stat3">Track record</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const ease=t=>1-Math.pow(1-t,3);
+  function animNum(el){
+    const target=parseFloat(el.dataset.target),dec=parseInt(el.dataset.decimals||0),
+      pre=el.dataset.prefix||'',suf=el.dataset.suffix||'',dur=1800,s=performance.now();
+    (function frame(now){
+      const p=Math.min((now-s)/dur,1),v=target*ease(p);
+      el.textContent=pre+v.toFixed(dec)+suf;
+      if(p<1)requestAnimationFrame(frame);
+    })(s);
+  }
+  const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){animNum(x.target);io.unobserve(x.target)}}),{threshold:.4});
+  document.querySelectorAll('.stat-number[data-target]').forEach(n=>io.observe(n));
+})();
+</script>
+<script>
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'hero'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+  var cues=[];
+  fetch('subtitles-en-v2.vtt').then(function(r){return r.text();}).then(function(txt){
+    var blocks=txt.trim().split(/\n\n+/);
+    blocks.forEach(function(b){
+      var lines=b.split('\n');
+      var timeLine=lines.find(function(l){return l.includes('-->');});
+      if(!timeLine) return;
+      var times=timeLine.split('-->');
+      function ts(s){var p=s.trim().split(/[:.]/);return (+p[0])*3600+(+p[1])*60+(+p[2])+(+p[3]||0)/1000;}
+      var start=ts(times[0]),end=ts(times[1].trim().split(/\s+/)[0]);
+      var text=lines.filter(function(l){return !l.includes('-->') && l!=='WEBVTT' && !/^\d+$/.test(l.trim());}).join('\n').trim();
+      if(text) cues.push({start:start,end:end,text:text});
+    });
+  });
+  var vid=document.getElementById('herovid');
+  var overlay=document.getElementById('subOverlay');
+  var span=overlay.querySelector('span');
+  if(!vid) return;
+  vid.addEventListener('timeupdate',function(){
+    var t=vid.currentTime;
+    var found=null;
+    for(var i=0;i<cues.length;i++){
+      if(t>=cues[i].start && t<cues[i].end){found=cues[i];break;}
+    }
+    span.textContent=found?found.text:'';
+  });
+})();
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    eyebrow:'Aurix Copy Trading Sistema',
+    h1:'Automatizuok savo prekybą su patikrinta copy trading sistema',
+    sub:'Prijunk savo sąskaitą prie profesionalios strategijos ir leisk sistemai dirbti už tave',
+    cta_btn:'Prisijungti prie bendruomenės',
+    trust1:'Patikrinta statistika',trust2:'Automatinis kopijavimas',trust3:'Rizikos valdymas',
+    stat1:'Vid. mėnesinis augimas',stat2:'Aktyvių vartotojų',stat3:'Track record'
+  },
+  en:{
+    eyebrow:'Aurix Copy Trading System',
+    h1:'Automate your trading with a proven copy trading system',
+    sub:'Connect your account to a professional strategy and let the system work for you',
+    cta_btn:'Join the community',
+    trust1:'Verified statistics',trust2:'Automatic copying',trust3:'Risk management',
+    stat1:'Avg. monthly growth',stat2:'Active users',stat3:'Track record'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+  document.querySelectorAll('.stat-number[data-suffix-en]').forEach(function(el){
+    if(!el.dataset.suffixLt) el.dataset.suffixLt=el.dataset.suffix||'';
+    var oldSuf=el.dataset.suffix||'';
+    var newSuf=lang==='en'?el.dataset.suffixEn:el.dataset.suffixLt;
+    if(el.textContent.endsWith(oldSuf)){
+      el.textContent=el.textContent.slice(0,el.textContent.length-oldSuf.length)+newSuf;
+    }
+    el.dataset.suffix=newSuf;
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body></html>
+
+
+

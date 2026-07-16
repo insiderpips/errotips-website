@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--surface:#0d0a18;--card:#0f0b1a;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;--gold:#c9a84c;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.section{padding:96px 24px;position:relative;overflow:hidden}
+.section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 80% 50%,rgba(168,85,247,.08),transparent 60%),radial-gradient(ellipse 50% 40% at 20% 60%,rgba(56,189,248,.06),transparent 55%),
+             radial-gradient(ellipse 40% 40% at 10% 60%,rgba(201,168,76,.04),transparent 60%);
+  pointer-events:none;
+}
+
+.container{max-width:1080px;margin:0 auto}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;margin-bottom:20px;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  font-size:12px;font-weight:700;color:#22d3ee;letter-spacing:.08em;text-transform:uppercase;
+}
+
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-.035em;line-height:1.08;margin-bottom:20px;
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.lead{font-size:16px;line-height:1.72;color:var(--muted);margin-bottom:28px}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+.checklist li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:15px;color:var(--text);line-height:1.5;
+}
+.check-icon{
+  flex-shrink:0;width:22px;height:22px;border-radius:6px;
+  background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);
+  display:flex;align-items:center;justify-content:center;margin-top:1px;
+}
+.check-icon svg{width:12px;height:12px;stroke:var(--accent);stroke-width:2.5;fill:none}
+
+.cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 32px;border-radius:14px;
+  font-family:'Inter',sans-serif;font-size:16px;font-weight:700;
+  text-decoration:none;cursor:pointer;
+  background:linear-gradient(135deg,#0ea5e9,#a855f7);
+  color:#0f0b1a;
+  box-shadow:0 0 32px rgba(168,85,247,.3),0 8px 24px rgba(0,0,0,.4);
+  transition:all .3s;
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(168,85,247,.45),0 16px 40px rgba(0,0,0,.5)}
+
+/* STRATEGY CARD */
+.strategy-card{
+  position:relative;border-radius:24px;overflow:hidden;
+  background:linear-gradient(160deg,#1a0d35 0%,#0d0a1e 60%,#071018 100%);
+  border:1px solid rgba(168,85,247,.3);
+  box-shadow:0 0 0 1px rgba(56,189,248,.08),0 0 60px rgba(168,85,247,.18),0 0 120px rgba(56,189,248,.06),0 40px 80px rgba(0,0,0,.6);
+  padding:32px;
+}
+.strategy-card::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 90% 10%,rgba(168,85,247,.14),transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 80%,rgba(56,189,248,.08),transparent 55%);
+  pointer-events:none;
+}
+.strategy-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(56,189,248,.5),rgba(168,85,247,.6),transparent);
+}
+
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.card-label{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.card-status{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:999px;
+  background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);
+  font-size:12px;font-weight:700;color:#38bdf8;
+}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#38bdf8;animation:pulse 2s infinite;box-shadow:0 0 6px #38bdf8}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.growth{
+  font-family:'Inter',sans-serif;
+  font-size:64px;font-weight:800;letter-spacing:-.05em;
+  background:linear-gradient(135deg,#38bdf8 0%,#a855f7 60%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(56,189,248,.3));
+  line-height:1;margin-bottom:8px;
+}
+.growth-label{font-size:14px;color:var(--muted);margin-bottom:4px}
+
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
+.metric{
+  padding:14px 10px;border-radius:14px;text-align:center;position:relative;overflow:hidden;
+  background:rgba(0,0,0,.35);border:1px solid rgba(168,85,247,.12);
+  transition:border-color .3s;
+}
+.metric:first-child{border-color:rgba(56,189,248,.18);background:rgba(56,189,248,.04)}
+.metric:first-child strong{color:#38bdf8}
+.metric span{display:block;font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
+.metric strong{font-size:14px;font-weight:700;color:var(--text)}
+
+/* chart line decoration */
+.mini-chart{
+  margin:16px 0 4px;height:68px;position:relative;
+}
+.mini-chart svg{width:100%;height:100%}
+@keyframes drawline{from{stroke-dashoffset:420}to{stroke-dashoffset:0}}
+.chart-line{stroke-dasharray:420;animation:drawline 2.2s ease-out forwards}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(24px);transition:opacity .7s .2s ease,transform .7s .2s ease}
+.reveal-right.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .grid{grid-template-columns:1fr;gap:48px}
+  .section{padding:72px 20px}
+}
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="grid">
+      <div class="reveal">
+        <span class="badge" data-i18n="badge">Strategijos privalumai</span>
+        <h2 data-i18n="h2">Kodėl rekomenduoju automatizuotą prekybą?</h2>
+        <p class="lead" data-i18n="lead">Automatizuota prekyba leidžia sistemai dirbti už tave - sprendimai priimami pagal logiką, o ne emocijas. Tu gali siekti rezultatų be nuolatinio įsitraukimo, išlaikydamas savo laiką ir laisvę.</p>
+        <ul class="checklist">
+          <li><span class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span><span data-i18n="li1">Aiškus rizikos valdymas</span></li>
+          <li><span class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span><span data-i18n="li2">Automatinis sandorių kopijavimas</span></li>
+          <li><span class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span><span data-i18n="li3">Patikrinta rezultatų istorija</span></li>
+          <li><span class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span><span data-i18n="li4">Tinka pradedantiesiems ir užimtiems žmonėms</span></li>
+        </ul>
+        <a href="https://my.levelssocials.com/auth/signup?ref=JC12vmdR&tag=u" target="_blank" rel="noopener" class="cta">
+          <span data-i18n="cta">Prijungti Aurix strategiją →</span>
+        </a>
+      </div>
+
+      <div class="reveal-right">
+        <div class="strategy-card">
+          <div class="card-header">
+            <span class="card-label">Aurix Strategy</span>
+            <span class="card-status"><span class="status-dot"></span>Active</span>
+          </div>
+          <div class="growth">+6.5%</div>
+          <p class="growth-label" data-i18n="growth_label">Vidutinis mėnesinis augimas</p>
+          <div class="mini-chart">
+            <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="cg" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="100%" stop-color="#a855f7"/>
+                </linearGradient>
+                <linearGradient id="cgfill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#38bdf8" stop-opacity=".18"/>
+                  <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <path d="M0,58 C30,53 50,46 80,38 C110,30 130,22 160,15 C190,8 220,5 250,3 C270,2 285,2 300,1 L300,68 L0,68 Z" fill="url(#cgfill)"/>
+              <path class="chart-line" d="M0,58 C30,53 50,46 80,38 C110,30 130,22 160,15 C190,8 220,5 250,3 C270,2 285,2 300,1" stroke="url(#cg)" stroke-width="2.5" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+            </svg>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span data-i18n="m1_l">Rizika</span><strong data-i18n="m1_v">Įjungta</strong></div>
+            <div class="metric"><span data-i18n="m2_l">Veikia</span><strong>Auto</strong></div>
+            <div class="metric"><span data-i18n="m3_l">Istorija</span><strong data-i18n="m3_v">25 mėn.</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal,.reveal-right').forEach(el=>io.observe(el));
+</script>
+<script>
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'why'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    badge:'Strategijos privalumai',h2:'Kodėl rekomenduoju automatizuotą prekybą?',
+    lead:'Automatizuota prekyba leidžia sistemai dirbti už tave - sprendimai priimami pagal logiką, o ne emocijas. Tu gali siekti rezultatų be nuolatinio įsitraukimo, išlaikydamas savo laiką ir laisvę.',
+    li1:'Aiškus rizikos valdymas',li2:'Automatinis sandorių kopijavimas',li3:'Patikrinta rezultatų istorija',li4:'Tinka pradedantiesiems ir užimtiems žmonėms',
+    cta:'Prijungti Aurix strategiją →',growth_label:'Vidutinis mėnesinis augimas',
+    m1_l:'Rizika',m1_v:'Įjungta',m2_l:'Veikia',m3_l:'Istorija',m3_v:'25 mėn.'
+  },
+  en:{
+    badge:'Strategy Benefits',h2:'Why I recommend automated trading?',
+    lead:'Automated trading lets the system work for you - decisions are made by logic, not emotions. You can achieve results without constant involvement, keeping your time and freedom.',
+    li1:'Clear risk management',li2:'Automatic trade copying',li3:'Verified results history',li4:'Suitable for beginners and busy people',
+    cta:'Connect Aurix strategy →',growth_label:'Average monthly growth',
+    m1_l:'Risk',m1_v:'Active',m2_l:'Mode',m3_l:'History',m3_v:'25 mo.'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body></html>
+
+
+

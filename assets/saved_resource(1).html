@@ -1,0 +1,549 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.14);--border-hi:rgba(168,85,247,.32);
+}
+html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden;position:relative}
+
+.stage{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 560px;
+  align-items:center;
+  padding:44px 64px;
+  background:transparent;
+  position:relative;overflow:visible;
+}
+.stage::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 65% 50%,rgba(168,85,247,.10),transparent 70%);
+  pointer-events:none;
+}
+
+.left{padding-right:48px;position:relative;z-index:10}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent);flex-shrink:0}
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(40px,5vw,64px);font-weight:700;letter-spacing:-.04em;line-height:1.03;margin-bottom:20px;
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.desc{font-size:16px;line-height:1.72;color:var(--muted);max-width:360px}
+
+.right{position:relative;height:620px;display:flex;align-items:center;justify-content:center;overflow:visible}
+
+.glow{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.13),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+
+/* iPHONE 17 PRO MAX - wrapper holds frame + side buttons */
+.phone-wrap{
+  position:relative;z-index:2;left:-50px;
+  filter:drop-shadow(0 0 60px rgba(168,85,247,.28)) drop-shadow(0 40px 80px rgba(0,0,0,.85));
+}
+
+/* Side buttons */
+.btn{
+  position:absolute;
+  background:linear-gradient(180deg,#3a3a3c,#2a2a2c);
+  border-radius:3px;
+}
+/* Action button (top-left) */
+.btn-action{
+  left:-12px;top:110px;width:12px;height:34px;
+  border-radius:5px 0 0 5px;
+  background:linear-gradient(90deg,#787878,#3c3c3c);
+  box-shadow:-1px 0 4px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.6);
+}
+/* Volume up */
+.btn-vol-up{
+  left:-12px;top:170px;width:12px;height:52px;
+  border-radius:5px 0 0 5px;
+  background:linear-gradient(90deg,#747474,#3a3a3a);
+  box-shadow:-1px 0 4px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.6);
+}
+/* Volume down */
+.btn-vol-down{
+  left:-12px;top:234px;width:12px;height:52px;
+  border-radius:5px 0 0 5px;
+  background:linear-gradient(90deg,#747474,#3a3a3a);
+  box-shadow:-1px 0 4px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.6);
+}
+/* Power button (right side) */
+.btn-power{
+  right:-12px;top:180px;width:12px;height:72px;
+  border-radius:0 5px 5px 0;
+  background:linear-gradient(90deg,#3a3a3a,#747474);
+  box-shadow:1px 0 4px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.6);
+}
+
+.phone{
+  width:260px;
+  border-radius:52px;
+  background:linear-gradient(175deg,#181818,#0a0a0a);
+  box-shadow:
+    0 0 0 1.5px rgba(255,255,255,.10),
+    0 0 0 3.5px #2c2c2e,
+    0 0 0 5px rgba(255,255,255,.05),
+    0 0 0 6.5px #1a1a1a;
+  overflow:hidden;position:relative;
+}
+
+/* Dynamic Island */
+.dynamic-island{
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  width:96px;height:30px;border-radius:20px;
+  background:#000;z-index:10;
+  box-shadow:0 0 0 1px rgba(255,255,255,.04);
+}
+
+.screen{padding:54px 16px 72px}
+
+/* STATUS BAR */
+.status-bar{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:18px;padding:0 2px;
+}
+.status-time{font-size:11px;font-weight:600;color:#fff;letter-spacing:-.01em}
+.status-right{display:flex;align-items:center;gap:5px}
+.status-signal{font-size:8px;color:#fff;letter-spacing:1px}
+.status-wifi{width:14px;height:11px;position:relative;display:flex;align-items:flex-end;justify-content:center;gap:1.5px}
+.status-wifi span{background:#fff;border-radius:1px;width:3px}
+.status-wifi span:nth-child(1){height:4px}
+.status-wifi span:nth-child(2){height:7px}
+.status-wifi span:nth-child(3){height:10px}
+/* Battery - white, monochrome */
+.battery{display:flex;align-items:center;gap:1px}
+.batt-body{
+  width:22px;height:11px;border-radius:3.5px;
+  border:1.5px solid rgba(255,255,255,.9);
+  position:relative;overflow:hidden;
+}
+.batt-fill{
+  position:absolute;left:2px;top:2px;bottom:2px;
+  width:70%;background:#fff;border-radius:2px;
+}
+.batt-tip{
+  width:2.5px;height:5px;background:rgba(255,255,255,.9);
+  border-radius:0 1.5px 1.5px 0;
+}
+
+/* PORTFOLIO BALANCE */
+.portfolio{margin-bottom:22px}
+.port-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.10em;margin-bottom:5px}
+.port-balance{font-family:'Inter',sans-serif;font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.03em;line-height:1}
+.port-today{font-size:9px;color:#4ade80;margin-top:5px;font-weight:600;letter-spacing:.02em}
+
+/* ALLOCATION BAR */
+.allocation{margin-bottom:20px}
+.alloc-labels{display:flex;gap:0;margin-bottom:5px}
+.alloc-labels span{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;flex:1;text-align:center}
+.alloc-labels span:first-child{text-align:left}
+.alloc-labels span:last-child{text-align:right}
+.alloc-bar{display:flex;height:5px;border-radius:4px;overflow:hidden;gap:1px}
+.alloc-seg{height:100%;border-radius:2px}
+.seg1{flex:4;background:var(--accent)}
+.seg2{flex:2.5;background:var(--accent2)}
+.seg3{flex:2;background:#6d28d9}
+.seg4{flex:1.5;background:#4c1d95}
+
+.ph-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ph-head-label{font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.ph-badge{padding:3px 9px;border-radius:20px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.32);font-size:8px;font-weight:700;color:var(--accent)}
+.trader{background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.14);border-radius:12px;padding:11px;margin-bottom:12px}
+.trader-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#0ea5e9,#a855f7);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;color:#fff}
+.trader-info{flex:1}
+.trader-name{font-size:10px;font-weight:700;color:var(--text);margin-bottom:2px}
+.trader-sub{font-size:7px;color:var(--muted)}
+.verified{font-size:7px;color:var(--accent);border:1px solid rgba(168,85,247,.3);padding:2px 5px;border-radius:8px;white-space:nowrap}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:10px}
+.stat{text-align:center;padding:6px 4px;background:rgba(0,0,0,.2);border-radius:7px}
+.sv{font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:var(--accent)}
+.sl{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:2px}
+.copy-btn{width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#0ea5e9,#a855f7);font-family:'Inter',sans-serif;font-size:10px;font-weight:700;color:#0f0b1a;cursor:default}
+.divider{height:1px;background:rgba(168,85,247,.09);margin:18px 0}
+
+/* SPARKLINE CHART */
+.ph-chart{margin-bottom:16px}
+.ph-chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.ph-chart-label{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ph-chart-val{font-size:9px;font-weight:700;color:#4ade80}
+
+/* FLOATING CARDS */
+.fc{
+  position:absolute;padding:16px 18px;border-radius:15px;
+  background:rgba(10,7,22,.94);border:1px solid var(--border-hi);
+  backdrop-filter:blur(20px);
+  box-shadow:0 12px 40px rgba(0,0,0,.55),0 0 28px rgba(168,85,247,.08);
+  min-width:162px;max-width:196px;z-index:5;opacity:0;
+}
+/* Card 1 - upper left, reaches into left column */
+.fc-1{top:60px;left:-150px;transform:translateX(-28px);transition:opacity .5s ease,transform .5s ease}
+.fc-1.show{opacity:1;transform:translateX(0)}
+/* Card 2 - middle right, extends past phone edge */
+.fc-2{top:50%;right:-50px;transform:translateY(-50%) translateX(28px);transition:opacity .5s ease,transform .5s ease}
+.fc-2.show{opacity:1;transform:translateY(-50%) translateX(0)}
+/* Card 3 - lower left, reaches into left column */
+.fc-3{bottom:60px;left:-150px;transform:translateX(-28px);transition:opacity .5s ease,transform .5s ease}
+.fc-3.show{opacity:1;transform:translateX(0)}
+
+.fc-num{width:22px;height:22px;border-radius:7px;margin-bottom:9px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:var(--accent)}
+.fc-title{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px}
+.fc-body{font-size:11px;line-height:1.55;color:var(--muted)}
+
+@media(max-width:760px){
+  .stage{
+    grid-template-columns:1fr;
+    padding:40px 24px;
+    gap:36px;
+  }
+  .left{padding-right:0;text-align:center}
+  .eyebrow{justify-content:center}
+  h2{font-size:clamp(36px,10vw,52px)}
+  .desc{max-width:100%;margin:0 auto}
+  .right{height:auto;justify-content:center}
+  .phone-wrap{left:0}
+  .phone{width:220px}
+  .fc{display:none;max-width:none !important;min-width:0 !important;}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="left">
+    <div class="eyebrow" data-i18n="eyebrow">Kaip tai veikia?</div>
+    <h2>Copy<br>Trading</h2>
+    <p class="desc" data-i18n="desc">Suprask per kelias sekundes, kaip sistema veikia ir kodėl ji tinka net neturint patirties.</p>
+  </div>
+  <div class="right">
+    <div class="glow"></div>
+
+    <!-- Card 1 -->
+    <div class="fc fc-1" id="fc1">
+      <div class="fc-num">01</div>
+      <div class="fc-title" data-i18n="fc1_title">Kas yra copy trading?</div>
+      <div class="fc-body" data-i18n="fc1_body">Tu prijungi sąskaitą prie patikrintos strategijos, o visi sandoriai bus vykdomi automatiškai - proporcingai tavo kapitalui.</div>
+    </div>
+
+    <!-- iPhone 17 Pro Max -->
+    <div class="phone-wrap">
+    <div class="btn btn-action"></div>
+    <div class="btn btn-vol-up"></div>
+    <div class="btn btn-vol-down"></div>
+    <div class="btn btn-power"></div>
+    <div class="phone">
+      <div class="dynamic-island"></div>
+      <div class="screen">
+
+        <!-- Status bar -->
+        <div class="status-bar">
+          <span class="status-time">9:41</span>
+          <div class="status-right">
+            <div class="status-wifi">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="battery">
+              <div class="batt-body"><div class="batt-fill"></div></div>
+              <div class="batt-tip"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio balance -->
+        <div class="portfolio">
+          <div class="port-label" data-i18n="port_label">PORTFELIS</div>
+          <div class="port-balance">€4 829,14</div>
+          <div class="port-today" data-i18n="port_today">+€184.30 šiandien</div>
+        </div>
+
+        <!-- Allocation bar -->
+        <div class="allocation">
+          <div class="alloc-labels">
+            <span>FX</span><span data-i18n="alloc_idx">Indeksai</span><span data-i18n="alloc_gold">Auksas</span><span data-i18n="alloc_other">Kiti</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-seg seg1"></div>
+            <div class="alloc-seg seg2"></div>
+            <div class="alloc-seg seg3"></div>
+            <div class="alloc-seg seg4"></div>
+          </div>
+        </div>
+
+        <!-- Sparkline chart -->
+        <div class="ph-chart">
+          <div class="ph-chart-head">
+            <span class="ph-chart-label" data-i18n="chart_label">7 dienų augimas</span>
+            <span class="ph-chart-val">+3.2%</span>
+          </div>
+          <svg viewBox="0 0 228 56" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:56px;display:block">
+            <defs>
+              <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a855f7" stop-opacity=".35"/>
+                <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,44 C18,40 36,38 54,33 C72,28 90,34 108,26 C126,18 144,20 162,12 C180,4 200,8 228,3 L228,56 L0,56 Z" fill="url(#cg)"/>
+            <path d="M0,44 C18,40 36,38 54,33 C72,28 90,34 108,26 C126,18 144,20 162,12 C180,4 200,8 228,3" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="228" cy="3" r="3.5" fill="#a855f7"/>
+            <circle cx="228" cy="3" r="6" fill="rgba(168,85,247,.25)"/>
+          </svg>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Copy trading section -->
+        <div class="ph-head">
+          <span class="ph-head-label" data-i18n="ph_copying">Kopijuojama</span>
+          <span class="ph-badge" data-i18n="ph_active">● Aktyvu</span>
+        </div>
+        <div class="trader">
+          <div class="trader-top">
+            <div class="avatar">AP</div>
+            <div class="trader-info">
+              <div class="trader-name">Aurix Pulse</div>
+              <div class="trader-sub" data-i18n="trader_sub">Nuo 2023 · Forex</div>
+            </div>
+            <div class="verified">✓ Verified</div>
+          </div>
+          <div class="stats">
+            <div class="stat"><div class="sv">+6.5%</div><div class="sl" data-i18n="sl_avg">Vid. mėn.</div></div>
+            <div class="stat"><div class="sv">25m.</div><div class="sl" data-i18n="sl_hist">Istorija</div></div>
+            <div class="stat"><div class="sv">7.9%</div><div class="sl">Drawdown</div></div>
+          </div>
+          <button class="copy-btn" data-i18n="copy_btn">✓ Kopijuoju šį traderį</button>
+        </div>
+      </div>
+    </div>
+    </div><!-- /phone-wrap -->
+
+    <!-- Card 2 -->
+    <div class="fc fc-2" id="fc2">
+      <div class="fc-num">02</div>
+      <div class="fc-title" data-i18n="fc2_title">Ką mes sekame?</div>
+      <div class="fc-body" data-i18n="fc2_body">Forex algoritmų strategiją, veikiančią stabiliai jau 25+ mėnesius, su vieša Myfxbook statistika ir kontroliuojama rizika (~7.9% max drawdown).</div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="fc fc-3" id="fc3">
+      <div class="fc-num">03</div>
+      <div class="fc-title" data-i18n="fc3_title">Kodėl tai darome?</div>
+      <div class="fc-body" data-i18n="fc3_body">Kad galėtum dalyvauti finansų rinkose ir generuoti grąžą be patirties, emocijų ar nuolatinio stebėjimo.</div>
+    </div>
+  </div>
+</div>
+<script>
+window.addEventListener('message', function(e) {
+  if (!e.data || e.data.action !== 'scrollProgress' || e.data.id !== 'kaipveikia') return;
+  if (window.innerWidth > 760) {
+    var p = e.data.progress;
+    document.getElementById('fc1').classList.toggle('show', p > 0.28);
+    document.getElementById('fc2').classList.toggle('show', p > 0.50);
+    document.getElementById('fc3').classList.toggle('show', p > 0.68);
+  }
+});
+</script>
+<script>
+var ro = new ResizeObserver(function() {
+  var stage = document.querySelector('.stage');
+  var h = stage ? stage.offsetHeight : document.body.scrollHeight;
+  window.parent.postMessage({action:'iframeHeightUpdated', height: h, id:'kaipveikia'}, '*');
+});
+ro.observe(document.querySelector('.stage') || document.body);
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    eyebrow:'Kaip tai veikia?',desc:'Suprask per kelias sekundes, kaip sistema veikia ir kodėl ji tinka net neturint patirties.',
+    fc1_title:'Kas yra copy trading?',fc1_body:'Tu prijungi sąskaitą prie patikrintos strategijos, o visi sandoriai bus vykdomi automatiškai - proporcingai tavo kapitalui.',
+    fc2_title:'Ką mes sekame?',fc2_body:'Forex algoritmų strategiją, veikiančią stabiliai jau 25+ mėnesius, su vieša Myfxbook statistika ir kontroliuojama rizika (~7.9% max drawdown).',
+    fc3_title:'Kodėl tai darome?',fc3_body:'Kad galėtum dalyvauti finansų rinkose ir generuoti grąžą be patirties, emocijų ar nuolatinio stebėjimo.',
+    ph_copying:'Kopijuojama',ph_active:'● Aktyvu',sl_avg:'Vid. mėn.',sl_hist:'Istorija',copy_btn:'✓ Kopijuoju šį traderį',
+    port_label:'PORTFELIS',port_today:'+€184.30 šiandien',
+    chart_label:'7 dienų augimas',trader_sub:'Nuo 2023 · Forex',
+    alloc_idx:'Indeksai',alloc_gold:'Auksas',alloc_other:'Kiti'
+  },
+  en:{
+    eyebrow:'How does it work?',desc:'Understand in seconds how the system works and why it suits even those without experience.',
+    fc1_title:'What is copy trading?',fc1_body:'You connect your account to a verified strategy, and all trades are executed automatically - proportional to your capital.',
+    fc2_title:'What do we follow?',fc2_body:'A Forex algorithm strategy running stably for 25+ months, with public Myfxbook statistics and controlled risk (~7.9% max drawdown).',
+    fc3_title:'Why do we do this?',fc3_body:'So you can participate in financial markets and generate returns without experience, emotions, or constant monitoring.',
+    ph_copying:'Copying',ph_active:'● Active',sl_avg:'Avg. mo.',sl_hist:'History',copy_btn:'✓ Copy this trader',
+    port_label:'PORTFOLIO',port_today:'+€184.30 today',
+    chart_label:'7 days growth',trader_sub:'Since 2023 · Forex',
+    alloc_idx:'Indices',alloc_gold:'Gold',alloc_other:'Other'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script>
+<canvas id="fxbg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0"></canvas>
+<script>
+(function(){
+  var cv=document.getElementById('fxbg');
+  var ctx=cv.getContext('2d');
+  var W,H;
+  function resize(){W=cv.width=cv.offsetWidth||800;H=cv.height=cv.offsetHeight||600;}
+  resize();
+  window.addEventListener('resize',resize);
+  var CANDLES=[],COUNT=22;
+  function newCandle(x){
+    var bull=Math.random()>.45;
+    var bodyH=16+Math.random()*52;
+    var bodyY=H*.1+Math.random()*H*.75;
+    return{x:x,bodyY:bodyY,bodyH:bodyH,
+      wickTop:bodyY-5-Math.random()*16,wickBot:bodyY+bodyH+5+Math.random()*16,
+      w:5+Math.random()*5,bull:bull,speed:.15+Math.random()*.25,
+      alpha:.13+Math.random()*.15};
+  }
+  for(var i=0;i<COUNT;i++) CANDLES.push(newCandle(Math.random()*W));
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<CANDLES.length;i++){
+      var c=CANDLES[i];
+      c.x-=c.speed;
+      if(c.x<-20){CANDLES[i]=newCandle(W+20+Math.random()*60);continue;}
+      var col=c.bull?'#38bdf8':'#a855f7';
+      ctx.globalAlpha=c.alpha*.65;
+      ctx.strokeStyle=col;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(c.x,c.wickTop);ctx.lineTo(c.x,c.wickBot);ctx.stroke();
+      ctx.globalAlpha=c.alpha;
+      ctx.fillStyle=col;
+      ctx.fillRect(c.x-c.w/2,c.bodyY,c.w,c.bodyH);
+    }
+    ctx.globalAlpha=1;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+<script>
+window.addEventListener('load', function(){
+  if(window.innerWidth > 760) return;
+
+  var stage    = document.querySelector('.stage');
+  var left     = document.querySelector('.left');
+  var right    = document.querySelector('.right');
+  var phonewrap= document.querySelector('.phone-wrap');
+  var phoneEl  = document.querySelector('.phone');
+  var h2el     = document.querySelector('h2');
+  var eyebrow  = document.querySelector('.eyebrow');
+  var desc     = document.querySelector('.desc');
+  var fcs      = [document.getElementById('fc1'), document.getElementById('fc2'), document.getElementById('fc3')];
+
+  stage.style.cssText = 'width:100%;max-width:100%;display:flex;flex-direction:column;padding:16px 24px 0;gap:20px;overflow-x:hidden;overflow-y:visible;';
+  left.style.cssText  = 'padding-right:0;text-align:center;flex-shrink:0;position:relative;z-index:2;';
+  if(eyebrow) eyebrow.style.justifyContent = 'center';
+  if(desc)    desc.style.cssText = 'max-width:100%;margin:0 auto;font-size:15px;';
+  if(h2el)    h2el.style.fontSize = 'clamp(34px,9vw,50px)';
+
+  /* Phone: render at natural 260px width, then scale to fit available space */
+  if(phoneEl) phoneEl.style.width = '260px';
+  phonewrap.style.cssText = 'position:absolute;left:50%;top:8px;transform-origin:top center;transform:translateX(-50%);will-change:transform,opacity;z-index:10;pointer-events:none;';
+
+  /* Measure natural height, then calculate scale */
+  var naturalH = phonewrap.offsetHeight;
+  var stageW = stage.offsetWidth - 48;
+  var maxH = window.innerHeight - 260;
+  var scaleByW = (stageW - 30) / (phonewrap.offsetWidth);
+  var scaleByH = maxH / naturalH;
+  var phoneScale = Math.min(scaleByW, scaleByH, 1);
+  var scaledH = Math.round(naturalH * phoneScale);
+
+  phonewrap.style.transformOrigin = 'top center';
+  phonewrap.dataset.scale = phoneScale;
+
+  right.style.cssText = 'position:relative;width:100%;height:'+(scaledH+16)+'px;overflow:hidden;flex-shrink:0;z-index:2;';
+
+  /* Cards: no CSS transitions — lerp RAF loop handles all smoothing */
+  fcs.forEach(function(fc){
+    fc.style.cssText = 'display:block;position:absolute;left:0;right:0;top:0;bottom:auto;max-width:none;min-width:0;opacity:0;transform:translateX(110%);will-change:transform,opacity;padding:12px 14px;';
+  });
+
+  function stackCards(){
+    var top = 8;
+    fcs.forEach(function(fc){
+      fc.style.top = top + 'px';
+      top += fc.offsetHeight + 8;
+    });
+    var cardsH = top + 8;
+    if(cardsH > parseInt(right.style.height)) right.style.height = cardsH + 'px';
+  }
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(stackCards);
+  } else {
+    setTimeout(stackCards, 400);
+  }
+
+  function ease(t){ return t<0?0:t>1?1:t*t*(3-2*t); }
+  function remap(p,a,b){ return ease(Math.max(0,Math.min(1,(p-a)/(b-a)))); }
+
+  /* Lerp RAF loop: interpolate currentP → targetP every frame so postMessage lag is invisible */
+  var targetP = 0;
+  var currentP = 0;
+  var rafId = null;
+
+  function applyProgress(p){
+    var s = parseFloat(phonewrap.dataset.scale) || 1;
+    var phoneOut = remap(p, 0.15, 0.32);
+    phonewrap.style.transform = 'translateX(calc(-50% + '+(-phoneOut*130)+'%)) scale('+s+')';
+    phonewrap.style.opacity   = (1 - phoneOut).toFixed(3);
+    var f1 = remap(p, 0.15, 0.32);
+    fcs[0].style.transform = 'translateX('+((1-f1)*110)+'%)';
+    fcs[0].style.opacity   = f1.toFixed(3);
+    var f2 = remap(p, 0.44, 0.58);
+    fcs[1].style.transform = 'translateX('+((1-f2)*110)+'%)';
+    fcs[1].style.opacity   = f2.toFixed(3);
+    var f3 = remap(p, 0.64, 0.78);
+    fcs[2].style.transform = 'translateX('+((1-f3)*110)+'%)';
+    fcs[2].style.opacity   = f3.toFixed(3);
+  }
+
+  function lerpLoop(){
+    var delta = targetP - currentP;
+    /* lerp factor 0.14 → ~60fps smooth catch-up, tight enough to feel responsive */
+    if(Math.abs(delta) > 0.0002){
+      currentP += delta * 0.14;
+      applyProgress(currentP);
+      rafId = requestAnimationFrame(lerpLoop);
+    } else {
+      currentP = targetP;
+      applyProgress(currentP);
+      rafId = null;
+    }
+  }
+
+  function setTarget(p){
+    targetP = p;
+    if(!rafId) rafId = requestAnimationFrame(lerpLoop);
+  }
+
+  applyProgress(0);
+  window.addEventListener('message', function(e){
+    if(!e.data || e.data.action !== 'scrollProgress' || e.data.id !== 'kaipveikia') return;
+    setTarget(e.data.progress);
+  });
+  window.parent.postMessage({action:'mobileReady', id:'kaipveikia'}, '*');
+});
+</script>
+</body></html>
+
+

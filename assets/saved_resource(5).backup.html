@@ -1,0 +1,635 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--card:#0f0b1a;--card2:#140e22;
+  --accent:#a855f7;--accent2:#7c3aed;
+  --text:#f4f0ff;--muted:#9b8ab5;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.section{padding:96px 24px;position:relative;overflow:hidden}
+.section::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 40% at 20% 30%,rgba(168,85,247,.06),transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 70%,rgba(168,85,247,.04),transparent 60%);
+  pointer-events:none;
+}
+
+.container{max-width:1080px;margin:0 auto}
+
+.header{text-align:center;margin-bottom:72px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;margin-bottom:20px;
+  background:rgba(168,85,247,.07);border:1px solid var(--border-hi);
+  font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;
+}
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(28px,4.5vw,50px);font-weight:700;letter-spacing:-.035em;line-height:1.08;margin-bottom:16px;
+  background:linear-gradient(160deg,#fff 0%,#e0d4ff 60%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.lead{font-size:17px;line-height:1.65;color:var(--muted);max-width:580px;margin:0 auto 32px}
+
+.cta-top{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:12px;
+  font-family:'Inter',sans-serif;font-size:15px;font-weight:700;
+  text-decoration:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#0f0b1a;
+  box-shadow:0 0 24px rgba(168,85,247,.25),0 6px 20px rgba(0,0,0,.4);
+  transition:all .3s;
+}
+.cta-top:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(168,85,247,.4),0 12px 32px rgba(0,0,0,.5)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0;position:relative}
+#snakeSvg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+.step{position:relative;z-index:1}
+
+.step{
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+  padding:64px 0;border-bottom:1px solid var(--border);
+  position:relative;
+}
+.step:last-child{border-bottom:none}
+.step:nth-child(even){direction:rtl}
+.step:nth-child(even)>*{direction:ltr}
+
+.step-content{position:relative}
+.step-tag{
+  display:inline-block;padding:4px 12px;border-radius:999px;margin-bottom:16px;
+  background:rgba(168,85,247,.07);border:1px solid var(--border-hi);
+  font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;
+}
+.step-num{
+  font-family:'Inter',sans-serif;
+  font-size:80px;font-weight:800;letter-spacing:-.05em;
+  color:rgba(168,85,247,.06);line-height:1;
+  position:absolute;top:-20px;left:-10px;pointer-events:none;
+  user-select:none;
+}
+h3{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(22px,3vw,32px);font-weight:700;letter-spacing:-.03em;
+  color:var(--text);margin-bottom:14px;position:relative;z-index:1;
+}
+.step-p{font-size:16px;line-height:1.72;color:var(--muted);position:relative;z-index:1}
+
+/* MOCKUP CARD */
+.step-mock{
+  border-radius:20px;overflow:hidden;
+  border:1px solid var(--border-hi);
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(168,85,247,.07);
+  transition:transform .4s,box-shadow .4s;
+  background:#0d0918;
+}
+.step-mock:hover{transform:translateY(-4px);box-shadow:0 32px 80px rgba(0,0,0,.6),0 0 60px rgba(168,85,247,.12)}
+
+/* mock browser chrome */
+.mock-chrome{
+  padding:10px 14px;border-bottom:1px solid rgba(168,85,247,.08);
+  background:#09071a;
+  display:flex;align-items:center;gap:8px;
+}
+.mock-dot{width:9px;height:9px;border-radius:50%}
+.mock-bar{
+  flex:1;height:22px;border-radius:6px;
+  background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.08);
+  display:flex;align-items:center;padding:0 10px;
+  font-size:10px;color:rgba(155,138,181,.5);font-family:'Inter',sans-serif;letter-spacing:.01em;
+}
+
+/* BOTTOM CTA BOX */
+.cta-box{
+  margin-top:72px;border-radius:24px;padding:52px 40px;text-align:center;
+  background:linear-gradient(160deg,#1e0f38,#100c1c);
+  border:1px solid rgba(168,85,247,.18);
+  box-shadow:0 0 80px rgba(168,85,247,.06),0 40px 80px rgba(0,0,0,.4);
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(168,85,247,.1),transparent 60%);
+  pointer-events:none;
+}
+.cta-box h3{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-.035em;
+  margin-bottom:16px;position:relative;z-index:1;
+  background:linear-gradient(160deg,#fff 0%,#e0d4ff 60%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.cta-box p{font-size:17px;color:var(--muted);max-width:580px;margin:0 auto 32px;position:relative;z-index:1}
+.cta-box-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:18px 40px;border-radius:14px;
+  font-family:'Inter',sans-serif;font-size:17px;font-weight:700;
+  text-decoration:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#0f0b1a;
+  box-shadow:0 0 40px rgba(168,85,247,.35),0 8px 24px rgba(0,0,0,.4);
+  transition:all .3s;position:relative;z-index:1;
+}
+.cta-box-btn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 60px rgba(168,85,247,.5),0 16px 40px rgba(0,0,0,.5)}
+
+.trust-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px;position:relative;z-index:1}
+.trust-pill{
+  padding:10px 18px;border-radius:999px;
+  background:rgba(168,85,247,.06);border:1px solid var(--border);
+  font-size:13.5px;color:var(--muted);
+}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:800px){
+  .section{padding:72px 20px}
+  .step{grid-template-columns:1fr;gap:28px;direction:ltr!important}
+  .step:nth-child(even)>*{direction:ltr}
+  .step-mock{order:-1}
+  .cta-box{padding:36px 24px}
+}
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="header reveal">
+      <span class="badge" data-i18n="badge">Kaip pradėti?</span>
+      <h2 data-i18n="h2">Prisijungimas trunka vos kelias minutes</h2>
+      <p class="lead" data-i18n="lead">Sek žemiau esančius žingsnius, atlik KYC patvirtinimą ir pradėk automatiškai kopijuoti strategiją.</p>
+      <a href="https://my.levelssocials.com/auth/signup?ref=JC12vmdR&tag=u" target="_blank" rel="noopener" class="cta-top"><span data-i18n="cta_top">Susikurti paskyrą →</span></a>
+    </div>
+
+    <div class="steps">
+      <!-- STEP 1 -->
+      <div class="step reveal">
+        <div class="step-content">
+          <div class="step-num">01</div>
+          <span class="step-tag" data-i18n="step1_tag">Žingsnis 1</span>
+          <h3 data-i18n="step1_h3">Susikurk paskyrą ir atlik KYC</h3>
+          <p class="step-p" data-i18n="step1_p">Registruokis platformoje ir patvirtink savo tapatybę. Procesas greitas ir saugus - trunka apie 5-10 minučių.</p>
+        </div>
+        <div class="step-mock">
+          <div class="mock-chrome">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#febc2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+            <div class="mock-bar">my.levelssocials.com/auth/signup</div>
+          </div>
+          <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+            <rect width="480" height="280" fill="#0d0918"/>
+            <!-- logo -->
+            <text x="240" y="44" text-anchor="middle" font-family="Inter,sans-serif" font-size="18" font-weight="700" fill="#f4f0ff">Levels Socials</text>
+            <text x="240" y="62" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#9b8ab5">Sukurk nemokamą paskyrą</text>
+            <!-- form card -->
+            <rect x="100" y="76" width="280" height="172" rx="14" fill="#0f0b1a" stroke="rgba(168,85,247,.14)" stroke-width="1"/>
+            <!-- name -->
+            <text x="120" y="100" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">Vardas</text>
+            <rect x="120" y="106" width="240" height="28" rx="7" fill="#0c0918" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <text x="132" y="124" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">Jonas Jonaitis</text>
+            <!-- email -->
+            <text x="120" y="148" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">El. paštas</text>
+            <rect x="120" y="154" width="240" height="28" rx="7" fill="#0c0918" stroke="rgba(168,85,247,.28)" stroke-width="1"/>
+            <text x="132" y="172" font-family="Inter,sans-serif" font-size="10" fill="#f4f0ff">jonas@email.com</text>
+            <!-- cursor blink -->
+            <rect x="194" y="162" width="1" height="12" fill="#a855f7" opacity=".9"/>
+            <!-- password -->
+            <text x="120" y="197" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">Slaptažodis</text>
+            <rect x="120" y="203" width="240" height="28" rx="7" fill="#0c0918" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <text x="132" y="221" font-family="Inter,sans-serif" font-size="11" fill="#9b8ab5">••••••••••</text>
+            <!-- btn -->
+            <rect x="120" y="238" width="240" height="2" rx="1" fill="rgba(168,85,247,.06)"/>
+            <rect x="120" y="247" width="240" height="0" rx="6" fill="transparent"/>
+            <!-- register btn inside card -->
+            <rect x="120" y="238" width="240" height="0" rx="6" fill="transparent"/>
+            <!-- separator -->
+            <line x1="120" y1="238" x2="360" y2="238" stroke="rgba(168,85,247,.08)" stroke-width="1"/>
+          </svg>
+          <div style="padding:0 20px 20px;background:#0d0918">
+            <div style="background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:9px;padding:11px;text-align:center;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#0f0b1a">Registruotis →</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step reveal" style="transition-delay:.1s">
+        <div class="step-content">
+          <div class="step-num">02</div>
+          <span class="step-tag" data-i18n="step2_tag">Žingsnis 2</span>
+          <h3 data-i18n="step2_h3">Atlik KYC tapatybės patvirtinimą</h3>
+          <p class="step-p" data-i18n="step2_p">Įkelk asmens dokumentą ir atliki veidą atpažinimą. Paprastas procesas, kuris užtrunka kelias minutes ir užtikrina sąskaitos saugumą.</p>
+        </div>
+        <div class="step-mock">
+          <div class="mock-chrome">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#febc2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+            <div class="mock-bar">my.levelssocials.com/kyc</div>
+          </div>
+          <svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+            <rect width="480" height="300" fill="#0d0918"/>
+            <!-- title -->
+            <text x="240" y="38" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#f4f0ff">Tapatybės patvirtinimas</text>
+            <text x="240" y="56" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">KYC - žingsnis 1 iš 2</text>
+            <!-- progress bar -->
+            <rect x="80" y="66" width="320" height="4" rx="2" fill="rgba(168,85,247,.1)"/>
+            <rect x="80" y="66" width="160" height="4" rx="2" fill="#a855f7"/>
+            <!-- doc card -->
+            <rect x="80" y="84" width="320" height="120" rx="14" fill="#0f0b1a" stroke="rgba(168,85,247,.14)" stroke-width="1"/>
+            <!-- doc icon -->
+            <rect x="190" y="100" width="60" height="44" rx="5" fill="#130d1e" stroke="rgba(168,85,247,.2)" stroke-width="1"/>
+            <rect x="197" y="108" width="46" height="3" rx="1.5" fill="rgba(168,85,247,.3)"/>
+            <rect x="197" y="114" width="36" height="3" rx="1.5" fill="rgba(168,85,247,.2)"/>
+            <rect x="197" y="120" width="42" height="3" rx="1.5" fill="rgba(168,85,247,.15)"/>
+            <rect x="197" y="126" width="30" height="3" rx="1.5" fill="rgba(168,85,247,.1)"/>
+            <text x="240" y="162" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#9b8ab5">Įkelk asmens dokumentą</text>
+            <text x="240" y="177" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="rgba(155,138,181,.5)">Pasas · Tapatybės kortelė · Vairuotojo pažymėjimas</text>
+            <!-- upload btn -->
+            <rect x="160" y="186" width="160" height="30" rx="8" fill="rgba(168,85,247,.07)" stroke="rgba(168,85,247,.18)" stroke-width="1"/>
+            <text x="240" y="205" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#a855f7">+ Įkelti failą</text>
+            <!-- selfie row -->
+            <rect x="80" y="218" width="145" height="60" rx="12" fill="#0f0b1a" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <circle cx="152" cy="248" r="18" fill="#130d1e" stroke="rgba(168,85,247,.18)" stroke-width="1"/>
+            <circle cx="152" cy="242" r="7" fill="rgba(168,85,247,.15)"/>
+            <ellipse cx="152" cy="260" rx="11" ry="7" fill="rgba(168,85,247,.1)"/>
+            <text x="152" y="273" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#9b8ab5">Selfie</text>
+            <!-- check row -->
+            <rect x="255" y="218" width="145" height="60" rx="12" fill="#0f0b1a" stroke="rgba(168,85,247,.28)" stroke-width="1"/>
+            <circle cx="327" cy="243" r="12" fill="rgba(168,85,247,.12)"/>
+            <polyline points="320,243 325,249 335,237" stroke="#a855f7" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <text x="327" y="273" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a855f7">Patvirtinta</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step reveal" style="transition-delay:.2s">
+        <div class="step-content">
+          <div class="step-num">03</div>
+          <span class="step-tag" data-i18n="step3_tag">Žingsnis 3</span>
+          <h3 data-i18n="step3_h3">Įneši depozitą</h3>
+          <p class="step-p" data-i18n="step3_p">Papildyk sąskaitą patogia suma. Minimumas prasideda nuo $500 - rekomenduojame pradėti nuo didesnės sumos geresniam rezultatui.</p>
+        </div>
+        <div class="step-mock">
+          <div class="mock-chrome">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#febc2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+            <div class="mock-bar">my.levelssocials.com/deposit</div>
+          </div>
+          <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+            <rect width="480" height="280" fill="#0d0918"/>
+            <text x="240" y="38" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#f4f0ff">Įnešti lėšas</text>
+            <!-- balance box -->
+            <rect x="80" y="50" width="320" height="56" rx="12" fill="#0f0b1a" stroke="rgba(168,85,247,.14)" stroke-width="1"/>
+            <text x="240" y="74" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#9b8ab5">Dabartinis balansas</text>
+            <text x="240" y="96" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="#a855f7">$0.00</text>
+            <!-- method tabs -->
+            <rect x="80" y="118" width="100" height="28" rx="8" fill="rgba(168,85,247,.12)" stroke="rgba(168,85,247,.28)" stroke-width="1"/>
+            <text x="130" y="136" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#a855f7">Banko pervedimas</text>
+            <rect x="188" y="118" width="80" height="28" rx="8" fill="transparent"/>
+            <text x="228" y="136" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">Kriptovaliuta</text>
+            <rect x="276" y="118" width="70" height="28" rx="8" fill="transparent"/>
+            <text x="311" y="136" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">Kortelė</text>
+            <!-- amount field -->
+            <text x="80" y="164" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">Suma (USD)</text>
+            <rect x="80" y="170" width="320" height="36" rx="9" fill="#0c0918" stroke="rgba(168,85,247,.28)" stroke-width="1"/>
+            <text x="96" y="193" font-family="Space Grotesk,sans-serif" font-size="16" font-weight="700" fill="#a855f7">$ 1000</text>
+            <rect x="344" y="178" width="44" height="20" rx="6" fill="rgba(168,85,247,.1)"/>
+            <text x="366" y="191" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#a855f7">Maks.</text>
+            <!-- quick amounts -->
+            <rect x="80" y="216" width="72" height="26" rx="7" fill="rgba(168,85,247,.06)" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <text x="116" y="232" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">$500</text>
+            <rect x="160" y="216" width="72" height="26" rx="7" fill="rgba(168,85,247,.12)" stroke="rgba(168,85,247,.28)" stroke-width="1"/>
+            <text x="196" y="232" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#a855f7">$1000</text>
+            <rect x="240" y="216" width="72" height="26" rx="7" fill="rgba(168,85,247,.06)" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <text x="276" y="232" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">$2500</text>
+            <rect x="320" y="216" width="80" height="26" rx="7" fill="rgba(168,85,247,.06)" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <text x="360" y="232" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">$5000+</text>
+            <!-- submit -->
+            <rect x="80" y="252" width="320" height="0" rx="9" fill="transparent"/>
+          </svg>
+          <div style="padding:0 20px 20px;background:#0d0918">
+            <div style="background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:9px;padding:11px;text-align:center;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#0f0b1a">Patvirtinti mokėjimą →</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step reveal" style="transition-delay:.3s">
+        <div class="step-content">
+          <div class="step-num">04</div>
+          <span class="step-tag" data-i18n="step4_tag">Žingsnis 4</span>
+          <h3 data-i18n="step4_h3">Prisijunk prie Aurix strategijos ir stebėk pelną</h3>
+          <p class="step-p" data-i18n="step4_p">Rask Aurix strategiją platformoje, aktyvuok automatinį kopijavimą ir sistema pradeda dirbti už tave. Stebėk augantį kapitalą realiuoju laiku.</p>
+        </div>
+        <div class="step-mock">
+          <div class="mock-chrome">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#febc2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+            <div class="mock-bar">my.levelssocials.com/strategies/aurix</div>
+          </div>
+          <svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+            <rect width="480" height="300" fill="#0d0918"/>
+            <!-- strategy header -->
+            <circle cx="60" cy="46" r="22" fill="#0f0b1a" stroke="rgba(168,85,247,.18)" stroke-width="1"/>
+            <text x="60" y="51" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="700" fill="#a855f7">A</text>
+            <text x="92" y="40" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="700" fill="#f4f0ff">Aurix Pulse</text>
+            <text x="92" y="56" font-family="Inter,sans-serif" font-size="10" fill="#9b8ab5">Verified</text>
+            <!-- active badge -->
+            <rect x="368" y="30" width="80" height="24" rx="12" fill="rgba(168,85,247,.1)" stroke="rgba(168,85,247,.2)" stroke-width="1"/>
+            <circle cx="382" cy="42" r="4" fill="#a855f7"/>
+            <text x="410" y="46" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#a855f7">Active</text>
+            <!-- stats row -->
+            <rect x="24" y="78" width="130" height="52" rx="10" fill="#0f0b1a" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <text x="89" y="98" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#9b8ab5">Vid. mėn. augimas</text>
+            <text x="89" y="118" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700" fill="#a855f7">+6.5%</text>
+
+            <rect x="164" y="78" width="130" height="52" rx="10" fill="#0f0b1a" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <text x="229" y="98" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#9b8ab5">Max drawdown</text>
+            <text x="229" y="118" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700" fill="#f4f0ff">5.61%</text>
+
+            <rect x="304" y="78" width="152" height="52" rx="10" fill="#0f0b1a" stroke="rgba(168,85,247,.12)" stroke-width="1"/>
+            <text x="380" y="98" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#9b8ab5">Track record</text>
+            <text x="380" y="118" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700" fill="#f4f0ff">24 mėn.</text>
+
+            <!-- mini chart -->
+            <rect x="24" y="142" width="432" height="100" rx="10" fill="#0f0b1a" stroke="rgba(168,85,247,.08)" stroke-width="1"/>
+            <polyline points="44,222 80,210 116,215 152,200 188,192 224,180 260,172 296,158 332,148 368,138 404,126 436,118" stroke="#a855f7" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- fill under chart -->
+            <polygon points="44,222 80,210 116,215 152,200 188,192 224,180 260,172 296,158 332,148 368,138 404,126 436,118 436,232 44,232" fill="url(#chartGrad)" opacity=".3"/>
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a855f7" stop-opacity=".4"/>
+                <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <!-- grid lines -->
+            <line x1="44" y1="165" x2="436" y2="165" stroke="rgba(168,85,247,.05)" stroke-width="1"/>
+            <line x1="44" y1="198" x2="436" y2="198" stroke="rgba(168,85,247,.05)" stroke-width="1"/>
+            <!-- copy btn -->
+            <rect x="24" y="252" width="432" height="0" rx="9" fill="transparent"/>
+          </svg>
+          <div style="padding:0 20px 20px;background:#0d0918">
+            <div style="background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:9px;padding:11px;text-align:center;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#0f0b1a">Kopijuoti strategiją →</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cta-box reveal" style="transition-delay:.15s">
+      <h3 data-i18n="cta_h3">Pradėk automatizuoti prekybą šiandien</h3>
+      <p data-i18n="cta_p">Prisijunk prie bendruomenės ir gauk visą pagalbą, kurios reikia pirmam žingsniui.</p>
+      <a href="https://t.me/errotipscopyfx" target="_blank" rel="noopener" class="cta-box-btn">
+        <span data-i18n="tg_btn">Prisijungti prie Telegram →</span>
+      </a>
+      <div class="trust-pills">
+        <span class="trust-pill" data-i18n="pill1">✓ Nemokamas palaikymas</span>
+        <span class="trust-pill" data-i18n="pill2">✓ Pilnai automatizuota</span>
+        <span class="trust-pill" data-i18n="pill3">✓ Bet kada gali sustabdyti</span>
+        <span class="trust-pill" data-i18n="pill4">✓ 24 mėn. track record</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script>
+// Snake path animation
+(function(){
+  var NS = 'http://www.w3.org/2000/svg';
+  var snakeUpdate = null;
+  var snakeUpdateByViewY = null;
+
+  function buildSnake() {
+    var stepsEl = document.querySelector('.steps');
+    var stepEls = Array.from(document.querySelectorAll('.step'));
+    if (!stepsEl || !stepEls.length) return;
+
+    var W = stepsEl.offsetWidth;
+    var H = stepsEl.offsetHeight;
+    if (W < 10 || H < 10) return;
+
+    // Remove any existing SVG
+    var old = document.getElementById('snakeSvg');
+    if (old) old.parentNode.removeChild(old);
+
+    // Step 1 & 3: mock on LEFT (index 0,2); Step 2 & 4: mock on RIGHT (index 1,3)
+    var stepsRect = stepsEl.getBoundingClientRect();
+
+    // Get actual mock card positions relative to .steps container
+    var pts = stepEls.map(function(s, i) {
+      var mockEl = s.querySelector('.step-mock');
+      var mockOnLeft = (i % 2 === 0);
+      var mTop, mH;
+      if (mockEl) {
+        var mr = mockEl.getBoundingClientRect();
+        mTop = mr.top - stepsRect.top;
+        mH   = mockEl.offsetHeight;
+      } else {
+        mTop = s.offsetTop;
+        mH   = s.offsetHeight * 0.6;
+      }
+      var xCenter = mockOnLeft ? W * 0.26 : W * 0.74;
+      return {
+        x:      xCenter,
+        midY:   mTop + mH * 0.5,
+        botY:   mTop + mH
+      };
+    });
+
+    // Path: start at mid of card 1, down to its bottom,
+    // S-curve to mid of next card, down to its bottom, repeat.
+    var d = 'M ' + pts[0].x + ' ' + pts[0].midY;
+    d += ' L ' + pts[0].x + ' ' + pts[0].botY;
+    for (var i = 0; i < pts.length - 1; i++) {
+      var a = pts[i], b = pts[i+1];
+      // S-curve through the gap between cards
+      var cy1 = a.botY  + (b.midY - a.botY) * 0.4;
+      var cy2 = a.botY  + (b.midY - a.botY) * 0.6;
+      d += ' C ' + a.x + ' ' + cy1 + ', ' + b.x + ' ' + cy2 + ', ' + b.x + ' ' + b.midY;
+      d += ' L ' + b.x + ' ' + b.botY;
+    }
+
+    // Create SVG
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('id', 'snakeSvg');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+    // Defs: gradient + glow filter
+    var defs = document.createElementNS(NS, 'defs');
+    defs.innerHTML =
+      '<linearGradient id="sGrad" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="#a855f7"/>' +
+        '<stop offset="100%" stop-color="#7c3aed"/>' +
+      '</linearGradient>' +
+      '<filter id="sGlow" x="-50%" y="-50%" width="200%" height="200%">' +
+        '<feGaussianBlur stdDeviation="5" result="b"/>' +
+        '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+      '</filter>';
+    svg.appendChild(defs);
+
+    // Background dim path
+    var bg = document.createElementNS(NS, 'path');
+    bg.setAttribute('d', d);
+    bg.setAttribute('fill', 'none');
+    bg.setAttribute('stroke', 'rgba(168,85,247,0.1)');
+    bg.setAttribute('stroke-width', '2');
+    svg.appendChild(bg);
+
+    // Active (drawn) path
+    var fp = document.createElementNS(NS, 'path');
+    fp.setAttribute('id', 'snakeFill');
+    fp.setAttribute('d', d);
+    fp.setAttribute('fill', 'none');
+    fp.setAttribute('stroke', 'url(#sGrad)');
+    fp.setAttribute('stroke-width', '2');
+    svg.appendChild(fp);
+
+    // Ball
+    var ballEl = document.createElementNS(NS, 'circle');
+    ballEl.setAttribute('id', 'snakeBall');
+    ballEl.setAttribute('r', '7');
+    ballEl.setAttribute('fill', '#a855f7');
+    ballEl.setAttribute('filter', 'url(#sGlow)');
+    svg.appendChild(ballEl);
+
+    // Outer glow ring
+    var ring = document.createElementNS(NS, 'circle');
+    ring.setAttribute('id', 'snakeRing');
+    ring.setAttribute('r', '13');
+    ring.setAttribute('fill', 'none');
+    ring.setAttribute('stroke', 'rgba(168,85,247,0.3)');
+    ring.setAttribute('stroke-width', '2');
+    svg.appendChild(ring);
+
+    stepsEl.insertBefore(svg, stepsEl.firstChild);
+
+    var totalLen = fp.getTotalLength();
+    fp.setAttribute('stroke-dasharray', totalLen);
+    fp.setAttribute('stroke-dashoffset', totalLen);
+    var startPt = fp.getPointAtLength(0);
+    ballEl.setAttribute('cx', startPt.x);
+    ballEl.setAttribute('cy', startPt.y);
+    ring.setAttribute('cx', startPt.x);
+    ring.setAttribute('cy', startPt.y);
+
+    // Tell parent exact y extents in IFRAME coordinates (add stepsEl.offsetTop offset)
+    var stepsTop = stepsEl.offsetTop;
+    window.parent.postMessage({action:'pradeti_bounds', startY: stepsTop + pts[0].midY, endY: stepsTop + pts[pts.length-1].botY}, '*');
+
+    snakeUpdate = function(p) {
+      var drawn = Math.max(0, Math.min(1, p)) * totalLen;
+      fp.setAttribute('stroke-dashoffset', totalLen - drawn);
+      var pt = fp.getPointAtLength(drawn);
+      ballEl.setAttribute('cx', pt.x);
+      ballEl.setAttribute('cy', pt.y);
+      ring.setAttribute('cx', pt.x);
+      ring.setAttribute('cy', pt.y);
+    };
+
+    // Pixel-perfect: binary search path for given viewport-bottom y (in iframe coords)
+    snakeUpdateByViewY = function(viewY, viewH) {
+      var delay = (viewH || 800) * 0.45; // start ball 45% viewport height later
+      var targetY = viewY - stepsTop - delay; // convert to SVG/stepsEl coords
+      if (targetY <= 0) { snakeUpdate(0); return; }
+      if (targetY >= H) { snakeUpdate(1); return; }
+      var lo = 0, hi = totalLen;
+      for (var i = 0; i < 26; i++) {
+        var mid = (lo + hi) / 2;
+        if (fp.getPointAtLength(mid).y < targetY) lo = mid; else hi = mid;
+      }
+      var t = (lo + hi) / 2;
+      fp.setAttribute('stroke-dashoffset', totalLen - t);
+      var pt = fp.getPointAtLength(t);
+      ballEl.setAttribute('cx', pt.x); ballEl.setAttribute('cy', pt.y);
+      ring.setAttribute('cx', pt.x);   ring.setAttribute('cy', pt.y);
+    };
+  }
+
+  function init() {
+    setTimeout(buildSnake, 150);
+  }
+  if (document.readyState === 'complete') { init(); }
+  else { window.addEventListener('load', init); }
+
+  window.addEventListener('message', function(e) {
+    if (!e.data || e.data.action !== 'scrollProgress' || e.data.id !== 'pradeti') return;
+    if (e.data.viewY !== undefined && snakeUpdateByViewY) {
+      snakeUpdateByViewY(e.data.viewY, e.data.viewH);
+    } else if (snakeUpdate) {
+      snakeUpdate(e.data.progress);
+    }
+  });
+})();
+
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'steps'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    badge:'Kaip pradėti?',h2:'Prisijungimas trunka vos kelias minutes',
+    lead:'Sek žemiau esančius žingsnius, atlik KYC patvirtinimą ir pradėk automatiškai kopijuoti strategiją.',
+    cta_top:'Susikurti paskyrą →',
+    step1_tag:'Žingsnis 1',step2_tag:'Žingsnis 2',step3_tag:'Žingsnis 3',step4_tag:'Žingsnis 4',
+    step1_p:'Registruokis platformoje ir patvirtink savo tapatybę. Procesas greitas ir saugus - trunka apie 5-10 minučių.',
+    step2_p:'Įkelk asmens dokumentą ir atliki veidą atpažinimą. Paprastas procesas, kuris užtrunka kelias minutes ir užtikrina sąskaitos saugumą.',
+    step3_p:'Papildyk sąskaitą patogia suma. Minimumas prasideda nuo $500 - rekomenduojame pradėti nuo didesnės sumos geresniam rezultatui.',
+    step4_p:'Rask Aurix strategiją platformoje, aktyvuok automatinį kopijavimą ir sistema pradeda dirbti už tave. Stebėk augantį kapitalą realiuoju laiku.',
+    cta_h3:'Pradėk automatizuoti prekybą šiandien',
+    cta_p:'Prisijunk prie bendruomenės ir gauk visą pagalbą, kurios reikia pirmam žingsniui.',
+    tg_btn:'Prisijungti prie Telegram →',
+    pill1:'✓ Nemokamas palaikymas',pill2:'✓ Pilnai automatizuota',pill3:'✓ Bet kada gali sustabdyti',pill4:'✓ 24 mėn. track record',
+    step1_h3:'Susikurk paskyrą ir atlik KYC',step2_h3:'Atlik KYC tapatybės patvirtinimą',
+    step3_h3:'Įneši depozitą',step4_h3:'Prisijunk prie Aurix strategijos ir stebėk pelną'
+  },
+  en:{
+    badge:'How to start?',h2:'Getting started takes just a few minutes',
+    lead:'Follow the steps below, complete KYC verification and start automatically copying the strategy.',
+    cta_top:'Create an account →',
+    step1_tag:'Step 1',step2_tag:'Step 2',step3_tag:'Step 3',step4_tag:'Step 4',
+    step1_p:'Register on the platform and verify your identity. The process is fast and secure — takes about 5–10 minutes.',
+    step2_p:'Upload your ID document and complete facial recognition. A simple process that takes a few minutes and ensures account security.',
+    step3_p:'Fund your account with a comfortable amount. The minimum starts at $500 — we recommend starting with a larger amount for better results.',
+    step4_p:'Find the Aurix strategy on the platform, activate automatic copying and the system starts working for you. Watch your capital grow in real time.',
+    cta_h3:'Start automating your trading today',
+    cta_p:'Join the community and get all the help you need for your first step.',
+    tg_btn:'Join Telegram →',
+    pill1:'✓ Free support',pill2:'✓ Fully automated',pill3:'✓ Stop anytime',pill4:'✓ 24 months track record',
+    step1_h3:'Create an account and complete KYC',step2_h3:'Complete KYC identity verification',
+    step3_h3:'Make a deposit',step4_h3:'Connect to the Aurix strategy and watch the profits'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body></html>

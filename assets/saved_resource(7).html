@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--card:#0f0b1a;--dark:#0d0a18;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;--gold:#c9a84c;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.section{padding:96px 24px;position:relative;overflow:hidden}
+.section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 30% 50%,rgba(168,85,247,.05),transparent 60%);
+  pointer-events:none;
+}
+
+.container{max-width:1080px;margin:0 auto}
+
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;margin-bottom:20px;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  font-size:12px;font-weight:700;color:#22d3ee;letter-spacing:.08em;text-transform:uppercase;
+}
+
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(28px,4.5vw,48px);font-weight:700;letter-spacing:-.035em;line-height:1.08;margin-bottom:16px;
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.lead{font-size:16px;line-height:1.65;color:var(--muted);max-width:480px;margin-bottom:36px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+
+/* INPUTS */
+.inputs{display:flex;flex-direction:column;gap:24px}
+.field label{display:block;font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:10px}
+
+.num-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.num-input{
+  width:120px;padding:8px 12px;border-radius:10px;
+  background:rgba(168,85,247,.06);border:1px solid var(--border-hi);
+  color:var(--accent);font-family:'Inter',sans-serif;font-size:16px;font-weight:700;
+  text-align:right;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.num-input:focus{border-color:rgba(168,85,247,.4);box-shadow:0 0 0 3px rgba(168,85,247,.08)}
+
+/* custom slider */
+input[type=range]{
+  -webkit-appearance:none;width:100%;height:4px;border-radius:2px;outline:none;cursor:pointer;
+  background:rgba(168,85,247,.15);
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(135deg,#0ea5e9,#a855f7);
+  box-shadow:0 0 12px rgba(168,85,247,.4);
+  border:2px solid #08060f;cursor:pointer;
+  transition:box-shadow .2s;
+}
+input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 20px rgba(168,85,247,.6)}
+
+/* RESULTS CARD */
+.results{
+  border-radius:22px;padding:28px;
+  background:linear-gradient(160deg,#1a0d35 0%,#0d0a1e 60%,#071018 100%);
+  border:1px solid rgba(168,85,247,.3);
+  box-shadow:0 0 0 1px rgba(56,189,248,.08),0 0 60px rgba(168,85,247,.15),0 0 100px rgba(56,189,248,.05),0 40px 80px rgba(0,0,0,.6);
+  position:relative;overflow:hidden;
+}
+.results::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 90% 10%,rgba(168,85,247,.12),transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 80%,rgba(56,189,248,.07),transparent 55%);
+  pointer-events:none;
+}
+.results::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(56,189,248,.5),rgba(168,85,247,.6),transparent);
+}
+
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.res-box{
+  padding:18px;border-radius:14px;
+  background:rgba(0,0,0,.3);border:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.res-box:first-child{border-color:rgba(56,189,248,.2);background:rgba(56,189,248,.04)}
+.res-box:first-child .res-val{
+  background:linear-gradient(135deg,#38bdf8,#a855f7);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 12px rgba(56,189,248,.3));
+}
+.res-box:last-child{border-color:rgba(0,255,180,.18);background:rgba(0,255,180,.03)}
+.res-box:last-child .res-val{
+  background:linear-gradient(120deg,#22d3ee 0%,#00ffb3 55%,#86efac 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 18px rgba(0,255,180,.5));
+}
+.res-label{font-size:11px;color:var(--muted);margin-bottom:8px;display:block;text-transform:uppercase;letter-spacing:.06em}
+.res-val{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(20px,2.8vw,28px);font-weight:800;letter-spacing:-.04em;
+}
+
+/* progress */
+.prog-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px}
+.prog-track{width:100%;height:5px;border-radius:3px;background:rgba(168,85,247,.1);margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#38bdf8,#a855f7);box-shadow:0 0 12px rgba(56,189,248,.4);transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+/* chart */
+.chart-wrap{height:200px;position:relative}
+canvas{width:100%!important}
+
+/* disclaimer */
+.note{
+  margin-top:18px;padding:14px 16px;border-radius:12px;
+  background:rgba(0,0,0,.3);border:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.note-title{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.note-text{font-size:12px;color:var(--muted);line-height:1.55}
+
+@media(max-width:760px){
+  .section{padding:72px 20px}
+  .grid{grid-template-columns:1fr;gap:36px}
+}
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <span class="badge" data-i18n="badge">Sudėtinių Palūkanų Skaičiuoklė</span>
+        <h2 data-i18n="h2">Skaičiuok investicijų augimą</h2>
+        <p class="lead" data-i18n="lead">Įvesk savo pradinę sumą, mėnesinį papildymą ir preliminarią mėnesinę grąžą. Skaičiuoklė parodys kiek gali užaugti tavo kapitalas per laiką.</p>
+
+        <div class="inputs">
+          <div class="field">
+            <div class="num-row">
+              <label data-i18n="l1">Pradinė suma (€)</label>
+              <input id="iN" class="num-input" type="number" min="0" max="100000" step="100" value="1000">
+            </div>
+            <input id="i" type="range" min="0" max="100000" step="100" value="1000">
+          </div>
+          <div class="field">
+            <div class="num-row">
+              <label data-i18n="l2">Mėnesinis papildymas (€)</label>
+              <input id="mN" class="num-input" type="number" min="0" max="5000" step="50" value="200">
+            </div>
+            <input id="m" type="range" min="0" max="5000" step="50" value="200">
+          </div>
+          <div class="field">
+            <div class="num-row">
+              <label data-i18n="l3">Mėnesinė grąža (%)</label>
+              <input id="rN" class="num-input" type="number" min="0" max="10" step="0.1" value="1">
+            </div>
+            <input id="r" type="range" min="0" max="10" step="0.1" value="1">
+          </div>
+          <div class="field">
+            <div class="num-row">
+              <label data-i18n="l4">Laikotarpis (metais)</label>
+              <input id="yN" class="num-input" type="number" min="1" max="40" step="1" value="10">
+            </div>
+            <input id="y" type="range" min="1" max="40" step="1" value="10">
+          </div>
+        </div>
+      </div>
+
+      <div class="results">
+        <div class="res-grid">
+          <div class="res-box">
+            <span class="res-label" data-i18n="res1">Galutinė suma</span>
+            <div id="fv" class="res-val">0 €</div>
+          </div>
+          <div class="res-box">
+            <span class="res-label" data-i18n="res2">Pelnas</span>
+            <div id="pv" class="res-val">0 €</div>
+          </div>
+        </div>
+        <div class="prog-row">
+          <span data-i18n="invested">Investuota</span>
+          <span id="iv">0 €</span>
+        </div>
+        <div class="prog-track"><div id="pbar" class="prog-fill" style="width:0%"></div></div>
+        <div class="chart-wrap">
+          <canvas id="chart"></canvas>
+        </div>
+        <div class="note">
+          <div class="note-title" data-i18n="note_title">Svarbi informacija</div>
+          <p class="note-text" data-i18n="note_text">Perspėjimas: ši skaičiuoklė pateikia tik preliminarias investicijų augimo prognozes. Rezultatai nėra finansinis patarimas ar garantuojama grąža.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const iEl=document.getElementById('i'),mEl=document.getElementById('m'),rEl=document.getElementById('r'),yEl=document.getElementById('y');
+const iN=document.getElementById('iN'),mN=document.getElementById('mN'),rN=document.getElementById('rN'),yN=document.getElementById('yN');
+const fvEl=document.getElementById('fv'),pvEl=document.getElementById('pv'),ivEl=document.getElementById('iv'),pbar=document.getElementById('pbar');
+
+const fmt=n=>new Intl.NumberFormat('lt-LT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+
+const ctx=document.getElementById('chart').getContext('2d');
+// gradient for chart fill
+function makeGrad(ctx2,chartArea){
+  const g=ctx2.createLinearGradient(chartArea.left,0,chartArea.right,0);
+  g.addColorStop(0,'#38bdf8');g.addColorStop(1,'#a855f7');return g;
+}
+function makeFill(ctx2,chartArea){
+  const g=ctx2.createLinearGradient(0,chartArea.top,0,chartArea.bottom);
+  g.addColorStop(0,'rgba(56,189,248,.18)');g.addColorStop(1,'rgba(168,85,247,.0)');return g;
+}
+let gradLine,gradFill;
+const ch=new Chart(ctx,{
+  type:'line',
+  data:{labels:[],datasets:[
+    {data:[],borderColor:function(c){const ca=c.chart.chartArea;if(!ca)return '#38bdf8';gradLine=gradLine||makeGrad(ctx,ca);return gradLine;},
+     backgroundColor:function(c){const ca=c.chart.chartArea;if(!ca)return 'transparent';gradFill=gradFill||makeFill(ctx,ca);return gradFill;},
+     borderWidth:2.5,tension:.4,fill:true,
+     pointRadius:function(c){return c.dataIndex===c.dataset.data.length-1?5:0;},
+     pointBackgroundColor:'#38bdf8',pointBorderColor:'#08060f',pointBorderWidth:2,
+     pointHoverRadius:5}
+  ]},
+  options:{
+    responsive:true,maintainAspectRatio:false,animation:{duration:600},
+    plugins:{legend:{display:false},tooltip:{
+      backgroundColor:'rgba(13,10,30,.95)',borderColor:'rgba(56,189,248,.3)',borderWidth:1,
+      titleColor:'#c0b4d8',bodyColor:'#f4f0ff',
+      callbacks:{label:function(c){return ' '+new Intl.NumberFormat('lt-LT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(c.raw);}}
+    }},
+    scales:{
+      x:{ticks:{color:'#9b8ab5',font:{size:10,family:'Inter'}},grid:{color:'rgba(168,85,247,.05)'},border:{color:'transparent'}},
+      y:{ticks:{color:'#9b8ab5',font:{size:10,family:'Inter'},callback:v=>v>=1000?Math.round(v/1000)+'k€':v},grid:{color:'rgba(168,85,247,.05)'},border:{color:'transparent'}}
+    }
+  }
+});
+
+function calc(){
+  const init=+iEl.value,mo=+mEl.value,rate=+rEl.value/100,yrs=+yEl.value,months=yrs*12;
+  let fv=init;const labels=[],data=[];
+  for(let i=1;i<=months;i++){
+    fv=fv*(1+rate)+mo;
+    if(i%12===0){labels.push(i/12+' m.');data.push(Math.round(fv));}
+  }
+  const invested=init+mo*months,profit=fv-invested,pct=(profit/fv)*100;
+  fvEl.textContent=fmt(fv);pvEl.textContent=fmt(profit);ivEl.textContent=fmt(invested);
+  pbar.style.width=Math.max(0,Math.min(100,pct))+'%';
+  ch.data.labels=labels;ch.data.datasets[0].data=data;ch.update();
+}
+
+[[iEl,iN],[mEl,mN],[rEl,rN],[yEl,yN]].forEach(([range,num])=>{
+  range.addEventListener('input',()=>{num.value=range.value;calc()});
+  num.addEventListener('input',()=>{range.value=num.value;calc()});
+});
+calc();
+</script>
+<script>
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'calc'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+var T={
+  lt:{badge:'Sudėtinių Palūkanų Skaičiuoklė',h2:'Skaičiuok investicijų augimą',lead:'Įvesk savo pradinę sumą, mėnesinį papildymą ir preliminarią mėnesinę grąžą. Skaičiuoklė parodys kiek gali užaugti tavo kapitalas per laiką.',l1:'Pradinė suma (€)',l2:'Mėnesinis papildymas (€)',l3:'Mėnesinė grąža (%)',l4:'Laikotarpis (metais)',res1:'Galutinė suma',res2:'Pelnas',invested:'Investuota',note_title:'Svarbi informacija',note_text:'Perspėjimas: ši skaičiuoklė pateikia tik preliminarias investicijų augimo prognozes. Rezultatai nėra finansinis patarimas ar garantuojama grąža.'},
+  en:{badge:'Compound Interest Calculator',h2:'Calculate your investment growth',lead:'Enter your initial amount, monthly contribution and estimated monthly return. The calculator will show how your capital can grow over time.',l1:'Initial amount (€)',l2:'Monthly contribution (€)',l3:'Monthly return (%)',l4:'Period (years)',res1:'Final amount',res2:'Profit',invested:'Invested',note_title:'Important information',note_text:'Warning: this calculator provides only preliminary projections of investment growth. Results are not financial advice or a guaranteed return.'}
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body></html>
+
+
+

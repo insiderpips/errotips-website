@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07050d;--card:#0f0b1a;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+footer{padding:72px 24px 0;position:relative;overflow:hidden}
+footer::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(168,85,247,.2),transparent);
+}
+
+.container{max-width:1080px;margin:0 auto}
+
+/* TOP GRID */
+.top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:52px;border-bottom:1px solid var(--border)}
+
+.brand-name{
+  font-family:'Inter',sans-serif;
+  font-size:22px;font-weight:700;letter-spacing:-.03em;
+  color:var(--text);margin-bottom:12px;
+}
+.brand-dot{color:var(--accent)}
+.brand-desc{font-size:14px;line-height:1.65;color:var(--muted);margin-bottom:24px;max-width:280px}
+
+.socials{display:flex;gap:10px}
+.social-btn{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(168,85,247,.07);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:16px;text-decoration:none;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.social-btn:hover{background:rgba(168,85,247,.12);border-color:var(--border-hi);color:var(--accent)}
+
+.col-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.col-links{display:flex;flex-direction:column;gap:11px}
+.col-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s}
+.col-links a:hover{color:var(--accent)}
+
+/* DISCLAIMER */
+.disclaimer{padding:24px 0;border-bottom:1px solid var(--border)}
+.disclaimer p{font-size:12.5px;line-height:1.7;color:rgba(155,138,181,.6);text-align:center}
+
+/* BOTTOM */
+.bottom{padding:20px 0 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.copy{font-size:13px;color:rgba(155,138,181,.5)}
+.bottom-links{display:flex;gap:20px}
+.bottom-links a{font-size:12.5px;color:rgba(155,138,181,.5);text-decoration:none;transition:color .2s;cursor:pointer}
+.bottom-links a:hover{color:var(--accent)}
+
+/* MODAL */
+.modal{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal.open{display:flex}
+.modal-box{
+  background:#0f0b1a;border:1px solid var(--border-hi);border-radius:20px;
+  max-width:680px;width:100%;max-height:80vh;overflow-y:auto;padding:36px;
+  position:relative;
+  box-shadow:0 0 80px rgba(168,85,247,.08),0 40px 80px rgba(0,0,0,.6);
+}
+.modal-close{
+  position:sticky;top:0;float:right;width:34px;height:34px;border-radius:8px;
+  background:rgba(168,85,247,.08);border:1px solid var(--border);
+  color:var(--muted);font-size:20px;line-height:34px;text-align:center;
+  cursor:pointer;transition:.2s;
+}
+.modal-close:hover{background:rgba(168,85,247,.15);color:var(--accent)}
+.modal-box h3{font-family:'Inter',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:16px}
+.modal-box h4{font-size:15px;font-weight:700;color:var(--text);margin:20px 0 8px}
+.modal-box p,.modal-box li{font-size:14px;line-height:1.72;color:var(--muted)}
+.modal-box ul{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+
+/* COOKIE BANNER */
+.cookie{
+  position:fixed;left:16px;right:16px;bottom:16px;z-index:9998;
+  display:none;
+}
+.cookie.show{display:block}
+.cookie-box{
+  max-width:960px;margin:0 auto;padding:20px 24px;border-radius:18px;
+  background:rgba(15,11,26,.95);border:1px solid var(--border-hi);
+  backdrop-filter:blur(20px);
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(168,85,247,.08);
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.cookie-box h4{font-family:'Inter',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.cookie-box p{font-size:13px;color:var(--muted);line-height:1.55}
+.cookie-btns{display:flex;gap:10px;flex-shrink:0}
+.btn-accept{
+  padding:10px 20px;border-radius:10px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#0ea5e9,#a855f7);
+  color:#0f0b1a;font-weight:700;font-size:13.5px;transition:.2s;
+}
+.btn-accept:hover{box-shadow:0 0 20px rgba(168,85,247,.3)}
+.btn-reject{
+  padding:10px 20px;border-radius:10px;cursor:pointer;
+  background:rgba(168,85,247,.07);border:1px solid var(--border);
+  color:var(--muted);font-size:13.5px;transition:.2s;
+}
+.btn-reject:hover{border-color:var(--border-hi);color:var(--text)}
+
+@media(max-width:720px){
+  .top{grid-template-columns:1fr;gap:36px}
+  .bottom{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<footer>
+  <div class="container">
+    <div class="top">
+      <div>
+        <div class="brand-name">errotips</div>
+        <p class="brand-desc" data-i18n="brand_desc">Automatizuotas copy trading sprendimas, skirtas sekti strategijas ir valdyti kapitalą efektyviau.</p>
+        <div class="socials">
+          <a href="https://facebook.com/errotips" target="_blank" rel="noopener" class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.0726C24 5.44354 18.629 0.0725708 12 0.0725708C5.37097 0.0725708 0 5.44354 0 12.0726C0 18.0619 4.38823 23.0264 10.125 23.9274V15.5414H7.07661V12.0726H10.125V9.4287C10.125 6.42144 11.9153 4.76031 14.6574 4.76031C15.9706 4.76031 17.3439 4.99451 17.3439 4.99451V7.94612H15.8303C14.34 7.94612 13.875 8.87128 13.875 9.82015V12.0726H17.2031L16.6708 15.5414H13.875V23.9274C19.6118 23.0264 24 18.0619 24 12.0726Z" fill="currentColor"/></svg></a>
+          <a href="https://instagram.com/errotips" target="_blank" rel="noopener" class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.0027 5.84808C8.59743 5.84808 5.85075 8.59477 5.85075 12C5.85075 15.4053 8.59743 18.1519 12.0027 18.1519C15.4079 18.1519 18.1546 15.4053 18.1546 12C18.1546 8.59477 15.4079 5.84808 12.0027 5.84808ZM12.0027 15.9996C9.80212 15.9996 8.00312 14.2059 8.00312 12C8.00312 9.7941 9.79677 8.00046 12.0027 8.00046C14.2086 8.00046 16.0022 9.7941 16.0022 12C16.0022 14.2059 14.2032 15.9996 12.0027 15.9996ZM19.8412 5.59644C19.8412 6.39421 19.1987 7.03135 18.4062 7.03135C17.6085 7.03135 16.9713 6.38885 16.9713 5.59644C16.9713 4.80402 17.6138 4.16153 18.4062 4.16153C19.1987 4.16153 19.8412 4.80402 19.8412 5.59644ZM23.9157 7.05277C23.8247 5.13063 23.3856 3.42801 21.9775 2.02522C20.5747 0.622429 18.8721 0.183388 16.9499 0.0870135C14.9689 -0.0254238 9.03112 -0.0254238 7.05008 0.0870135C5.1333 0.178034 3.43068 0.617075 2.02253 2.01986C0.614389 3.42265 0.180703 5.12527 0.0843279 7.04742C-0.0281093 9.02845 -0.0281093 14.9662 0.0843279 16.9472C0.175349 18.8694 0.614389 20.572 2.02253 21.9748C3.43068 23.3776 5.12794 23.8166 7.05008 23.913C9.03112 24.0254 14.9689 24.0254 16.9499 23.913C18.8721 23.822 20.5747 23.3829 21.9775 21.9748C23.3803 20.572 23.8193 18.8694 23.9157 16.9472C24.0281 14.9662 24.0281 9.03381 23.9157 7.05277ZM21.3564 19.0728C20.9388 20.1223 20.1303 20.9307 19.0755 21.3537C17.496 21.9802 13.7481 21.8356 12.0027 21.8356C10.2572 21.8356 6.50396 21.9748 4.92984 21.3537C3.88042 20.9361 3.07195 20.1276 2.64897 19.0728C2.02253 17.4934 2.16709 13.7455 2.16709 12C2.16709 10.2546 2.02789 6.50129 2.64897 4.92717C3.06659 3.87776 3.87507 3.06928 4.92984 2.6463C6.50931 2.01986 10.2572 2.16443 12.0027 2.16443C13.7481 2.16443 17.5014 2.02522 19.0755 2.6463C20.1249 3.06392 20.9334 3.8724 21.3564 4.92717C21.9828 6.50665 21.8383 10.2546 21.8383 12C21.8383 13.7455 21.9828 17.4987 21.3564 19.0728Z" fill="currentColor"/></svg></a>
+          <a href="https://t.me/errotipscopyfx" target="_blank" rel="noopener" class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37097 0 0 5.37097 0 12C0 18.629 5.37097 24 12 24C18.629 24 24 18.629 24 12C24 5.37097 18.629 0 12 0ZM17.8935 8.22097L15.9242 17.5016C15.779 18.1597 15.3871 18.3194 14.8403 18.0097L11.8403 15.7984L10.3935 17.1919C10.2339 17.3516 10.0984 17.4871 9.78871 17.4871L10.0016 14.4339L15.5613 9.41129C15.8032 9.19839 15.5081 9.07742 15.1887 9.29032L8.31774 13.6161L5.35645 12.6919C4.7129 12.4887 4.69839 12.0484 5.49194 11.7387L17.0613 7.27742C17.5984 7.08387 18.0677 7.40806 17.8935 8.22097Z" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="col-title" data-i18n="col_contacts">Kontaktai</div>
+        <div class="col-links">
+          <a href="https://t.me/errotipscopyfx" target="_blank" rel="noopener">Telegram: t.me/errotips</a>
+          <a href="https://instagram.com/errotips" target="_blank" rel="noopener">Instagram: @errotips</a>
+        </div>
+      </div>
+      <div>
+        <div class="col-title" data-i18n="col_legal">Teisinė</div>
+        <div class="col-links">
+          <a data-modal="privacy" data-i18n="link_privacy">Privatumo politika</a>
+          <a data-modal="terms" data-i18n="link_terms">Naudojimo sąlygos</a>
+          <a data-modal="risk" data-i18n="link_risk">Rizikos įspėjimas</a>
+          <a data-modal="cookies" data-i18n="link_cookies">Slapukų politika</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <p data-i18n="disclaimer">Ši svetainė nėra finansinių konsultacijų šaltinis. Visa pateikta informacija yra tik informacinio pobūdžio. Prekyba Forex, CFD, kriptovaliutomis ir kitomis finansinėmis priemonėmis yra susijusi su didele rizika. Galite prarasti dalį arba visą investuotą kapitalą. Praeities rezultatai negarantuoja ateities rezultatų.</p>
+    </div>
+
+    <div class="bottom">
+      <span class="copy" data-i18n="copy">© 2026 errotips. Visos teisės saugomos.</span>
+      <div class="bottom-links">
+        <a data-modal="privacy" data-i18n="link_privacy">Privatumo politika</a>
+        <a data-modal="terms" data-i18n="link_terms">Naudojimo sąlygos</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-close" id="modalClose">×</div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- COOKIE -->
+<div class="cookie" id="cookie">
+  <div class="cookie-box">
+    <div>
+      <h4 data-i18n="cookie_title">Slapukų naudojimas</h4>
+      <p data-i18n="cookie_desc">Naudojame slapukus svetainės veikimui, analitikai ir vartotojo patirties gerinimui.</p>
+    </div>
+    <div class="cookie-btns">
+      <button class="btn-accept" id="cookieAccept" data-i18n="cookie_accept">Priimti</button>
+      <button class="btn-reject" id="cookieReject" data-i18n="cookie_reject">Atmesti</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var MODAL_LANG='lt';
+const modals={
+  lt:{
+    privacy:'<h3>Privatumo politika</h3><p>Atnaujinta: 2026-06-27. Duomenų valdytojas: errotips, el. p.: info@errotips.com.</p><h4>Renkami duomenys</h4><p>Pateikiant formą renkame: vardą ir el. pašto adresą. Automatiškai renkama: IP adresas, naršyklės tipas, apsilankymo data ir laikas, svetainės naudojimo statistika.</p><h4>Duomenų naudojimas</h4><p>Duomenys naudojami: (1) medžiagai išsiųsti, (2) informaciniams pranešimams, (3) svetainės kokybei gerinti. Duomenų neparduodame ir neperduodame trečiosioms šalims komerciniais tikslais.</p><h4>Duomenų tvarkytojai</h4><p>Naudojame: Supabase (duomenų bazė, JAV), Resend (el. laiškų siuntimas, JAV), Google Analytics (statistika, JAV), Meta Pixel (rinkodara, JAV). Visi tvarkytojai laikosi GDPR reikalavimų.</p><h4>Saugojimo laikotarpis</h4><p>Asmens duomenis saugome ne ilgiau nei 2 metus nuo paskutinio kontakto arba kol atšaukiate sutikimą.</p><h4>Jūsų teisės</h4><p>Pagal BDAR turite teisę: susipažinti su savo duomenimis, juos ištaisyti, ištrinti, apriboti tvarkymą, duomenų perkeliamumą. Skundus galite teikti Valstybinei duomenų apsaugos inspekcijai (vdai.lrv.lt).</p><h4>Kontaktai</h4><p>El. p.: info@errotips.com | Telegram: t.me/errotipscopyfx</p>',
+    terms:'<h3>Naudojimo sąlygos</h3><p>Atnaujinta: 2026-06-27. Naudodamiesi svetaine errotips.com sutinkate su šiomis sąlygomis.</p><h4>Paslaugų pobūdis</h4><p>Errotips teikia išskirtinai edukacinę informaciją apie copy trading ir Forex rinkas. Svetainė nėra finansų patarėjas, brokeris ar investicijų valdymo įmonė. Visa informacija skirta tik mokymuisi.</p><h4>Atsakomybės apribojimas</h4><p>Errotips neatsako už jokius tiesioginius ar netiesioginius nuostolius, kilusius dėl svetainės turinio naudojimo prekybos sprendimams. Jūs prisiimate visą atsakomybę už savo investicinius sprendimus.</p><h4>Intelektinė nuosavybė</h4><p>Visas svetainės turinys (tekstai, grafika, video) yra errotips nuosavybė ir saugomas autorių teisių įstatymų. Draudžiama kopijuoti ar platinti be raštiško leidimo.</p><h4>Paslaugų keitimas</h4><p>Pasiliekame teisę keisti arba nutraukti svetainės paslaugas be išankstinio įspėjimo.</p><h4>Taikoma teisė</h4><p>Šios sąlygos reglamentuojamos Lietuvos Respublikos įstatymų. Ginčai sprendžiami Lietuvos teismuose.</p><h4>Kontaktai</h4><p>El. p.: info@errotips.com</p>',
+    risk:'<h3>Rizikos įspėjimas</h3><p><strong>SVARBU: Atidžiai perskaitykite šį įspėjimą prieš naudodamiesi svetaine.</strong></p><h4>Bendra rizika</h4><p>Prekyba Forex, CFD ir kitomis finansinėmis priemonėmis yra labai rizikinga ir tinka ne visiems. Statistiškai didžioji dalis mažmeninių investuotojų patiria nuostolius prekiaudami CFD.</p><h4>Kapitalo praradimo rizika</h4><p>Galite prarasti visą ar dalį investuoto kapitalo. Sverto efektas gali ženkliai padidinti tiek galimą pelną, tiek nuostolius. Niekada neinvestuokite lėšų, kurių praradimą sunku pakelti finansiškai ar emociškai.</p><h4>Praeities rezultatai</h4><p>Jokie praeities rezultatai negarantuoja panašių ateities rezultatų. Rodomi statistiniai duomenys yra istoriniai ir gali skirtis nuo būsimų.</p><h4>Tai nėra finansinė konsultacija</h4><p>Visa errotips svetainėje pateikiama informacija yra tik edukacinė. Tai nėra ir negali būti laikoma individualia investicine rekomendacija ar finansine konsultacija. Prieš investuodami pasitarkite su licencijuotu finansų patarėju.</p><h4>Reguliavimas</h4><p>Errotips nėra licencijuota finansų įstaiga ir nepriklauso jokiai finansų reguliavimo institucijos priežiūrai.</p>',
+    cookies:'<h3>Slapukų politika</h3><p>Atnaujinta: 2026-06-27.</p><h4>Būtini slapukai</h4><p>Reikalingi svetainei veikti (seanso duomenys, slapukų sutikimas). Negalima išjungti.</p><h4>Analitiniai slapukai</h4><p>Google Analytics renka anoniminę statistiką apie lankytojus (puslapių peržiūros, sesijų trukmė, geografija). Galite atsisakyti.</p><h4>Rinkodaros slapukai</h4><p>Meta (Facebook) Pixel seka konversijas ir leidžia rodyti tikslinius skelbimus. Galite atsisakyti.</p><h4>Valdymas</h4><p>Slapukus valdykite spausdami "Tvarkyti nuostatas" slapukų pranešime arba naršyklės nustatymuose. Daugiau: info@errotips.com</p>'
+  },
+  en:{
+    privacy:'<h3>Privacy Policy</h3><p>Last updated: 2026-06-27. Data controller: errotips, email: info@errotips.com.</p><h4>Data collected</h4><p>Via forms: name and email address. Automatically: IP address, browser type, visit date and time, website usage statistics.</p><h4>How data is used</h4><p>Data is used to: (1) send requested materials, (2) send informational messages, (3) improve website quality. We do not sell or share data with third parties for commercial purposes.</p><h4>Data processors</h4><p>We use: Supabase (database, USA), Resend (email delivery, USA), Google Analytics (statistics, USA), Meta Pixel (marketing, USA). All processors comply with GDPR requirements.</p><h4>Retention period</h4><p>Personal data is retained for no longer than 2 years from last contact or until consent is withdrawn.</p><h4>Your rights</h4><p>Under GDPR you have the right to: access, rectify, erase, restrict processing of your data, and data portability. Complaints may be submitted to your national data protection authority.</p><h4>Contact</h4><p>Email: info@errotips.com | Telegram: t.me/errotipscopyfx</p>',
+    terms:'<h3>Terms of Use</h3><p>Last updated: 2026-06-27. By using errotips.com you agree to these terms.</p><h4>Nature of services</h4><p>Errotips provides exclusively educational information about copy trading and Forex markets. The website is not a financial advisor, broker or investment management company. All content is for educational purposes only.</p><h4>Limitation of liability</h4><p>Errotips is not liable for any direct or indirect losses arising from the use of website content for trading decisions. You bear full responsibility for your investment decisions.</p><h4>Intellectual property</h4><p>All website content (texts, graphics, video) is the property of errotips and protected by copyright law. Copying or distribution without written permission is prohibited.</p><h4>Service changes</h4><p>We reserve the right to modify or discontinue website services without prior notice.</p><h4>Governing law</h4><p>These terms are governed by the laws of the Republic of Lithuania. Disputes shall be resolved in Lithuanian courts.</p><h4>Contact</h4><p>Email: info@errotips.com</p>',
+    risk:'<h3>Risk Warning</h3><p><strong>IMPORTANT: Please read this warning carefully before using this website.</strong></p><h4>General risk</h4><p>Trading Forex, CFDs and other financial instruments is highly risky and not suitable for everyone. Statistically, the majority of retail investors lose money when trading CFDs.</p><h4>Capital loss risk</h4><p>You may lose all or part of your invested capital. Leverage can significantly amplify both potential gains and losses. Never invest funds whose loss would be financially or emotionally difficult to bear.</p><h4>Past performance</h4><p>No past results guarantee similar future results. All statistical data shown is historical and may differ from future performance.</p><h4>Not financial advice</h4><p>All information on the errotips website is educational only. It does not constitute and cannot be considered individual investment advice or financial consultation. Please consult a licensed financial advisor before investing.</p><h4>Regulation</h4><p>Errotips is not a licensed financial institution and is not subject to oversight by any financial regulatory authority.</p>',
+    cookies:'<h3>Cookie Policy</h3><p>Last updated: 2026-06-27.</p><h4>Essential cookies</h4><p>Required for the website to function (session data, cookie consent). Cannot be disabled.</p><h4>Analytical cookies</h4><p>Google Analytics collects anonymous visitor statistics (page views, session duration, geography). You may opt out.</p><h4>Marketing cookies</h4><p>Meta (Facebook) Pixel tracks conversions and enables targeted advertising. You may opt out.</p><h4>Management</h4><p>Manage cookies by clicking "Manage preferences" in the cookie notice or via browser settings. More info: info@errotips.com</p>'
+  }
+};
+const modal=document.getElementById('modal'),mc=document.getElementById('modalContent'),mClose=document.getElementById('modalClose');
+document.querySelectorAll('[data-modal]').forEach(a=>{
+  a.addEventListener('click',()=>{mc.innerHTML=(modals[MODAL_LANG]||modals.lt)[a.dataset.modal]||'';modal.classList.add('open')});
+});
+mClose.addEventListener('click',()=>modal.classList.remove('open'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});
+
+// Cookie banner disabled — handled by main page custom banner
+</script>
+<script>
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'footer'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    brand_desc:'Automatizuotas copy trading sprendimas, skirtas sekti strategijas ir valdyti kapitalą efektyviau.',
+    col_contacts:'Kontaktai',col_legal:'Teisinė',
+    link_privacy:'Privatumo politika',link_terms:'Naudojimo sąlygos',
+    link_risk:'Rizikos įspėjimas',link_cookies:'Slapukų politika',
+    disclaimer:'Ši svetainė nėra finansinių konsultacijų šaltinis. Visa pateikta informacija yra tik informacinio pobūdžio. Prekyba Forex, CFD, kriptovaliutomis ir kitomis finansinėmis priemonėmis yra susijusi su didele rizika. Galite prarasti dalį arba visą investuotą kapitalą. Praeities rezultatai negarantuoja ateities rezultatų.',
+    copy:'© 2026 errotips. Visos teisės saugomos.',
+    cookie_title:'Slapukų naudojimas',cookie_desc:'Naudojame slapukus svetainės veikimui, analitikai ir vartotojo patirties gerinimui.',
+    cookie_accept:'Priimti',cookie_reject:'Atmesti'
+  },
+  en:{
+    brand_desc:'Automated copy trading solution designed to follow strategies and manage capital more efficiently.',
+    col_contacts:'Contacts',col_legal:'Legal',
+    link_privacy:'Privacy Policy',link_terms:'Terms of Use',
+    link_risk:'Risk Warning',link_cookies:'Cookie Policy',
+    disclaimer:'This website is not a source of financial advice. All information provided is for informational purposes only. Trading Forex, CFDs, cryptocurrencies and other financial instruments involves significant risk. You may lose part or all of your invested capital. Past results do not guarantee future results.',
+    copy:'© 2026 errotips. All rights reserved.',
+    cookie_title:'Cookie usage',cookie_desc:'We use cookies for website functionality, analytics and improving user experience.',
+    cookie_accept:'Accept',cookie_reject:'Reject'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang'){ MODAL_LANG=e.data.lang; applyLang(e.data.lang); }
+});
+})();
+</script>
+</body></html>

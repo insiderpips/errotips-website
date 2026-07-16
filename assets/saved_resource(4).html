@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{overflow:hidden}*{margin:0;padding:0;box-sizing:border-box}iframe{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f;--card:#0f0b1a;
+  --accent:#a855f7;--accent-blue:#38bdf8;--accent2:#7c3aed;--gold:#c9a84c;
+  --text:#f4f0ff;--muted:#c0b4d8;
+  --border:rgba(168,85,247,.12);--border-hi:rgba(168,85,247,.28);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+
+.section{padding:96px 0;position:relative;overflow:hidden}
+.section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(168,85,247,.05),transparent 60%);
+  pointer-events:none;
+}
+
+.header{text-align:center;padding:0 24px;margin-bottom:56px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;margin-bottom:20px;
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  font-size:12px;font-weight:700;color:#22d3ee;letter-spacing:.08em;text-transform:uppercase;
+}
+h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(28px,4.5vw,50px);font-weight:700;letter-spacing:-.035em;line-height:1.08;margin-bottom:14px;
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.lead{font-size:17px;line-height:1.65;color:var(--muted);max-width:560px;margin:0 auto}
+
+/* MARQUEE */
+.marquee-wrap{position:relative;overflow:hidden;padding:8px 0}
+.marquee-wrap::before,.marquee-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;width:140px;z-index:2;pointer-events:none;
+}
+.marquee-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.marquee-wrap::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent)}
+
+.track{display:flex;gap:16px;width:max-content;animation:scroll 40s linear infinite}
+.track:hover{animation-play-state:paused}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.t-card{
+  flex-shrink:0;width:300px;padding:24px;border-radius:18px;
+  background:var(--card);border:1px solid var(--border);
+  position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s;
+  cursor:default;
+}
+.t-card::before{
+  content:'"';position:absolute;top:-10px;right:18px;
+  font-size:80px;font-weight:800;color:rgba(168,85,247,.06);line-height:1;
+  font-family:'Inter',sans-serif;
+}
+.t-card:hover{border-color:var(--border-hi);transform:translateY(-3px)}
+
+.t-text{font-size:15px;line-height:1.65;color:var(--text);margin-bottom:20px;position:relative;z-index:1}
+.t-user{display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,#0ea5e9,#a855f7);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#0f0b1a;
+  flex-shrink:0;
+}
+.t-name{font-weight:700;font-size:14px;color:var(--text);display:block}
+.t-since{font-size:12px;color:var(--muted)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:600px){.section{padding:72px 0}}
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="header reveal">
+    <span class="badge" data-i18n="badge">Atsiliepimai</span>
+    <h2 data-i18n="h2">Ką sako vartotojai</h2>
+    <p class="lead" data-i18n="lead">Žmonės, kurie jau kopijuoja Aurix strategiją, dalinasi savo patirtimi ir rezultatais.</p>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="track">
+      <!-- Set 1 -->
+      <div class="t-card"><p class="t-text">„Pradėjau be jokios patirties. Labiausiai patinka, kad viskas vyksta automatiškai."</p><div class="t-user"><div class="avatar">M</div><div><span class="t-name">Mantas</span><span class="t-since">3 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Bandžiau kelis copy trading variantus, bet šitas atrodo stabilus ir ne per agresyvus."</p><div class="t-user"><div class="avatar">T</div><div><span class="t-name">Tomas</span><span class="t-since">6 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Didžiausias pliusas - rizikos valdymas. Sistema orientuota ne į hype, o į stabilumą."</p><div class="t-user"><div class="avatar">A</div><div><span class="t-name">Andrius</span><span class="t-since">5 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Man patiko, kad nereikia sėdėti prie grafikų. Prisijungiau ir tiesiog stebiu rezultatus."</p><div class="t-user"><div class="avatar">L</div><div><span class="t-name">Lukas</span><span class="t-since">4 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Prieš prisijungdamas buvau skeptiškas, bet statistika padėjo apsispręsti."</p><div class="t-user"><div class="avatar">D</div><div><span class="t-name">Darius</span><span class="t-since">6 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Labai paprasta pradėti. Per kelias minutes jau buvau prijungęs sąskaitą."</p><div class="t-user"><div class="avatar">E</div><div><span class="t-name">Edgaras</span><span class="t-since">2 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Patinka, kad nereikia emocijų - sistema viską daro už tave."</p><div class="t-user"><div class="avatar">R</div><div><span class="t-name">Rokas</span><span class="t-since">3 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Rezultatai stabilūs, be didelių šuolių. Būtent to ir ieškojau."</p><div class="t-user"><div class="avatar">J</div><div><span class="t-name">Jonas</span><span class="t-since">5 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="t-card"><p class="t-text">„Pradėjau be jokios patirties. Labiausiai patinka, kad viskas vyksta automatiškai."</p><div class="t-user"><div class="avatar">M</div><div><span class="t-name">Mantas</span><span class="t-since">3 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Bandžiau kelis copy trading variantus, bet šitas atrodo stabilus ir ne per agresyvus."</p><div class="t-user"><div class="avatar">T</div><div><span class="t-name">Tomas</span><span class="t-since">6 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Didžiausias pliusas - rizikos valdymas. Sistema orientuota ne į hype, o į stabilumą."</p><div class="t-user"><div class="avatar">A</div><div><span class="t-name">Andrius</span><span class="t-since">5 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Man patiko, kad nereikia sėdėti prie grafikų. Prisijungiau ir tiesiog stebiu rezultatus."</p><div class="t-user"><div class="avatar">L</div><div><span class="t-name">Lukas</span><span class="t-since">4 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Prieš prisijungdamas buvau skeptiškas, bet statistika padėjo apsispręsti."</p><div class="t-user"><div class="avatar">D</div><div><span class="t-name">Darius</span><span class="t-since">6 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Labai paprasta pradėti. Per kelias minutes jau buvau prijungęs sąskaitą."</p><div class="t-user"><div class="avatar">E</div><div><span class="t-name">Edgaras</span><span class="t-since">2 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Patinka, kad nereikia emocijų - sistema viską daro už tave."</p><div class="t-user"><div class="avatar">R</div><div><span class="t-name">Rokas</span><span class="t-since">3 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+      <div class="t-card"><p class="t-text">„Rezultatai stabilūs, be didelių šuolių. Būtent to ir ieškojau."</p><div class="t-user"><div class="avatar">J</div><div><span class="t-name">Jonas</span><span class="t-since">5 <span class="i18n-using">mėn. naudojasi</span></span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script>
+const heightObserver=new ResizeObserver(([{contentRect}])=>{
+  window.parent.postMessage({action:'iframeHeightUpdated',height:contentRect.height,id:'testimonials'},'*');
+});
+heightObserver.observe(document.documentElement);
+</script>
+<script>
+(function(){
+var T={
+  lt:{
+    badge:'Atsiliepimai',h2:'Ką sako vartotojai',
+    lead:'Žmonės, kurie jau kopijuoja Aurix strategiją, dalinasi savo patirtimi ir rezultatais.',
+    reviews:[
+      '"Pradėjau be jokios patirties. Labiausiai patinka, kad viskas vyksta automatiškai."',
+      '"Bandžiau kelis copy trading variantus, bet šitas atrodo stabilus ir ne per agresyvus."',
+      '"Didžiausias pliusas - rizikos valdymas. Sistema orientuota ne į hype, o į stabilumą."',
+      '"Man patiko, kad nereikia sėdėti prie grafikų. Prisijungiau ir tiesiog stebiu rezultatus."',
+      '"Prieš prisijungdamas buvau skeptiškas, bet statistika padėjo apsispręsti."',
+      '"Labai paprasta pradėti. Per kelias minutes jau buvau prijungęs sąskaitą."',
+      '"Patinka, kad nereikia emocijų - sistema viską daro už tave."',
+      '"Rezultatai stabilūs, be didelių šuolių. Būtent to ir ieškojau."'
+    ],
+    using:'mėn. naudojasi'
+  },
+  en:{
+    badge:'Testimonials',h2:'What users say',
+    lead:'People who are already copying the Aurix strategy share their experience and results.',
+    reviews:[
+      '"I started with no experience at all. I love that everything happens automatically."',
+      '"I tried several copy trading options, but this one seems stable and not too aggressive."',
+      '"The biggest plus is risk management. The system is focused on stability, not hype."',
+      '"I liked that I don\'t have to sit in front of charts. I just connected and watch the results."',
+      '"I was skeptical before joining, but the statistics helped me decide."',
+      '"Very easy to get started. Within a few minutes I had my account connected."',
+      '"I love that no emotions are needed - the system does everything for you."',
+      '"Stable results, no big swings. That\'s exactly what I was looking for."'
+    ],
+    using:'months using'
+  }
+};
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
+  });
+  document.querySelectorAll('.i18n-using').forEach(function(el){ el.textContent=T[lang].using; });
+  var cards=document.querySelectorAll('.t-text');
+  cards.forEach(function(el,i){ if(T[lang].reviews[i%8]) el.textContent=T[lang].reviews[i%8]; });
+}
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
+});
+})();
+</script></body></html>
+
+
+
