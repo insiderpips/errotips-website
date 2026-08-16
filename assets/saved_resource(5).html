@@ -26,8 +26,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webk
 
 .header{text-align:center;margin-bottom:72px}
 .badge{
-  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;margin-bottom:20px;
-  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  display:inline-block;padding-bottom:8px;margin-bottom:20px;
+  border-bottom:2px solid rgba(34,211,238,.55);
   font-size:12px;font-weight:700;color:#22d3ee;letter-spacing:.08em;text-transform:uppercase;
 }
 h2{
@@ -65,12 +65,12 @@ h2{
 
 .step-content{position:relative;z-index:1}
 .step-tag{
-  display:inline-block;padding:4px 12px;border-radius:999px;margin-bottom:16px;
-  background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.25);
+  display:inline-block;padding-bottom:5px;margin-bottom:16px;
+  border-bottom:2px solid rgba(56,189,248,.5);
   font-size:11px;font-weight:700;color:#38bdf8;letter-spacing:.1em;text-transform:uppercase;
 }
 .step:nth-child(odd) .step-tag{
-  background:rgba(168,85,247,.07);border-color:var(--border-hi);color:var(--accent);
+  border-bottom-color:var(--border-hi);color:var(--accent);
 }
 .step-num{
   font-family:'Inter',sans-serif;
