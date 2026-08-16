@@ -167,7 +167,7 @@ var T={
     faq2_q:'What is the minimum amount to start?',faq2_a:'The minimum is $500, but starting with a larger amount is recommended for better proportional results.',
     faq3_q:'Can I stop copying at any time?',faq3_a:'Yes, you can turn off the copy trading function with a single button press at any time. No extra bureaucracy.',
     faq4_q:'Can I withdraw my money at any time?',faq4_a:'Yes. You always have full control over your funds and can withdraw them at any time - with no additional fees or waiting periods.',
-    faq5_q:'Does this guarantee profits?',faq5_a:'No. Trading always carries risk. However, the Aurix strategy focuses on stable growth with controlled risk (~5.61% max drawdown). Past results do not guarantee future performance.',
+    faq5_q:'Does this guarantee profits?',faq5_a:'No. Trading always carries risk. However, the Aurix strategy focuses on stable growth with controlled risk (~8.11% max drawdown). Past results do not guarantee future performance.',
     faq6_q:'How long does it take to get started?',faq6_a:'The entire process usually takes 10–15 minutes (registration, KYC, and deposit).'
   }
 };
@@ -180,6 +180,7 @@ function applyLang(lang){
 window.addEventListener('message',function(e){
   if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
 });
+applyLang('en');
 })();
 </script></body></html>
 

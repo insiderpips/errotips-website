@@ -333,6 +333,7 @@ function applyLang(lang){
 window.addEventListener('message',function(e){
   if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
 });
+applyLang('en');
 })();
 </script></body></html>
 

@@ -144,7 +144,7 @@ h2 .accent{
 <script>
 (function(){
   const ENDPOINT='https://fsqtjmexsyockqsisuab.supabase.co/functions/v1/submit-lead';
-  const ANON_KEY='sb_publishable_GysyTRjZrgOh2YRZFWqaAg_P8-G9rsY';
+  const ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzcXRqbWV4c3lvY2txc2lzdWFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0OTcwNjYsImV4cCI6MjA5ODA3MzA2Nn0.Rr__bULnyduV9emvu1qLkq9tTHvQ1opO2paybzZsbCg';
   const form=document.getElementById('form');
   const ok=document.getElementById('ok'),err=document.getElementById('err');
   form.addEventListener('submit',async function(e){
@@ -152,7 +152,7 @@ h2 .accent{
     const btn=form.querySelector('button[type=submit]'),orig=btn.textContent;
     btn.disabled=true;btn.textContent='Siunčiama...';
     try{
-      const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+ANON_KEY,'apikey':ANON_KEY},body:JSON.stringify({name:form.name.value.trim(),email:form.email.value.trim()})});
+      const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+ANON_KEY,'apikey':ANON_KEY},body:JSON.stringify({name:form.name.value.trim(),email:form.email.value.trim(),lang:window.__formLang||'en'})});
       if(r.ok){ok.style.display='block';form.reset()}else throw new Error();
     }catch(ex){err.style.display='block'}
     btn.disabled=false;btn.textContent=orig;
@@ -181,17 +181,18 @@ var T={
   },
   en:{
     badge:'Free material',
-    h2:'Get <span class="accent">14 Forex ICT strategy</span> training PDFs for free',
-    sub:'Enter your details and we\'ll send the material straight to your email within minutes.',
-    li1:'14 PDFs in English',li2:'Clear examples and explanations',li3:'Suitable for both beginners and advanced',
+    h2:'Get the <span class="accent">Candlestick Trading</span> Bible for free',
+    sub:'Enter your details and we\'ll send the guide straight to your email within minutes.',
+    li1:'Full trading guide in English',li2:'Clear examples and explanations',li3:'Suitable for both beginners and advanced',
     l_name:'Name',l_email:'Email',l_phone:'Phone (optional)',l_msg:'Message (optional)',
     ph_name:'Your name',ph_email:'name@email.com',ph_phone:'+1...',ph_msg:'Questions or comments...',
     submit_btn:'Get PDF for free',note:'Your data is safe. We will never share it with third parties.',
-    ok_msg:'Thank you! We\'ve sent the material to your email. Check your inbox (and SPAM folder).',
+    ok_msg:'Thank you! We\'ve sent the guide to your email. Check your inbox (and SPAM folder).',
     err_msg:'An error occurred. Please try again or contact us directly.'
   }
 };
 function applyLang(lang){
+  window.__formLang = lang;
   document.querySelectorAll('[data-i18n]').forEach(function(el){
     var k=el.getAttribute('data-i18n');
     if(T[lang]&&T[lang][k]) el.innerHTML=T[lang][k];
@@ -204,5 +205,6 @@ function applyLang(lang){
 window.addEventListener('message',function(e){
   if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
 });
+applyLang('en');
 })();
 </script></body></html>
