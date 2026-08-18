@@ -102,7 +102,7 @@ video{width:100%;display:block;background:#000}
 /* heading */
 h1{
   font-family:'Inter',sans-serif;
-  font-size:clamp(36px,5.5vw,68px);font-weight:700;line-height:1.0;
+  font-size:clamp(36px,5.5vw,68px);font-weight:700;line-height:1.15;padding-bottom:0.08em;
   letter-spacing:-.04em;margin-bottom:22px;
   background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   animation:fadeUp .8s .2s ease both;
@@ -331,7 +331,7 @@ function applyLang(lang){
 window.addEventListener('message',function(e){
   if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
 });
-applyLang('en');
+applyLang((window.top && window.top.location.pathname.indexOf('/lt')===0) ? 'lt' : 'en');
 })();
 </script></body></html>
 

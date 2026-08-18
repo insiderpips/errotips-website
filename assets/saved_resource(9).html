@@ -188,7 +188,7 @@ footer::before{
 </div>
 
 <script>
-var MODAL_LANG='en';
+var MODAL_LANG=(window.top && window.top.location.pathname.indexOf('/lt')===0) ? 'lt' : 'en';
 const modals={
   lt:{
     privacy:'<h3>Privatumo politika</h3><p>Atnaujinta: 2026-06-27. Duomenų valdytojas: errotips, el. p.: info@errotips.com.</p><h4>Renkami duomenys</h4><p>Pateikiant formą renkame: vardą ir el. pašto adresą. Automatiškai renkama: IP adresas, naršyklės tipas, apsilankymo data ir laikas, svetainės naudojimo statistika.</p><h4>Duomenų naudojimas</h4><p>Duomenys naudojami: (1) medžiagai išsiųsti, (2) informaciniams pranešimams, (3) svetainės kokybei gerinti. Duomenų neparduodame ir neperduodame trečiosioms šalims komerciniais tikslais.</p><h4>Duomenų tvarkytojai</h4><p>Naudojame: Supabase (duomenų bazė, JAV), Resend (el. laiškų siuntimas, JAV), Google Analytics (statistika, JAV), Meta Pixel (rinkodara, JAV). Visi tvarkytojai laikosi GDPR reikalavimų.</p><h4>Saugojimo laikotarpis</h4><p>Asmens duomenis saugome ne ilgiau nei 2 metus nuo paskutinio kontakto arba kol atšaukiate sutikimą.</p><h4>Jūsų teisės</h4><p>Pagal BDAR turite teisę: susipažinti su savo duomenimis, juos ištaisyti, ištrinti, apriboti tvarkymą, duomenų perkeliamumą. Skundus galite teikti Valstybinei duomenų apsaugos inspekcijai (vdai.lrv.lt).</p><h4>Kontaktai</h4><p>El. p.: info@errotips.com | Telegram: t.me/errotipscopyfx</p>',
@@ -251,7 +251,7 @@ function applyLang(lang){
 window.addEventListener('message',function(e){
   if(e.data&&e.data.action==='setLang'){ MODAL_LANG=e.data.lang; applyLang(e.data.lang); }
 });
-applyLang('en');
+applyLang((window.top && window.top.location.pathname.indexOf('/lt')===0) ? 'lt' : 'en');
 })();
 </script>
 </body></html>

@@ -27,7 +27,7 @@ html,body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text)}
   font-family:'Inter',sans-serif;
   font-size:clamp(26px,3.5vw,44px);font-weight:800;
   letter-spacing:-.03em;line-height:1.1;
-  background:linear-gradient(135deg,#f4f0ff 30%,#a855f7);
+  background:linear-gradient(150deg,#ffffff 0%,#22d3ee 30%,#a855f7 70%,#7c3aed 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .section-sub{margin-top:12px;font-size:15px;color:var(--muted)}
@@ -347,7 +347,7 @@ function applyLang(lang){
 window.addEventListener('message',function(e){
   if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
 });
-applyLang('en');
+applyLang((window.top && window.top.location.pathname.indexOf('/lt')===0) ? 'lt' : 'en');
 })();
 </script></body>
 </html>

@@ -228,7 +228,7 @@ function applyLang(lang){
 window.addEventListener('message',function(e){
   if(e.data&&e.data.action==='setLang') applyLang(e.data.lang);
 });
-applyLang('en');
+applyLang((window.top && window.top.location.pathname.indexOf('/lt')===0) ? 'lt' : 'en');
 })();
 </script></body></html>
 
