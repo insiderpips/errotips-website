@@ -212,7 +212,7 @@ h1{
     <p class="sub" data-i18n="sub">Prijunk savo sąskaitą prie profesionalios strategijos ir leisk sistemai dirbti už tave</p>
 
     <div class="cta-wrap">
-      <a href="https://t.me/errotipscopyfx" target="_blank" rel="noopener" class="btn-primary"
+      <a href="https://t.me/errotipscopyfx" id="telegramCta" target="_blank" rel="noopener" class="btn-primary"
         onclick="event.preventDefault();const u=this.href;if(typeof fbq==='function'){fbq('trackCustom','TelegramJoin',{content_name:'Telegram Community',destination:'telegram'});fbq('track','Contact',{content_name:'Telegram Community'})}setTimeout(()=>window.open(u,'_blank'),250)">
         <span data-i18n="cta_btn">Prisijungti prie bendruomenės</span>
         <span class="btn-icon">→</span>
@@ -318,6 +318,8 @@ function applyLang(lang){
     var k=el.getAttribute('data-i18n');
     if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
   });
+  var cta=document.getElementById('telegramCta');
+  if(cta) cta.href = lang==='lt' ? 'https://t.me/errotipscopyfx' : 'https://t.me/errotipsfx';
   document.querySelectorAll('.stat-number[data-suffix-en]').forEach(function(el){
     if(!el.dataset.suffixLt) el.dataset.suffixLt=el.dataset.suffix||'';
     var oldSuf=el.dataset.suffix||'';
