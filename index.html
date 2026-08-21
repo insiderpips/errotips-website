@@ -1668,6 +1668,10 @@ window.addEventListener("DOMContentLoaded", () => {
         throw new Error(text);
       }
 
+      if(window.fbq){
+        fbq('track', 'Lead');
+      }
+
       alert(
         LEAD_T[leadLang].successMsg
       );
