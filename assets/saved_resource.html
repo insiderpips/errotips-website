@@ -213,7 +213,7 @@ h1{
 
     <div class="cta-wrap">
       <a href="https://t.me/errotipscopyfx" id="telegramCta" target="_blank" rel="noopener" class="btn-primary"
-        onclick="event.preventDefault();const u=this.href;if(typeof fbq==='function'){fbq('trackCustom','TelegramJoin',{content_name:'Telegram Community',destination:'telegram'});fbq('track','Contact',{content_name:'Telegram Community'})}setTimeout(()=>window.open(u,'_blank'),250)">
+        onclick="event.preventDefault();const u=this.href;if(typeof window.parent.fbq==='function'){window.parent.fbq('trackCustom','TelegramJoin',{content_name:'Telegram Community',destination:'telegram'});window.parent.fbq('track','Contact',{content_name:'Telegram Community'})}setTimeout(()=>window.open(u,'_blank'),250)">
         <span data-i18n="cta_btn">Prisijungti prie bendruomenės</span>
         <span class="btn-icon">→</span>
       </a>

@@ -153,7 +153,7 @@ h2 .accent{
     btn.disabled=true;btn.textContent='Siunčiama...';
     try{
       const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+ANON_KEY,'apikey':ANON_KEY},body:JSON.stringify({name:form.name.value.trim(),email:form.email.value.trim(),lang:window.__formLang||'en'})});
-      if(r.ok){ok.style.display='block';form.reset()}else throw new Error();
+      if(r.ok){ok.style.display='block';form.reset();if(typeof window.parent.fbq==='function')window.parent.fbq('track','Lead')}else throw new Error();
     }catch(ex){err.style.display='block'}
     btn.disabled=false;btn.textContent=orig;
   });
