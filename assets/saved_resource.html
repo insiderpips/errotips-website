@@ -291,6 +291,20 @@ heightObserver.observe(document.documentElement);
     }
     span.textContent=found?found.text:'';
   });
+
+  var videoMilestonesFired={50:false,75:false,100:false};
+  vid.addEventListener('timeupdate',function(){
+    if(!vid.duration) return;
+    var pct=(vid.currentTime/vid.duration)*100;
+    [50,75,100].forEach(function(m){
+      if(!videoMilestonesFired[m] && pct>=m){
+        videoMilestonesFired[m]=true;
+        if(typeof window.parent.fbq==='function'){
+          window.parent.fbq('trackCustom','VideoProgress',{content_name:'Hero VSL',percent:m});
+        }
+      }
+    });
+  });
 })();
 </script>
 <script>
