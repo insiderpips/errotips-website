@@ -291,6 +291,19 @@ function applyLang(lang){
     var k=el.getAttribute('data-i18n');
     if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
   });
+  var vid=document.getElementById('herovid');
+  if(vid){
+    var newSrc = lang==='lt' ? './hero-video-lt.mp4' : './hero-video-en.mp4';
+    var newPoster = lang==='lt' ? './hero-video-lt-poster.jpg' : './hero-video-en-poster.jpg';
+    var source = vid.querySelector('source');
+    if(source && source.getAttribute('src') !== newSrc){
+      var wasPlaying = !vid.paused;
+      source.setAttribute('src', newSrc);
+      vid.setAttribute('poster', newPoster);
+      vid.load();
+      if(wasPlaying) vid.play();
+    }
+  }
   var cta=document.getElementById('telegramCta');
   if(cta) cta.href = lang==='lt' ? 'https://t.me/errotipscopyfx' : 'https://t.me/errotipsfx';
   document.querySelectorAll('.stat-number[data-suffix-en]').forEach(function(el){
