@@ -294,7 +294,7 @@ function applyLang(lang){
   var vid=document.getElementById('herovid');
   if(vid){
     var newSrc = lang==='lt' ? './hero-video-lt.mp4' : './hero-video-en.mp4';
-    var newPoster = lang==='lt' ? './hero-video-lt-poster.jpg' : './hero-video-en-poster.jpg';
+    var newPoster = lang==='lt' ? './hero-video-lt-poster.png' : './hero-video-en-poster.jpg';
     var source = vid.querySelector('source');
     if(source && source.getAttribute('src') !== newSrc){
       var wasPlaying = !vid.paused;
