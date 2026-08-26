@@ -83,22 +83,6 @@ body::before{
   z-index:1;pointer-events:none;
 }
 video{width:100%;display:block;background:#000}
-.sub-overlay{
-  position:absolute;bottom:52px;left:0;right:0;
-  text-align:center;pointer-events:none;z-index:10;
-  padding:0 16px;
-}
-.sub-overlay span{
-  display:inline-block;
-  color:rgba(253,224,130,.9);
-  font-family:'Inter',sans-serif;
-  font-size:14px;font-weight:500;
-  line-height:1.55;
-  text-shadow:0 1px 5px rgba(0,0,0,.95),0 0 14px rgba(0,0,0,.8);
-  background:transparent;
-  white-space:pre-line;
-}
-
 /* heading */
 h1{
   font-family:'Inter',sans-serif;
@@ -204,7 +188,6 @@ h1{
       <video id="herovid" controls playsinline preload="none" poster="./hero-video-en-poster.jpg">
         <source src="./hero-video-en.mp4" type="video/mp4">
       </video>
-      <div class="sub-overlay" id="subOverlay"><span></span></div>
     </div>
 
     <h1 data-i18n="h1">Automatizuok savo prekybą su patikrinta copy trading sistema</h1>
@@ -265,32 +248,8 @@ heightObserver.observe(document.documentElement);
 </script>
 <script>
 (function(){
-  var cues=[];
-  fetch('subtitles-en-v2.vtt').then(function(r){return r.text();}).then(function(txt){
-    var blocks=txt.trim().split(/\n\n+/);
-    blocks.forEach(function(b){
-      var lines=b.split('\n');
-      var timeLine=lines.find(function(l){return l.includes('-->');});
-      if(!timeLine) return;
-      var times=timeLine.split('-->');
-      function ts(s){var p=s.trim().split(/[:.]/);return (+p[0])*3600+(+p[1])*60+(+p[2])+(+p[3]||0)/1000;}
-      var start=ts(times[0]),end=ts(times[1].trim().split(/\s+/)[0]);
-      var text=lines.filter(function(l){return !l.includes('-->') && l!=='WEBVTT' && !/^\d+$/.test(l.trim());}).join('\n').trim();
-      if(text) cues.push({start:start,end:end,text:text});
-    });
-  });
   var vid=document.getElementById('herovid');
-  var overlay=document.getElementById('subOverlay');
-  var span=overlay.querySelector('span');
   if(!vid) return;
-  vid.addEventListener('timeupdate',function(){
-    var t=vid.currentTime;
-    var found=null;
-    for(var i=0;i<cues.length;i++){
-      if(t>=cues[i].start && t<cues[i].end){found=cues[i];break;}
-    }
-    span.textContent=found?found.text:'';
-  });
 
   var videoMilestonesFired={50:false,75:false,100:false};
   vid.addEventListener('timeupdate',function(){
