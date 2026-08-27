@@ -1539,10 +1539,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   setTimeout(() => {
 
-    if(localStorage.getItem(STORAGE_KEY)){
-      return;
-    }
-
     overlay.classList.add("active");
 
     document.body.classList.add(
@@ -1550,8 +1546,6 @@ window.addEventListener("DOMContentLoaded", () => {
     );
 
     window.popupOpenedAt = Date.now();
-
-    localStorage.setItem(STORAGE_KEY,"yes");
 
   }, POPUP_DELAY);
 
