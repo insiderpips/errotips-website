@@ -83,22 +83,6 @@ body::before{
   z-index:1;pointer-events:none;
 }
 video{width:100%;display:block;background:#000}
-.sub-overlay{
-  position:absolute;bottom:52px;left:0;right:0;
-  text-align:center;pointer-events:none;z-index:10;
-  padding:0 16px;
-}
-.sub-overlay span{
-  display:inline-block;
-  color:rgba(253,224,130,.9);
-  font-family:'Inter',sans-serif;
-  font-size:14px;font-weight:500;
-  line-height:1.55;
-  text-shadow:0 1px 5px rgba(0,0,0,.95),0 0 14px rgba(0,0,0,.8);
-  background:transparent;
-  white-space:pre-line;
-}
-
 /* heading */
 h1{
   font-family:'Inter',sans-serif;
@@ -201,10 +185,9 @@ h1{
     </div>
 
     <div class="video-wrap">
-      <video id="herovid" controls playsinline preload="none" poster="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/screenshot-2026-05-07-at-21.09.26-XxvjyUjzISWeky4X.png" data-poster-lt="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/screenshot-2026-05-07-at-21.09.26-XxvjyUjzISWeky4X.png" data-poster-en="hero-poster-en.png">
-        <source src="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/geras-J2srwk7l7r0zzNPj.mp4" type="video/mp4">
+      <video id="herovid" controls playsinline preload="none" poster="./hero-video-en-poster.jpg">
+        <source src="./hero-video-en.mp4" type="video/mp4">
       </video>
-      <div class="sub-overlay" id="subOverlay"><span></span></div>
     </div>
 
     <h1 data-i18n="h1">Automatizuok savo prekybą su patikrinta copy trading sistema</h1>
@@ -212,8 +195,8 @@ h1{
     <p class="sub" data-i18n="sub">Prijunk savo sąskaitą prie profesionalios strategijos ir leisk sistemai dirbti už tave</p>
 
     <div class="cta-wrap">
-      <a href="https://t.me/errotipscopyfx" target="_blank" rel="noopener" class="btn-primary"
-        onclick="event.preventDefault();const u=this.href;if(typeof fbq==='function'){fbq('trackCustom','TelegramJoin',{content_name:'Telegram Community',destination:'telegram'});fbq('track','Contact',{content_name:'Telegram Community'})}setTimeout(()=>window.open(u,'_blank'),250)">
+      <a href="https://t.me/errotipscopyfx" id="telegramCta" target="_blank" rel="noopener" class="btn-primary"
+        onclick="event.preventDefault();const u=this.href;if(typeof window.parent.fbq==='function'){window.parent.fbq('trackCustom','TelegramJoin',{content_name:'Telegram Community',destination:'telegram'});window.parent.fbq('track','Contact',{content_name:'Telegram Community'})}setTimeout(()=>window.open(u,'_blank'),250)">
         <span data-i18n="cta_btn">Prisijungti prie bendruomenės</span>
         <span class="btn-icon">→</span>
       </a>
@@ -265,31 +248,21 @@ heightObserver.observe(document.documentElement);
 </script>
 <script>
 (function(){
-  var cues=[];
-  fetch('subtitles-en-v2.vtt').then(function(r){return r.text();}).then(function(txt){
-    var blocks=txt.trim().split(/\n\n+/);
-    blocks.forEach(function(b){
-      var lines=b.split('\n');
-      var timeLine=lines.find(function(l){return l.includes('-->');});
-      if(!timeLine) return;
-      var times=timeLine.split('-->');
-      function ts(s){var p=s.trim().split(/[:.]/);return (+p[0])*3600+(+p[1])*60+(+p[2])+(+p[3]||0)/1000;}
-      var start=ts(times[0]),end=ts(times[1].trim().split(/\s+/)[0]);
-      var text=lines.filter(function(l){return !l.includes('-->') && l!=='WEBVTT' && !/^\d+$/.test(l.trim());}).join('\n').trim();
-      if(text) cues.push({start:start,end:end,text:text});
-    });
-  });
   var vid=document.getElementById('herovid');
-  var overlay=document.getElementById('subOverlay');
-  var span=overlay.querySelector('span');
   if(!vid) return;
+
+  var videoMilestonesFired={50:false,75:false,100:false};
   vid.addEventListener('timeupdate',function(){
-    var t=vid.currentTime;
-    var found=null;
-    for(var i=0;i<cues.length;i++){
-      if(t>=cues[i].start && t<cues[i].end){found=cues[i];break;}
-    }
-    span.textContent=found?found.text:'';
+    if(!vid.duration) return;
+    var pct=(vid.currentTime/vid.duration)*100;
+    [50,75,100].forEach(function(m){
+      if(!videoMilestonesFired[m] && pct>=m){
+        videoMilestonesFired[m]=true;
+        if(typeof window.parent.fbq==='function'){
+          window.parent.fbq('trackCustom','VideoProgress',{content_name:'Hero VSL',percent:m});
+        }
+      }
+    });
   });
 })();
 </script>
@@ -318,11 +291,21 @@ function applyLang(lang){
     var k=el.getAttribute('data-i18n');
     if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
   });
-  var heroVid=document.getElementById('herovid');
-  if(heroVid){
-    var newPoster=lang==='en'?heroVid.getAttribute('data-poster-en'):heroVid.getAttribute('data-poster-lt');
-    if(newPoster) heroVid.setAttribute('poster',newPoster);
+  var vid=document.getElementById('herovid');
+  if(vid){
+    var newSrc = lang==='lt' ? './hero-video-lt.mp4' : './hero-video-en.mp4';
+    var newPoster = lang==='lt' ? './hero-video-lt-poster.png' : './hero-video-en-poster.jpg';
+    var source = vid.querySelector('source');
+    if(source && source.getAttribute('src') !== newSrc){
+      var wasPlaying = !vid.paused;
+      source.setAttribute('src', newSrc);
+      vid.setAttribute('poster', newPoster);
+      vid.load();
+      if(wasPlaying) vid.play();
+    }
   }
+  var cta=document.getElementById('telegramCta');
+  if(cta) cta.href = lang==='lt' ? 'https://t.me/errotipscopyfx' : 'https://t.me/errotipsfx';
   document.querySelectorAll('.stat-number[data-suffix-en]').forEach(function(el){
     if(!el.dataset.suffixLt) el.dataset.suffixLt=el.dataset.suffix||'';
     var oldSuf=el.dataset.suffix||'';
