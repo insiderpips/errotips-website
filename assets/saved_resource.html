@@ -185,7 +185,7 @@ h1{
     </div>
 
     <div class="video-wrap">
-      <video id="herovid" controls playsinline preload="none" poster="./hero-video-en-poster.jpg">
+      <video id="herovid" controls playsinline preload="none" poster="./hero-video-en-poster.png">
         <source src="./hero-video-en.mp4" type="video/mp4">
       </video>
     </div>
@@ -294,7 +294,7 @@ function applyLang(lang){
   var vid=document.getElementById('herovid');
   if(vid){
     var newSrc = lang==='lt' ? './hero-video-lt.mp4' : './hero-video-en.mp4';
-    var newPoster = lang==='lt' ? './hero-video-lt-poster.png' : './hero-video-en-poster.jpg';
+    var newPoster = lang==='lt' ? './hero-video-lt-poster.png' : './hero-video-en-poster.png';
     var source = vid.querySelector('source');
     if(source && source.getAttribute('src') !== newSrc){
       var wasPlaying = !vid.paused;
