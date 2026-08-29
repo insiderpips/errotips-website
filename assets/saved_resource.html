@@ -201,7 +201,7 @@ h1{
     </div>
 
     <div class="video-wrap">
-      <video id="herovid" controls playsinline preload="none" poster="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/screenshot-2026-05-07-at-21.09.26-XxvjyUjzISWeky4X.png">
+      <video id="herovid" controls playsinline preload="none" poster="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/screenshot-2026-05-07-at-21.09.26-XxvjyUjzISWeky4X.png" data-poster-lt="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/screenshot-2026-05-07-at-21.09.26-XxvjyUjzISWeky4X.png" data-poster-en="hero-poster-en.png">
         <source src="https://assets.zyrosite.com/pycHSzOSWf9T7B7j/geras-J2srwk7l7r0zzNPj.mp4" type="video/mp4">
       </video>
       <div class="sub-overlay" id="subOverlay"><span></span></div>
@@ -318,6 +318,11 @@ function applyLang(lang){
     var k=el.getAttribute('data-i18n');
     if(T[lang]&&T[lang][k]) el.textContent=T[lang][k];
   });
+  var heroVid=document.getElementById('herovid');
+  if(heroVid){
+    var newPoster=lang==='en'?heroVid.getAttribute('data-poster-en'):heroVid.getAttribute('data-poster-lt');
+    if(newPoster) heroVid.setAttribute('poster',newPoster);
+  }
   document.querySelectorAll('.stat-number[data-suffix-en]').forEach(function(el){
     if(!el.dataset.suffixLt) el.dataset.suffixLt=el.dataset.suffix||'';
     var oldSuf=el.dataset.suffix||'';
