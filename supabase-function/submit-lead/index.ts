@@ -33,7 +33,7 @@ serve(async (req) => {
 
     // 1. Išsaugoti į DB
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
-    await supabase.from('leads').insert({ name, email })
+    await supabase.from('leads').insert({ name, email, lang: isEn ? 'en' : 'lt' })
 
     // 2. Siųsti el. laišką klientui
     const clientEmail = isEn
