@@ -179,41 +179,6 @@
     background: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(34,211,238,0.08));
     pointer-events: none;
   }
-  .video-placeholder {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    color: var(--text-faint);
-    text-align: center;
-    padding: 1rem;
-  }
-  .play-btn {
-    width: 76px; height: 76px;
-    border-radius: 50%;
-    background: var(--glass-bg-strong);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text);
-    font-size: 1.4rem;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .play-btn:hover {
-    transform: scale(1.06);
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.45);
-  }
-  .video-placeholder small {
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    color: var(--text-faint);
-  }
-
   /* CTA section */
   .cta-section {
     max-width: 620px;
@@ -328,10 +293,9 @@
 
     <section class="video-section">
       <div class="video-frame">
-        <div class="video-placeholder">
-          <div class="play-btn">▶</div>
-          <p>Vaizdo įrašas netrukus</p>
-        </div>
+        <video controls playsinline preload="none" poster="assets/webinaras-lt-poster.jpg" style="width:100%;height:100%;display:block;">
+          <source src="assets/webinaras-lt.mp4" type="video/mp4">
+        </video>
       </div>
     </section>
 
