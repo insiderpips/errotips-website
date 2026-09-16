@@ -3,9 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nemokamas webinaras — errotips</title>
-<meta name="description" content="Asmeninė istorija apie prekybą XAUUSD ir sprendimą, kurį radau. Nemokamas vaizdo įrašas.">
+<title>Kaip aš perėjau nuo savarankiškos prekybos prie automatizacijos — errotips</title>
+<meta name="description" content="Asmeninė istorija apie tai, kodėl nustojau pats sėdėti prie ekranų ir su kokiomis problemomis susidūriau prekiaudamas rankiniu būdu. Nemokamas vaizdo įrašas.">
 <meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://errotips.com/webinaras">
+<meta property="og:title" content="Kaip aš perėjau nuo savarankiškos prekybos prie automatizacijos">
+<meta property="og:description" content="Asmeninė istorija apie tai, kodėl nustojau pats sėdėti prie ekranų ir su kokiomis problemomis susidūriau prekiaudamas rankiniu būdu. Nemokamas vaizdo įrašas.">
+<meta property="og:image" content="https://errotips.com/assets/webinaras-lt-poster.jpg">
+<meta property="og:locale" content="lt_LT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kaip aš perėjau nuo savarankiškos prekybos prie automatizacijos">
+<meta name="twitter:description" content="Asmeninė istorija apie tai, kodėl nustojau pats sėdėti prie ekranų ir su kokiomis problemomis susidūriau prekiaudamas rankiniu būdu. Nemokamas vaizdo įrašas.">
+<meta name="twitter:image" content="https://errotips.com/assets/webinaras-lt-poster.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -180,41 +190,6 @@
     background: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(34,211,238,0.08));
     pointer-events: none;
   }
-  .video-placeholder {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    color: var(--text-faint);
-    text-align: center;
-    padding: 1rem;
-  }
-  .play-btn {
-    width: 76px; height: 76px;
-    border-radius: 50%;
-    background: var(--glass-bg-strong);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text);
-    font-size: 1.4rem;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .play-btn:hover {
-    transform: scale(1.06);
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.45);
-  }
-  .video-placeholder small {
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    color: var(--text-faint);
-  }
-
   /* CTA section */
   .cta-section {
     max-width: 620px;
@@ -276,6 +251,23 @@
     background: rgba(255,255,255,0.12);
   }
 
+  .btn-tg {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 400;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .btn-tg:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.06);
+  }
+
   .disclaimer {
     max-width: 560px;
     margin: 0.5rem auto 0;
@@ -329,10 +321,9 @@
 
     <section class="video-section">
       <div class="video-frame">
-        <div class="video-placeholder">
-          <div class="play-btn">▶</div>
-          <p>Vaizdo įrašas netrukus</p>
-        </div>
+        <video controls playsinline preload="none" poster="assets/webinaras-lt-poster.jpg" style="width:100%;height:100%;display:block;">
+          <source src="assets/webinaras-lt.mp4" type="video/mp4">
+        </video>
       </div>
     </section>
 
@@ -343,6 +334,8 @@
         brokerį, paspaudęs mygtuką žemiau.
       </p>
       <a href="https://my.levelssocials.com/auth/signup?ref=JC12vmdR&tag=u" target="_blank" rel="noopener" class="btn-glass">Peržiūrėti LevelsSocials →</a>
+
+      <a href="https://t.me/errotipscopyfx" target="_blank" rel="noopener" class="btn-tg">Prisijungti prie Telegram bendruomenės →</a>
 
       <div class="disclaimer">
         CFD ir Forex prekyba yra susijusi su didele kapitalo praradimo rizika dėl sverto
