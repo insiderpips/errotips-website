@@ -9,8 +9,8 @@ const PDF_URL_LT = 'https://fsqtjmexsyockqsisuab.supabase.co/storage/v1/object/p
 const PDF_URL_EN = 'https://fsqtjmexsyockqsisuab.supabase.co/storage/v1/object/public/pdfs/THE%20CANDLESTICK%20TRADING%20BIBLE(1).pdf'
 const ADMIN_EMAIL = 'ernestasbudvytis@gmail.com'
 const FROM_EMAIL = 'info@errotips.com'
-const RESEND_AUDIENCE_LT = Deno.env.get('RESEND_AUDIENCE_LT')!
-const RESEND_AUDIENCE_EN = Deno.env.get('RESEND_AUDIENCE_EN')!
+const RESEND_AUDIENCE_LT = '4c32c842-90d3-4b54-8b99-2c0ef346605f'
+const RESEND_AUDIENCE_EN = '1ba4bf24-d1bc-4c08-b438-c5c9b5588ec8'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
