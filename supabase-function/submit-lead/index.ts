@@ -9,6 +9,8 @@ const PDF_URL_LT = 'https://fsqtjmexsyockqsisuab.supabase.co/storage/v1/object/p
 const PDF_URL_EN = 'https://fsqtjmexsyockqsisuab.supabase.co/storage/v1/object/public/pdfs/THE%20CANDLESTICK%20TRADING%20BIBLE(1).pdf'
 const ADMIN_EMAIL = 'ernestasbudvytis@gmail.com'
 const FROM_EMAIL = 'info@errotips.com'
+const RESEND_AUDIENCE_LT = Deno.env.get('RESEND_AUDIENCE_LT')!
+const RESEND_AUDIENCE_EN = Deno.env.get('RESEND_AUDIENCE_EN')!
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,6 +36,22 @@ serve(async (req) => {
     // 1. Išsaugoti į DB
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
     await supabase.from('leads').insert({ name, email, lang: isEn ? 'en' : 'lt' })
+
+    // 1b. Pridėti į Resend Audience (LT arba EN) bulk email'ams
+    const [firstName, ...rest] = name.trim().split(' ')
+    await fetch(`https://api.resend.com/audiences/${isEn ? RESEND_AUDIENCE_EN : RESEND_AUDIENCE_LT}/contacts`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        first_name: firstName,
+        last_name: rest.join(' '),
+        unsubscribed: false,
+      }),
+    })
 
     // 2. Siųsti el. laišką klientui
     const clientEmail = isEn
