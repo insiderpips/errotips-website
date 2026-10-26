@@ -1,13 +1,17 @@
 // Vienkartinis skriptas: iš naujo išsiunčia PDF laišką visiems lead'ams, kurie užsiregistravo,
 // kol Supabase `RESEND_API_KEY` secret'as buvo neteisingas (nuo 2026-09-19 09:34 UTC).
 //
-// Pirmiausia peržiūra be siuntimo:
-//   ADMIN_PASSWORD=... RESEND_API_KEY=re_... node scripts/resend-missed-pdfs.mjs --dry-run
-// Siuntimas (kiekvieną dieną ne daugiau MAX_SEND laiškų, nes Resend free planas = 100/dieną):
-//   ADMIN_PASSWORD=... RESEND_API_KEY=re_... node scripts/resend-missed-pdfs.mjs
-// Kitą dieną paleisk tą pačią komandą — skriptas prisimena, kam jau išsiuntė (.missed-pdf-sent.json).
+// Pirmiausia peržiūra be siuntimo (paprašys CRM slaptažodžio, rašomo teksto nerodo):
+//   node scripts/resend-missed-pdfs.mjs --dry-run
+// Siuntimas (paprašys CRM slaptažodžio ir Resend rakto). Per dieną ne daugiau MAX_SEND laiškų,
+// nes Resend free planas = 100/dieną:
+//   node scripts/resend-missed-pdfs.mjs
+// Kitą dieną paleisk tą pačią komandą - skriptas prisimena, kam jau išsiuntė (.missed-pdf-sent.json).
+// ADMIN_PASSWORD ir RESEND_API_KEY galima pateikti ir kaip env kintamuosius.
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { createInterface } from 'node:readline'
+import { execSync } from 'node:child_process'
 
 const ADMIN_LEADS_URL = 'https://fsqtjmexsyockqsisuab.supabase.co/functions/v1/admin-leads'
 const SINCE = process.env.SINCE || '2026-09-19T09:30:00Z'
@@ -15,8 +19,22 @@ const MAX_SEND = Number(process.env.MAX_SEND || 80)
 const STATE_FILE = new URL('./.missed-pdf-sent.json', import.meta.url)
 const DRY_RUN = process.argv.includes('--dry-run')
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
-const RESEND_API_KEY = process.env.RESEND_API_KEY
+function askHidden(question) {
+  return new Promise((resolve) => {
+    const rl = createInterface({ input: process.stdin, output: process.stdout })
+    const hide = process.stdin.isTTY
+    if (hide) execSync('stty -echo', { stdio: 'inherit' })
+    rl.question(question, (answer) => {
+      if (hide) execSync('stty echo', { stdio: 'inherit' })
+      console.log()
+      rl.close()
+      resolve(answer.trim())
+    })
+  })
+}
+
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (await askHidden('CRM (admin) slaptažodis: '))
+const RESEND_API_KEY = process.env.RESEND_API_KEY || (DRY_RUN ? '' : await askHidden('Resend API raktas (re_...): '))
 const FROM_EMAIL = 'info@errotips.com'
 const SKIP_EMAILS = new Set(['ernestasbudvytis@gmail.com'])
 
@@ -56,9 +74,10 @@ function buildEmail(lead) {
 }
 
 const res = await fetch(ADMIN_LEADS_URL, { headers: { 'x-admin-password': ADMIN_PASSWORD } })
-const { leads, error } = await res.json()
-if (error) {
-  console.error("Klaida gaunant lead'us:", error)
+const payload = await res.json().catch(() => ({}))
+const leads = payload.leads
+if (!res.ok || !Array.isArray(leads)) {
+  console.error(`Nepavyko gauti lead'ų (HTTP ${res.status}). Greičiausiai neteisingas CRM slaptažodis.`, payload.error || '')
   process.exit(1)
 }
 
