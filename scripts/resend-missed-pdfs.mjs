@@ -78,11 +78,14 @@ function buildEmail(lead) {
   }
 }
 
-const res = await fetch(ADMIN_LEADS_URL, { headers: { 'x-admin-password': ADMIN_PASSWORD } })
+const ANON_KEY = readFileSync(new URL('../crm.html', import.meta.url), 'utf8').match(/ANON_KEY\s*=\s*"([^"]+)"/)?.[1]
+const res = await fetch(ADMIN_LEADS_URL, {
+  headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}`, 'x-admin-password': ADMIN_PASSWORD },
+})
 const payload = await res.json().catch(() => ({}))
 const leads = payload.leads
 if (!res.ok || !Array.isArray(leads)) {
-  console.error(`Nepavyko gauti lead'ų (HTTP ${res.status}). Greičiausiai neteisingas CRM slaptažodis.`, payload.error || '')
+  console.error(`Nepavyko gauti lead'ų (HTTP ${res.status}). Patikrink CRM slaptažodį.`, payload.error || '')
   process.exit(1)
 }
 
