@@ -11,7 +11,7 @@
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { createInterface } from 'node:readline'
-import { execSync } from 'node:child_process'
+import { Writable } from 'node:stream'
 
 const ADMIN_LEADS_URL = 'https://fsqtjmexsyockqsisuab.supabase.co/functions/v1/admin-leads'
 const SINCE = process.env.SINCE || '2026-09-19T09:30:00Z'
@@ -21,15 +21,20 @@ const DRY_RUN = process.argv.includes('--dry-run')
 
 function askHidden(question) {
   return new Promise((resolve) => {
-    const rl = createInterface({ input: process.stdin, output: process.stdout })
-    const hide = process.stdin.isTTY
-    if (hide) execSync('stty -echo', { stdio: 'inherit' })
+    let muted = false
+    const out = new Writable({
+      write(chunk, _enc, cb) {
+        if (!muted) process.stdout.write(chunk)
+        cb()
+      },
+    })
+    const rl = createInterface({ input: process.stdin, output: out, terminal: Boolean(process.stdin.isTTY) })
     rl.question(question, (answer) => {
-      if (hide) execSync('stty echo', { stdio: 'inherit' })
-      console.log()
       rl.close()
+      process.stdout.write('\n')
       resolve(answer.trim())
     })
+    muted = true
   })
 }
 
