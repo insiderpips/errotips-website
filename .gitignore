@@ -1,2 +1,5 @@
 # Local Netlify folder
 .netlify
+
+# Local state with lead emails (PII) - never commit
+scripts/.missed-pdf-sent.json

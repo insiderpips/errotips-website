@@ -17,6 +17,21 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+async function resend(label: string, path: string, body: unknown) {
+  const r = await fetch(`https://api.resend.com${path}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+  if (!r.ok) {
+    console.error(`Resend ${label} failed: ${r.status} ${await r.text()}`)
+  }
+  return r.ok
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -39,18 +54,11 @@ serve(async (req) => {
 
     // 1b. Pridėti į Resend Audience (LT arba EN) bulk email'ams
     const [firstName, ...rest] = name.trim().split(' ')
-    await fetch(`https://api.resend.com/audiences/${isEn ? RESEND_AUDIENCE_EN : RESEND_AUDIENCE_LT}/contacts`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        first_name: firstName,
-        last_name: rest.join(' '),
-        unsubscribed: false,
-      }),
+    await resend('audience contact', `/audiences/${isEn ? RESEND_AUDIENCE_EN : RESEND_AUDIENCE_LT}/contacts`, {
+      email,
+      first_name: firstName,
+      last_name: rest.join(' '),
+      unsubscribed: false,
     })
 
     // 2. Siųsti el. laišką klientui
@@ -94,38 +102,24 @@ serve(async (req) => {
           `,
         }
 
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: `Errotips <${FROM_EMAIL}>`,
-        to: [email],
-        subject: clientEmail.subject,
-        html: clientEmail.html,
-      }),
+    await resend('client PDF email', '/emails', {
+      from: `Errotips <${FROM_EMAIL}>`,
+      to: [email],
+      subject: clientEmail.subject,
+      html: clientEmail.html,
     })
 
     // 3. Siųsti pranešimą adminui
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: `Errotips sistema <${FROM_EMAIL}>`,
-        to: [ADMIN_EMAIL],
-        subject: `Naujas kontaktas: ${name}`,
-        html: `
-          <p><strong>Vardas:</strong> ${name}</p>
-          <p><strong>El. paštas:</strong> ${email}</p>
-          <p><strong>Kalba:</strong> ${isEn ? 'EN (Candlestick Trading Bible)' : 'LT (14 ICT PDF)'}</p>
-          <p><strong>Laikas:</strong> ${new Date().toLocaleString('lt-LT')}</p>
-        `,
-      }),
+    await resend('admin notification', '/emails', {
+      from: `Errotips sistema <${FROM_EMAIL}>`,
+      to: [ADMIN_EMAIL],
+      subject: `Naujas kontaktas: ${name}`,
+      html: `
+        <p><strong>Vardas:</strong> ${name}</p>
+        <p><strong>El. paštas:</strong> ${email}</p>
+        <p><strong>Kalba:</strong> ${isEn ? 'EN (Candlestick Trading Bible)' : 'LT (14 ICT PDF)'}</p>
+        <p><strong>Laikas:</strong> ${new Date().toLocaleString('lt-LT')}</p>
+      `,
     })
 
     return new Response(JSON.stringify({ success: true }), {
