@@ -46,6 +46,11 @@ const SKIP_EMAILS = new Set(['ernestasbudvytis@gmail.com'])
 const PDF_URL_LT = 'https://fsqtjmexsyockqsisuab.supabase.co/storage/v1/object/public/pdfs/14-Forex-ICT-PDF.zip'
 const PDF_URL_EN = 'https://fsqtjmexsyockqsisuab.supabase.co/storage/v1/object/public/pdfs/THE%20CANDLESTICK%20TRADING%20BIBLE(1).pdf'
 
+if (RESEND_API_KEY && !/^re_[A-Za-z0-9_]{10,}$/.test(RESEND_API_KEY)) {
+  console.error(`Tai neatrodo kaip Resend raktas (turi prasidėti "re_", be tarpų; gauta ${RESEND_API_KEY.length} simbolių). Nukopijuok iš naujo.`)
+  process.exit(1)
+}
+
 if (!ADMIN_PASSWORD || (!RESEND_API_KEY && !DRY_RUN)) {
   console.error('Trūksta ADMIN_PASSWORD (ir RESEND_API_KEY siuntimui) environment kintamųjų.')
   process.exit(1)
@@ -109,7 +114,7 @@ if (DRY_RUN) {
   process.exit(0)
 }
 
-let sent = 0, failed = 0
+let sent = 0, failed = 0, consecutiveFailures = 0
 for (const lead of queue) {
   if (sent >= MAX_SEND) {
     console.log(`Pasiektas dienos limitas (${MAX_SEND}). Likusius paleisk rytoj tuo pačiu skriptu.`)
@@ -123,14 +128,16 @@ for (const lead of queue) {
   })
   if (r.ok) {
     sent++
+    consecutiveFailures = 0
     alreadySent.add(lead.email)
     writeFileSync(STATE_FILE, JSON.stringify([...alreadySent], null, 2))
   } else {
     failed++
     const body = await r.text()
     console.error(`Nepavyko: ${lead.email} — ${r.status} ${body}`)
-    if (r.status === 401 || r.status === 403 || r.status === 429) {
-      console.error('Stoju: tai raktas/limito problema, ne atskiro adreso.')
+    consecutiveFailures++
+    if ([401, 403, 429].includes(r.status) || /api key/i.test(body) || consecutiveFailures >= 3) {
+      console.error('Stoju: tai raktas/limito problema, ne atskiro adreso. Niekam daugiau nesiunčiau.')
       break
     }
   }
